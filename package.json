@@ -1,9 +1,9 @@
 {
-  "name": "maker-electron",
-  "version": "0.0.8",
-  "description": "Maker Toolkit Electron Shell",
-  "license": "MIT",
-  "author": "Brad Buchanan <islemaster@gmail.com> (http://bradleycbuchanan.com)",
+  "name": "@code-dot-org/browser",
+  "version": "0.0.1",
+  "description": "A browser with Code.org-specific extensions, built with Electron",
+  "license": "Apache-2.0",
+  "author": "Brad Buchanan <brad@code.org>",
   "main": "src/main.js",
   "scripts": {
     "start": "electron .",
@@ -12,7 +12,7 @@
     "dist": "build"
   },
   "build": {
-    "appId": "com.code-dot-org.maker-electron",
+    "appId": "com.code-dot-org.browser",
     "dmg": {
       "contents": [
         {

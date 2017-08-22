@@ -1,4 +1,4 @@
-# Prototype: Maker Toolkit Electron Shell [![Build Status](https://travis-ci.org/islemaster/maker-electron.svg?branch=master)](https://travis-ci.org/islemaster/maker-electron) [![GitHub release](https://img.shields.io/github/release/islemaster/maker-electron.svg)](https://github.com/islemaster/maker-electron/releases/latest)
+# Code.org Browser [![Build Status](https://travis-ci.org/code-dot-org/browser.svg?branch=master)](https://travis-ci.org/code-dot-org/browser) [![GitHub release](https://img.shields.io/github/release/code-dot-org/browser.svg)](https://github.com/code-dot-org/browser/releases/latest)
 
 See https://github.com/code-dot-org/code-dot-org/pull/15531.
 
