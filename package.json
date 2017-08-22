@@ -1,0 +1,45 @@
+{
+  "name": "maker-electron",
+  "version": "0.0.8",
+  "description": "Maker Toolkit Electron Shell",
+  "license": "MIT",
+  "author": "Brad Buchanan <islemaster@gmail.com> (http://bradleycbuchanan.com)",
+  "main": "src/main.js",
+  "scripts": {
+    "start": "electron .",
+    "install": "electron-rebuild",
+    "pack": "build --dir",
+    "dist": "build"
+  },
+  "build": {
+    "appId": "com.code-dot-org.maker-electron",
+    "dmg": {
+      "contents": [
+        {
+          "x": 65,
+          "y": 165
+        },
+        {
+          "x": 265,
+          "y": 165,
+          "type": "link",
+          "path": "/Applications"
+        }
+      ]
+    },
+    "linux": {
+      "target": [
+        "AppImage",
+        "deb"
+      ]
+    }
+  },
+  "dependencies": {
+    "serialport": "4.0.7"
+  },
+  "devDependencies": {
+    "electron": "1.6.10",
+    "electron-builder": "^18.3.5",
+    "electron-rebuild": "^1.5.11"
+  }
+}

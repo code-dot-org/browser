@@ -1,0 +1,43 @@
+osx_image: xcode7.3
+
+dist: trusty
+sudo: false
+
+language: c
+
+env:
+  - ELECTRON_CACHE=$HOME/.electron
+
+matrix:
+  include:
+    - os: osx
+    - os: linux
+      env: CC=clang CXX=clang++ npm_config_clang=1
+      compiler: clang
+
+cache:
+  directories:
+    - node_modules
+    - $HOME/.electron
+    - $HOME/.cache
+
+addons:
+  apt:
+    packages:
+      - icnsutils
+
+before_install:
+  - curl -o- --location https://yarnpkg.com/install.sh | bash
+  - export PATH="$HOME/.yarn/bin:$PATH"
+
+install:
+  - nvm install 7
+  - yarn install
+
+script:
+  - yarn run dist
+
+branches:
+  except:
+    - "/^v\\d+\\.\\d+\\.\\d+$/"
+
