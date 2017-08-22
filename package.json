@@ -38,8 +38,8 @@
     "serialport": "4.0.7"
   },
   "devDependencies": {
-    "electron": "1.6.10",
-    "electron-builder": "^18.3.5",
-    "electron-rebuild": "^1.5.11"
+    "electron": "^1.7.5",
+    "electron-builder": "^19.24.1",
+    "electron-rebuild": "^1.6.0"
   }
 }
