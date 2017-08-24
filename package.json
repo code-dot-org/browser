@@ -1,9 +1,14 @@
 {
-  "name": "@code-dot-org/browser",
+  "name": "code-dot-org-browser",
   "version": "0.0.1",
   "description": "A browser with Code.org-specific extensions, built with Electron",
+  "homepage": "https://code.org",
+  "repository": "https://github.com/code-dot-org/browser",
   "license": "Apache-2.0",
-  "author": "Brad Buchanan <brad@code.org>",
+  "author": {
+    "name": "Brad Buchanan",
+    "email": "brad@code.org"
+  },
   "main": "src/main.js",
   "scripts": {
     "start": "electron .",
@@ -12,7 +17,12 @@
     "dist": "build"
   },
   "build": {
-    "appId": "com.code-dot-org.browser",
+    "appId": "com.electron.code-dot-org-browser",
+    "productName": "Code.org Browser",
+    "copyright": "Copyright © 2017 Code.org",
+    "mac": {
+      "category": "public.app-category.education"
+    },
     "dmg": {
       "contents": [
         {
@@ -39,7 +49,6 @@
   },
   "devDependencies": {
     "electron": "^1.7.5",
-    "electron-builder": "^19.24.1",
-    "electron-rebuild": "^1.6.0"
+    "electron-builder": "^19.24.1"
   }
 }
