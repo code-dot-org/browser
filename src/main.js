@@ -17,7 +17,7 @@ function createMainWindow() {
   }));
 
   // Uncomment to open devtools
-  mainWindow.webContents.openDevTools();
+  // mainWindow.webContents.openDevTools();
 
   mainWindow.on('closed', () => {
     mainWindow = null;

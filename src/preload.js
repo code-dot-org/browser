@@ -10,6 +10,7 @@
 
 const { ipcRenderer: ipc, remote } = require('electron');
 const SerialPort = require('serialport');
+const packageJson = require('../package.json');
 
 function init() {
   // Don't inject anything if the current page isn't in our whitelist
@@ -25,7 +26,7 @@ function init() {
 }
 
 function getVersion() {
-  return '0.0.1';
+  return packageJson.version;
 }
 
 function list(...args) {

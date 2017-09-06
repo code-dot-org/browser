@@ -255,7 +255,7 @@ function handleLoadCommit() {
 
 function handleLoadStart(event) {
   document.body.classList.add('loading');
-  document.querySelector('webview').openDevTools();
+  // document.querySelector('webview').openDevTools();
   isLoading = true;
 
   resetExitedState();
