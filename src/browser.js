@@ -1,4 +1,4 @@
-const {home} = require('./defaults');
+const {HOME_URL} = require('./defaults');
 window.onresize = doLayout;
 var isLoading = false;
 
@@ -15,7 +15,7 @@ onload = function() {
   };
 
   document.querySelector('#home').onclick = function() {
-    navigateTo(home());
+    navigateTo(HOME_URL);
   };
 
   document.querySelector('#reload').onclick = function() {
@@ -45,7 +45,7 @@ onload = function() {
   webview.addEventListener('did-get-redirect-request', handleLoadRedirect);
   webview.addEventListener('did-finish-load', handleLoadCommit);
 
-  navigateTo(home());
+  navigateTo(HOME_URL);
 };
 
 function navigateTo(url) {
