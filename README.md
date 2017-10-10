@@ -3,6 +3,16 @@
 
 See https://github.com/code-dot-org/code-dot-org/pull/15531.
 
+## Options
+The following environment variables are available to help with local development:
+
+- `NODE_ENV` controls default URLs (home, sign in, etc).
+  If set to `production` it will point at the live Code.org site.
+  Otherwise it will point to http://localhost-studio.code.org:3000.
+- `OPEN_DEV_TOOLS`, if set, will cause the developer tools for both the electron
+  app and its contained webview to open when the app loads.
+  (Example: `OPEN_DEV_TOOLS=1 yarn start`)
+
 ## Resources
 
 - [electron-sample-apps/webview/browser](https://github.com/hokein/electron-sample-apps/tree/master/webview/browser)
