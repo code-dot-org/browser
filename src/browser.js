@@ -33,11 +33,6 @@ onload = function() {
         }
       });
 
-  document.querySelector('#location-form').onsubmit = function(e) {
-    e.preventDefault();
-    navigateTo(document.querySelector('#location').value);
-  };
-
   webview.addEventListener('close', handleExit);
   webview.addEventListener('did-start-loading', handleLoadStart);
   webview.addEventListener('did-stop-loading', handleLoadStop);
@@ -50,7 +45,6 @@ onload = function() {
 
 function navigateTo(url) {
   resetExitedState();
-  document.querySelector('#location').value = url;
   document.querySelector('webview').src = url;
 }
 
@@ -91,7 +85,6 @@ function resetExitedState() {
 function handleLoadCommit() {
   resetExitedState();
   var webview = document.querySelector('webview');
-  document.querySelector('#location').value = webview.getURL();
   document.querySelector('#back').disabled = !webview.canGoBack();
   document.querySelector('#forward').disabled = !webview.canGoForward();
 }
@@ -104,11 +97,6 @@ function handleLoadStart(event) {
   isLoading = true;
 
   resetExitedState();
-  if (!event.isTopLevel) {
-    return;
-  }
-
-  document.querySelector('#location').value = event.url;
 }
 
 function handleLoadStop(event) {
