@@ -1,5 +1,19 @@
-module.exports = {
-  DEFAULT_LOCATION: 'https://studio.code.org/maker/setup',
-  // DEFAULT_LOCATION: 'https://dashboard-adhoc-maker-electron.cdn-code.org/maker/setup',
-  // DEFAULT_LOCATION: 'http://localhost-studio.code.org:3000/maker/setup',
+const DEFAULT_LOCATIONS = {
+  home: 'https://studio.code.org/maker/setup',
 };
+
+const LOCAL_DEFAULT_LOCATIONS = {
+  home: 'http://localhost-studio.code.org:3000/maker/setup',
+};
+
+function _locations() {
+  return process.env.NODE_ENV === 'production' ?
+    DEFAULT_LOCATIONS :
+    LOCAL_DEFAULT_LOCATIONS;
+}
+
+function home() {
+  return _locations().home;
+}
+
+module.exports = {home};

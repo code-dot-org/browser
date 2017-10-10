@@ -1,4 +1,4 @@
-const {DEFAULT_LOCATION} = require('./defaults');
+const {home} = require('./defaults');
 window.onresize = doLayout;
 var isLoading = false;
 
@@ -15,7 +15,7 @@ onload = function() {
   };
 
   document.querySelector('#home').onclick = function() {
-    navigateTo(DEFAULT_LOCATION);
+    navigateTo(home());
   };
 
   document.querySelector('#reload').onclick = function() {
@@ -141,7 +141,8 @@ onload = function() {
     find.style.visibility = "hidden";
     find.style.position = "absolute";
   }
-  navigateTo(DEFAULT_LOCATION);
+
+  navigateTo(home());
 };
 
 function navigateTo(url) {
