@@ -1,5 +1,13 @@
+/** @file Default config values for Maker Toolkit app. */
+
+const DASHBOARD_HOST = process.env.DASHBOARD_HOST || (
+  process.env.NODE_ENV === 'production' ?
+    'https://studio.code.org' :
+    'http://localhost-studio.code.org:3000'
+);
+
 module.exports = {
-  DEFAULT_LOCATION: 'https://studio.code.org/maker/setup',
-  // DEFAULT_LOCATION: 'https://dashboard-adhoc-maker-electron.cdn-code.org/maker/setup',
-  // DEFAULT_LOCATION: 'http://localhost-studio.code.org:3000/maker/setup',
+  HOME_URL: DASHBOARD_HOST + '/home',
+  SIGN_IN_URL: DASHBOARD_HOST + '/users/sign_in',
+  MAKER_SETUP_URL: DASHBOARD_HOST + '/maker/setup',
 };
