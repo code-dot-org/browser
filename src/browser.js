@@ -1,3 +1,6 @@
+// First step: Always be production, unless told otherwise.
+if (process.env.NODE_ENV === undefined) process.env.NODE_ENV = "production";
+
 const {HOME_URL} = require('./defaults');
 window.onresize = doLayout;
 var isLoading = false;
