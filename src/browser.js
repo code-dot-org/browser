@@ -1,8 +1,7 @@
 // First step: Always be production, unless told otherwise.
 if (process.env.NODE_ENV === undefined) process.env.NODE_ENV = "production";
 
-const {session} = require('electron').remote;
-const {HOME_URL, MAKER_SETUP_URL} = require('./defaults');
+const {HOME_URL, MAKER_SETUP_URL, SIGN_IN_URL} = require('./defaults');
 
 window.onresize = doLayout;
 var isLoading = false;
@@ -21,7 +20,11 @@ onload = function() {
   };
 
   document.querySelector('#home').onclick = function() {
-    navigateTo(HOME_URL);
+    if (isSignedIn) {
+      navigateTo(HOME_URL);
+    } else {
+      navigateTo(SIGN_IN_URL)
+    }
   };
 
   document.querySelector('#reload').onclick = function() {
