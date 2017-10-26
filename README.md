@@ -21,3 +21,4 @@ The following environment variables are available to help with local development
 - [electron-sample-apps/webview/browser](https://github.com/hokein/electron-sample-apps/tree/master/webview/browser)
 - https://github.com/johnny-five-io/electron-serialport
 - [The `<webview>` tag](https://electron.atom.io/docs/api/webview-tag/)
+- I used [libicns](http://icns.sourceforge.net/) via the [icnsutils package](https://packages.debian.org/stretch/icnsutils) to generate OSX icon files from Ubuntu.
