@@ -45,7 +45,8 @@ input[type="submit"]:active {
 /* These glyphs are on the small side, make them look more natural when
 compared to the back/forward buttons */
 #controls #home,
-#controls #terminate {
+#controls #terminate,
+#controls #setup {
     font-size: 24px;
 }
 
