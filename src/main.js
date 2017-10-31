@@ -1,6 +1,7 @@
 const {app, BrowserWindow} = require('electron');
 const path = require('path');
 const url = require('url');
+const setupMenus = require('./menus');
 
 let mainWindow = null;
 
@@ -23,6 +24,8 @@ function createMainWindow() {
   mainWindow.on('closed', () => {
     mainWindow = null;
   });
+
+  setupMenus();
 }
 
 app.on('ready', createMainWindow);

@@ -1,3 +1,5 @@
+const {ipcRenderer} = require('electron');
+
 // First step: Always be production, unless told otherwise.
 if (process.env.NODE_ENV === undefined) process.env.NODE_ENV = "production";
 
@@ -6,6 +8,21 @@ const {HOME_URL, MAKER_SETUP_URL, SIGN_IN_URL} = require('./defaults');
 window.onresize = doLayout;
 var isLoading = false;
 var isSignedIn = false;
+
+// Handle requests from Electron menu items
+ipcRenderer.on('reload-requested', () => {
+  if (!isLoading) {
+    document.querySelector('webview').reload();
+  }
+});
+ipcRenderer.on('toggle-dev-tools-requested', () => {
+  const webview = document.querySelector('webview');
+  if (webview.isDevToolsOpened()) {
+    webview.closeDevTools();
+  } else {
+    webview.openDevTools();
+  }
+});
 
 onload = function() {
   var webview = document.querySelector('webview');
