@@ -1,9 +1,11 @@
 // First step: Always be production, unless told otherwise.
 if (process.env.NODE_ENV === undefined) process.env.NODE_ENV = "production";
 
-const {HOME_URL, MAKER_SETUP_URL} = require('./defaults');
+const {HOME_URL, MAKER_SETUP_URL, SIGN_IN_URL} = require('./defaults');
+
 window.onresize = doLayout;
 var isLoading = false;
+var isSignedIn = false;
 
 onload = function() {
   var webview = document.querySelector('webview');
@@ -18,7 +20,11 @@ onload = function() {
   };
 
   document.querySelector('#home').onclick = function() {
-    navigateTo(HOME_URL);
+    if (isSignedIn) {
+      navigateTo(HOME_URL);
+    } else {
+      navigateTo(SIGN_IN_URL)
+    }
   };
 
   document.querySelector('#reload').onclick = function() {
@@ -50,6 +56,54 @@ onload = function() {
 
   navigateTo(HOME_URL);
 };
+
+var _userNameCookieKey;
+function userNameCookieKey() {
+  if (_userNameCookieKey) {
+    return Promise.resolve(_userNameCookieKey);
+  }
+
+  return new Promise((resolve, reject) => {
+    var webview = document.querySelector('webview');
+    webview.executeJavaScript('window.userNameCookieKey', false, cookieKey => {
+      if (!cookieKey) {
+        return reject();
+      }
+      _userNameCookieKey = cookieKey;
+      resolve(cookieKey);
+    });
+  });
+}
+
+function readCookie(cookieKey) {
+  return new Promise((resolve, reject) => {
+    var webview = document.querySelector('webview');
+    const cookies = webview.getWebContents().session.cookies;
+    cookies.get(
+      {
+        name: cookieKey,
+        domain: '.code.org'
+      },
+      (_, foundCookies) => {
+        if (foundCookies.length > 0) {
+          resolve(foundCookies[0].value);
+        } else {
+          reject();
+        }
+      }
+    );
+  });
+}
+
+function checkSignInState() {
+  userNameCookieKey()
+    .then(key => readCookie(key))
+    .then(() => {
+      isSignedIn = true;
+    }).catch(() => {
+      isSignedIn = false;
+    });
+}
 
 function navigateTo(url) {
   resetExitedState();
@@ -111,6 +165,7 @@ function handleLoadStop(event) {
   // We don't remove the loading class immediately, instead we let the animation
   // finish, so that the spinner doesn't jerkily reset back to the 0 position.
   isLoading = false;
+  checkSignInState();
 }
 
 function handleLoadAbort(event) {
