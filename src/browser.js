@@ -1,7 +1,7 @@
 // First step: Always be production, unless told otherwise.
 if (process.env.NODE_ENV === undefined) process.env.NODE_ENV = "production";
 
-const {HOME_URL} = require('./defaults');
+const {HOME_URL, MAKER_SETUP_URL} = require('./defaults');
 window.onresize = doLayout;
 var isLoading = false;
 
@@ -29,12 +29,17 @@ onload = function() {
     }
   };
   document.querySelector('#reload').addEventListener(
-      'webkitAnimationIteration',
-      function() {
-        if (!isLoading) {
-          document.body.classList.remove('loading');
-        }
-      });
+    'webkitAnimationIteration',
+    function () {
+      if (!isLoading) {
+        document.body.classList.remove('loading');
+      }
+    }
+  );
+
+  document.querySelector('#setup').onclick = function() {
+    navigateTo(MAKER_SETUP_URL);
+  };
 
   webview.addEventListener('close', handleExit);
   webview.addEventListener('did-start-loading', handleLoadStart);
