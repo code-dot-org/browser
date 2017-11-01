@@ -3,6 +3,9 @@
  * @class User
  */
 class User {
+  /**
+   * @param {string} name - User's display name.  Read-only after it's set here.
+   */
   constructor(name) {
     Object.defineProperty(this, 'name', {
       value: name,
@@ -27,7 +30,7 @@ class User {
 }
 
 /**
- * @param {webview} webview
+ * @param {WebviewTag} webview
  * @returns {Promise.<string>} resolved to rack env for page loaded in webview
  */
 function readRackEnv(webview) {
@@ -38,10 +41,19 @@ function readRackEnv(webview) {
   });
 }
 
+/**
+ * @param {string} rackEnv
+ * @return {string} cookie key for current user's short display name
+ */
 function shortNameCookie(rackEnv) {
   return environmentifyCookie(rackEnv, '_shortName');
 }
 
+/**
+ * @param {string} rackEnv
+ * @param {string} cookieName in production environment
+ * @returns {string} cookie key adjusted for given rack environment
+ */
 function environmentifyCookie(rackEnv, cookieName) {
   if (rackEnv === 'production') {
     return cookieName;
@@ -49,6 +61,12 @@ function environmentifyCookie(rackEnv, cookieName) {
   return `${cookieName}_${rackEnv}`;
 }
 
+/**
+ * @param {WebviewTag} webview
+ * @param {string} cookieName
+ * @returns {Promise.<string>} Resolves to cookie value if cookie is found,
+ *   otherwise rejects.
+ */
 function readCookie(webview, cookieName) {
   return new Promise((resolve, reject) => {
     const cookies = webview.getWebContents().session.cookies;
