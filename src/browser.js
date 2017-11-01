@@ -74,6 +74,13 @@ onload = function() {
   navigateTo(HOME_URL);
 };
 
+function environmentSpecificCookieName(rackEnv, cookieName) {
+  if (rackEnv === 'production') {
+    return cookieName;
+  }
+  return `${cookieName}_${rackEnv}`;
+}
+
 var _userNameCookieKey;
 function userNameCookieKey() {
   if (_userNameCookieKey) {
@@ -82,12 +89,12 @@ function userNameCookieKey() {
 
   return new Promise((resolve, reject) => {
     var webview = document.querySelector('webview');
-    webview.executeJavaScript('window.userNameCookieKey', false, cookieKey => {
-      if (!cookieKey) {
+    webview.executeJavaScript('window.dashboard.rack_env', false, rackEnv => {
+      if (!rackEnv) {
         return reject();
       }
-      _userNameCookieKey = cookieKey;
-      resolve(cookieKey);
+      _userNameCookieKey = environmentSpecificCookieName(rackEnv, '_shortName');
+      resolve(_userNameCookieKey);
     });
   });
 }
