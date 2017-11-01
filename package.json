@@ -44,10 +44,10 @@
     }
   },
   "dependencies": {
-    "serialport": "4.0.7"
+    "serialport": "6.0.4"
   },
   "devDependencies": {
-    "electron": "^1.7.5",
-    "electron-builder": "^19.37.2"
+    "electron": "^1.7.9",
+    "electron-builder": "^19.43.3"
   }
 }
