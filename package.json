@@ -11,7 +11,7 @@
   },
   "main": "src/main.js",
   "scripts": {
-    "start": "NODE_ENV=development electron .",
+    "start": "NODE_ENV=${NODE_ENV:-development} electron .",
     "pack": "build --dir",
     "dist": "build"
   },
