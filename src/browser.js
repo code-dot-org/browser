@@ -1,4 +1,5 @@
 const {ipcRenderer} = require('electron');
+const User = require('./User');
 
 // First step: Always be production, unless told otherwise.
 if (process.env.NODE_ENV === undefined) process.env.NODE_ENV = "production";
@@ -7,7 +8,6 @@ const {HOME_URL, MAKER_SETUP_URL, SIGN_IN_URL} = require('./defaults');
 
 window.onresize = doLayout;
 var isLoading = false;
-var isSignedIn = false;
 
 // Handle requests from Electron menu items
 ipcRenderer.on('reload-requested', () => {
@@ -37,11 +37,11 @@ onload = function() {
   };
 
   document.querySelector('#home').onclick = function() {
-    if (isSignedIn) {
-      navigateTo(HOME_URL);
-    } else {
-      navigateTo(SIGN_IN_URL)
-    }
+    User.getCurrentUser()
+      // Signed in
+      .then(() => navigateTo(HOME_URL))
+      // Not signed in
+      .catch(() => navigateTo(SIGN_IN_URL));
   };
 
   document.querySelector('#reload').onclick = function() {
@@ -73,61 +73,6 @@ onload = function() {
 
   navigateTo(HOME_URL);
 };
-
-function environmentSpecificCookieName(rackEnv, cookieName) {
-  if (rackEnv === 'production') {
-    return cookieName;
-  }
-  return `${cookieName}_${rackEnv}`;
-}
-
-var _userNameCookieKey;
-function userNameCookieKey() {
-  if (_userNameCookieKey) {
-    return Promise.resolve(_userNameCookieKey);
-  }
-
-  return new Promise((resolve, reject) => {
-    var webview = document.querySelector('webview');
-    webview.executeJavaScript('window.dashboard.rack_env', false, rackEnv => {
-      if (!rackEnv) {
-        return reject();
-      }
-      _userNameCookieKey = environmentSpecificCookieName(rackEnv, '_shortName');
-      resolve(_userNameCookieKey);
-    });
-  });
-}
-
-function readCookie(cookieKey) {
-  return new Promise((resolve, reject) => {
-    var webview = document.querySelector('webview');
-    const cookies = webview.getWebContents().session.cookies;
-    cookies.get(
-      {
-        name: cookieKey,
-        domain: '.code.org'
-      },
-      (_, foundCookies) => {
-        if (foundCookies.length > 0) {
-          resolve(foundCookies[0].value);
-        } else {
-          reject();
-        }
-      }
-    );
-  });
-}
-
-function checkSignInState() {
-  userNameCookieKey()
-    .then(key => readCookie(key))
-    .then(() => {
-      isSignedIn = true;
-    }).catch(() => {
-      isSignedIn = false;
-    });
-}
 
 function navigateTo(url) {
   resetExitedState();
@@ -189,7 +134,6 @@ function handleLoadStop(event) {
   // We don't remove the loading class immediately, instead we let the animation
   // finish, so that the spinner doesn't jerkily reset back to the 0 position.
   isLoading = false;
-  checkSignInState();
 }
 
 function handleLoadAbort(event) {
