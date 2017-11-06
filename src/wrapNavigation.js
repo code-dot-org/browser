@@ -2,27 +2,51 @@ const {app, shell} = require('electron');
 const {URL} = require('url');
 
 /**
- * For the given webview, attaches to the 'will-navigate' event and redirects
+ * For every created webview, attaches to navigation events and redirects
  * attempted navigation to a non-whitelisted site to the system's default
  * browser instead of navigating within the webview itself.
- * @param {WebviewTag} webview
+ * Also makes links that would normally open in a new tab/window open in the
+ * existing view if they're whitelisted, or open in the system browser if not.
  */
-function wrapNavigation(webview) {
+function wrapNavigation() {
   // We apply this behavior to all created webviews, whenever they get created,
   // because we have to handle this event on the main thread.
   // This is the preferred approach to capturing and preventing navigation
-  // within a webview; see:
-  // https://github.com/electron/electron/issues/1378#issuecomment-265207386
-  app.on('web-contents-created', (_, contents) => {
-    if (contents.getType() === 'webview') {
-      contents.on('will-navigate', (event, url) => {
-        if (!isDestinationWhitelistedForNavigation(url)) {
-          event.preventDefault();
-          shell.openExternal(url);
-        }
-        // Otherwise fall through and navigation will proceed normally.
-      })
+  // within a webview.
+  // @see https://github.com/electron/electron/issues/1378#issuecomment-265207386
+  // @see https://electron.atom.io/docs/api/app/#event-web-contents-created
+  app.on('web-contents-created', (_, webContents) => {
+    if (webContents.getType() !== 'webview') {
+      return;
     }
+
+    // Capture requests to navigate within the webview and open links in the
+    // system default browser instead if they are outside the Maker Toolkit
+    // walled garden of whitelisted origins.
+    // @see https://electron.atom.io/docs/api/web-contents/#event-will-navigate
+    webContents.on('will-navigate', (event, url) => {
+      if (!isDestinationWhitelistedForNavigation(url)) {
+        event.preventDefault();
+        shell.openExternal(url);
+      }
+      // Otherwise navigation will proceed normally.
+    });
+
+    // Capture requests to open a new tab or window, triggered by calls to
+    // `window.open` or links with `target="_blank"`, and handle them
+    // manually, navigating the existing webview for links within the
+    // Maker Toolkit walled garden and opening all other links in the
+    // system default browser.
+    // @see https://electron.atom.io/docs/api/web-contents/#event-new-window
+    webContents.on('new-window', (event, url) => {
+      // This `preventDefault()` call may be redundant for a webview, but
+      // will prevent a new Electron window from being created if we ever
+      // call this method in the wrong context.
+      // @see https://github.com/electron/electron/issues/1963
+      event.preventDefault();
+
+      shell.openExternal(url);
+    });
   });
 }
 
