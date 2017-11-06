@@ -2,6 +2,7 @@ const {app, BrowserWindow} = require('electron');
 const path = require('path');
 const url = require('url');
 const setupMenus = require('./menus');
+const wrapNavigation = require('./wrapNavigation');
 
 let mainWindow = null;
 
@@ -25,6 +26,7 @@ function createMainWindow() {
     mainWindow = null;
   });
 
+  wrapNavigation();
   setupMenus();
 }
 
