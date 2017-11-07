@@ -15,6 +15,7 @@ ipcRenderer.on('reload-requested', () => {
     document.querySelector('webview').reload();
   }
 });
+ipcRenderer.on('navigation-requested', (_, url) => navigateTo(url));
 ipcRenderer.on('toggle-dev-tools-requested', () => {
   const webview = document.querySelector('webview');
   if (webview.isDevToolsOpened()) {

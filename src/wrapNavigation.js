@@ -1,4 +1,4 @@
-const {app, shell} = require('electron');
+const {app, shell, BrowserWindow} = require('electron');
 const {URL} = require('url');
 
 /**
@@ -45,7 +45,16 @@ function wrapNavigation() {
       // @see https://github.com/electron/electron/issues/1963
       event.preventDefault();
 
-      shell.openExternal(url);
+      if (isDestinationWhitelistedForNavigation(url)) {
+        const focusedWindow = BrowserWindow.getFocusedWindow();
+        if (focusedWindow) {
+          focusedWindow.webContents.send('navigation-requested', url);
+        } else {
+          console.warn('Unable to navigate, there is no focused window.');
+        }
+      } else {
+        shell.openExternal(url);
+      }
     });
   });
 }
