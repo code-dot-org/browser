@@ -16,7 +16,7 @@ const {URL} = require('url');
  */
 const BLACKLIST = [
   /curriculum\.code\.org$/i,
-  /documentation\.code\.org$/i,
+  /docs\.code\.org$/i,
   /forum\.code\.org$/i,
   /support\.code\.org$/i,
   /wiki\.code\.org$/i,
