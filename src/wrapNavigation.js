@@ -4,7 +4,7 @@
  * Process: Main
  */
 const {app, shell, BrowserWindow} = require('electron');
-const {isUrlWhitelisted} = require('./isOriginWhitelisted');
+const {isUrlWhitelisted} = require('./originWhitelist');
 const {NAVIGATION_REQUESTED} = require('./channelNames');
 
 /**

@@ -11,7 +11,7 @@
 const { ipcRenderer: ipc, remote } = require('electron');
 const SerialPort = require('serialport');
 const packageJson = require('../package.json');
-const {isOriginWhitelisted} = require('./isOriginWhitelisted');
+const {isOriginWhitelisted} = require('./originWhitelist');
 
 function init() {
   // Don't inject anything if the current page isn't in our whitelist
