@@ -1,5 +1,12 @@
+/**
+ * @file Customizes which pages can be visited within Maker Toolkit Browser.
+ *
+ * Process: Main
+ */
+
 const {app, shell, BrowserWindow} = require('electron');
 const {URL} = require('url');
+const {NAVIGATION_REQUESTED} = require('./channelNames');
 
 /**
  * For every created webview, attaches to navigation events and redirects
@@ -48,7 +55,7 @@ function wrapNavigation() {
       if (isDestinationWhitelistedForNavigation(url)) {
         const focusedWindow = BrowserWindow.getFocusedWindow();
         if (focusedWindow) {
-          focusedWindow.webContents.send('navigation-requested', url);
+          focusedWindow.webContents.send(NAVIGATION_REQUESTED, url);
         } else {
           console.warn('Unable to navigate, there is no focused window.');
         }
