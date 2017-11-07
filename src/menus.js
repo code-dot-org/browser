@@ -18,21 +18,21 @@ const RELOAD_WEBVIEW = {
     if (focusedWindow) {
       focusedWindow.webContents.send(RELOAD_REQUESTED);
     }
-  }
+  },
 };
 
 const TOGGLE_WEBVIEW_DEVTOOLS = {
   label: 'Toggle Developer Tools',
   accelerator: (
-    process.platform === 'darwin' ?
-      'Alt+Command+I' :
-      'Ctrl+Shift+I'
+    process.platform === 'darwin'
+      ? 'Alt+Command+I'
+      : 'Ctrl+Shift+I'
   ),
   click(_, focusedWindow) {
     if (focusedWindow) {
       focusedWindow.webContents.send(TOGGLE_DEV_TOOLS_REQUESTED);
     }
-  }
+  },
 };
 
 const TOGGLE_ELECTRON_DEVTOOLS = {
@@ -41,14 +41,14 @@ const TOGGLE_ELECTRON_DEVTOOLS = {
     if (focusedWindow) {
       focusedWindow.webContents.toggleDevTools();
     }
-  }
+  },
 };
 
 const VERSION = {
   label: `Version ${packageJson.version}`,
   click() {
     shell.openExternal(`https://github.com/code-dot-org/browser/releases/tag/v${packageJson.version}`);
-  }
+  },
 };
 
 module.exports = function setupMenus() {
@@ -56,8 +56,8 @@ module.exports = function setupMenus() {
   const fileMenu = {
     label: 'File',
     submenu: [
-      {role: 'quit'}
-    ]
+      {role: 'quit'},
+    ],
   };
 
   // The initial menu item on OSX, always named for the application
@@ -73,8 +73,8 @@ module.exports = function setupMenus() {
       {role: 'hideothers'},
       {role: 'unhide'},
       {type: 'separator'},
-      {role: 'quit'}
-    ]
+      {role: 'quit'},
+    ],
   };
 
   const viewMenu = {
@@ -82,8 +82,8 @@ module.exports = function setupMenus() {
     submenu: [
       RELOAD_WEBVIEW,
       TOGGLE_WEBVIEW_DEVTOOLS,
-      TOGGLE_ELECTRON_DEVTOOLS
-    ]
+      TOGGLE_ELECTRON_DEVTOOLS,
+    ],
   };
 
   const helpMenu = {
@@ -94,11 +94,11 @@ module.exports = function setupMenus() {
         enabled: false,
       },
       VERSION,
-    ]
+    ],
   };
 
   const osxHelpMenu = {
-    role: 'help'
+    role: 'help',
   };
 
   // We define menus differently on OSX:
@@ -107,13 +107,13 @@ module.exports = function setupMenus() {
     menu = Menu.buildFromTemplate([
       osxAppMenu,
       viewMenu,
-      osxHelpMenu
+      osxHelpMenu,
     ]);
   } else {
     menu = Menu.buildFromTemplate([
       fileMenu,
       viewMenu,
-      helpMenu
+      helpMenu,
     ]);
   }
 

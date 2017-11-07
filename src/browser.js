@@ -6,7 +6,7 @@
  * Process: Renderer
  */
 // First step: Always be production, unless told otherwise.
-if (process.env.NODE_ENV === undefined) process.env.NODE_ENV = "production";
+if (process.env.NODE_ENV === undefined) process.env.NODE_ENV = 'production';
 
 const {ipcRenderer} = require('electron');
 const User = require('./User');
@@ -18,7 +18,7 @@ const {
 const {
   HOME_URL,
   MAKER_SETUP_URL,
-  SIGN_IN_URL
+  SIGN_IN_URL,
 } = require('./defaults');
 
 window.onresize = doLayout;
@@ -40,7 +40,7 @@ ipcRenderer.on(TOGGLE_DEV_TOOLS_REQUESTED, () => {
   }
 });
 
-onload = function() {
+window.onload = function() {
   var webview = document.querySelector('webview');
   doLayout();
 
@@ -69,7 +69,7 @@ onload = function() {
   };
   document.querySelector('#reload').addEventListener(
     'webkitAnimationIteration',
-    function () {
+    function() {
       if (!isLoading) {
         document.body.classList.remove('loading');
       }
@@ -109,16 +109,16 @@ function doLayout() {
 
   var sadWebview = document.querySelector('#sad-webview');
   sadWebview.style.width = webviewWidth + 'px';
-  sadWebview.style.height = webviewHeight * 2/3 + 'px';
-  sadWebview.style.paddingTop = webviewHeight/3 + 'px';
+  sadWebview.style.height = webviewHeight * 2 / 3 + 'px';
+  sadWebview.style.paddingTop = webviewHeight / 3 + 'px';
 }
 
 function handleExit(event) {
   console.log(event.type);
   document.body.classList.add('exited');
-  if (event.type == 'abnormal') {
+  if (event.type === 'abnormal') {
     document.body.classList.add('crashed');
-  } else if (event.type == 'killed') {
+  } else if (event.type === 'killed') {
     document.body.classList.add('killed');
   }
 }

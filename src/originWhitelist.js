@@ -34,8 +34,8 @@ const CODE_ORG_URL = /^https?:\/\/(?:[\w\d-]+\.)?(?:cdn-)?code\.org(?::\d+)?$/i;
  * @returns {boolean} whether the origin is included in the whitelist
  */
 function isOriginWhitelisted(origin) {
-  return CODE_ORG_URL.test(origin)
-    && !BLACKLIST.some(site => site.test(origin));
+  return CODE_ORG_URL.test(origin) &&
+    !BLACKLIST.some(site => site.test(origin));
 }
 
 /**
