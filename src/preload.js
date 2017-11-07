@@ -11,6 +11,7 @@
 const { ipcRenderer: ipc, remote } = require('electron');
 const SerialPort = require('serialport');
 const packageJson = require('../package.json');
+const {isOriginWhitelisted} = require('./isOriginWhitelisted');
 
 function init() {
   // Don't inject anything if the current page isn't in our whitelist
@@ -40,13 +41,6 @@ function openSerialPort(portName, serialBaud) {
   });
 }
 
-function isOriginWhitelisted(origin) {
-  // Match origins:
-  // https://studio.code.org                          Production
-  // https://test-studio.code.org                     Test
-  // https://dashboard-adhoc-my-branch.cdn-code.org   Ad-Hoc servers
-  // http://localhost-studio.code.org:3000            Local development
-  return /^https?:\/\/(?:[\w\d-]+\.)?(?:cdn-)?code\.org(?::\d+)?$/i.test(origin);
-}
+
 
 init();
