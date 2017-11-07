@@ -16,6 +16,7 @@
     "test": "mocha",
     "start": "NODE_ENV=${NODE_ENV:-development} electron .",
     "pack": "build --dir",
+    "predist": "yarn test",
     "dist": "build"
   },
   "build": {
