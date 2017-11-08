@@ -1,12 +1,22 @@
+/**
+ * @file Creates menus for Maker Toolkit Browser.
+ *
+ * Process: Main
+ */
+
 const {app, Menu, shell} = require('electron');
 const packageJson = require('../package.json');
+const {
+  RELOAD_REQUESTED,
+  TOGGLE_DEV_TOOLS_REQUESTED,
+} = require('./channelNames');
 
 const RELOAD_WEBVIEW = {
   label: 'Reload',
   accelerator: 'CmdOrCtrl+R',
   click(_, focusedWindow) {
     if (focusedWindow) {
-      focusedWindow.webContents.send('reload-requested');
+      focusedWindow.webContents.send(RELOAD_REQUESTED);
     }
   }
 };
@@ -20,7 +30,7 @@ const TOGGLE_WEBVIEW_DEVTOOLS = {
   ),
   click(_, focusedWindow) {
     if (focusedWindow) {
-      focusedWindow.webContents.send('toggle-dev-tools-requested');
+      focusedWindow.webContents.send(TOGGLE_DEV_TOOLS_REQUESTED);
     }
   }
 };

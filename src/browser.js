@@ -1,21 +1,37 @@
-const {ipcRenderer} = require('electron');
-const User = require('./User');
-
+/**
+ * @file Render process entry point for Maker Toolkit Browser.
+ * Creates/binds browser controls, including the webview that hosts Code.org
+ * curriculum.
+ *
+ * Process: Renderer
+ */
 // First step: Always be production, unless told otherwise.
 if (process.env.NODE_ENV === undefined) process.env.NODE_ENV = "production";
 
-const {HOME_URL, MAKER_SETUP_URL, SIGN_IN_URL} = require('./defaults');
+const {ipcRenderer} = require('electron');
+const User = require('./User');
+const {
+  NAVIGATION_REQUESTED,
+  RELOAD_REQUESTED,
+  TOGGLE_DEV_TOOLS_REQUESTED,
+} = require('./channelNames');
+const {
+  HOME_URL,
+  MAKER_SETUP_URL,
+  SIGN_IN_URL
+} = require('./defaults');
 
 window.onresize = doLayout;
 var isLoading = false;
 
 // Handle requests from Electron menu items
-ipcRenderer.on('reload-requested', () => {
+ipcRenderer.on(RELOAD_REQUESTED, () => {
   if (!isLoading) {
     document.querySelector('webview').reload();
   }
 });
-ipcRenderer.on('toggle-dev-tools-requested', () => {
+ipcRenderer.on(NAVIGATION_REQUESTED, (_, url) => navigateTo(url));
+ipcRenderer.on(TOGGLE_DEV_TOOLS_REQUESTED, () => {
   const webview = document.querySelector('webview');
   if (webview.isDevToolsOpened()) {
     webview.closeDevTools();
