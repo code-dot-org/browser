@@ -15,7 +15,7 @@ function createMainWindow() {
   mainWindow.loadURL(url.format({
     pathname: path.join(__dirname, 'index.html'),
     protocol: 'file:',
-    slashes: true
+    slashes: true,
   }));
 
   if (process.env.OPEN_DEV_TOOLS) {
@@ -44,4 +44,3 @@ app.on('activate', () => {
     createMainWindow();
   }
 });
-

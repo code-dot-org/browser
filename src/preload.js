@@ -8,7 +8,6 @@
 
 // https://github.com/electron/electron/blob/master/docs/api/webview-tag.md#preload
 
-const { ipcRenderer: ipc, remote } = require('electron');
 const SerialPort = require('serialport');
 const packageJson = require('../package.json');
 const {isOriginWhitelisted} = require('./originWhitelist');
@@ -29,18 +28,5 @@ function init() {
 function getVersion() {
   return packageJson.version;
 }
-
-function list(...args) {
-  return SerialPort.list(...args);
-}
-
-function openSerialPort(portName, serialBaud) {
-  return new SerialPort.SerialPort(portName, {
-    autoOpen: true,
-    bitrate: serialBaud,
-  });
-}
-
-
 
 init();

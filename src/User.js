@@ -9,7 +9,7 @@ class User {
   constructor(name) {
     Object.defineProperty(this, 'name', {
       value: name,
-      enumerable: true
+      enumerable: true,
     });
   }
 
@@ -25,7 +25,7 @@ class User {
     return readRackEnv(webview)
       .then(rackEnv => readCookie(webview, shortNameCookie(rackEnv)))
       .then(shortName => new User(shortName))
-      .catch(err => Promise.reject(err))
+      .catch(err => Promise.reject(err));
   }
 }
 
@@ -36,7 +36,7 @@ class User {
 function readRackEnv(webview) {
   return new Promise((resolve, reject) => {
     webview.executeJavaScript('window.dashboard.rack_env', false, (rackEnv) => {
-      rackEnv ? resolve(rackEnv) : reject();
+      rackEnv ? resolve(rackEnv) : reject(new Error('No rack_env found'));
     });
   });
 }
@@ -73,13 +73,13 @@ function readCookie(webview, cookieName) {
     cookies.get(
       {
         name: cookieName,
-        domain: '.code.org'
+        domain: '.code.org',
       },
       (_, foundCookies) => {
         if (foundCookies.length > 0) {
           resolve(foundCookies[0].value);
         } else {
-          reject();
+          reject(new Error(`No '${cookieName}' cookie found`));
         }
       }
     );
