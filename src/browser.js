@@ -9,7 +9,6 @@
 if (process.env.NODE_ENV === undefined) process.env.NODE_ENV = 'production';
 
 const {ipcRenderer} = require('electron');
-const User = require('./User');
 const {
   NAVIGATION_REQUESTED,
   RELOAD_REQUESTED,
@@ -18,7 +17,6 @@ const {
 const {
   HOME_URL,
   MAKER_SETUP_URL,
-  SIGN_IN_URL,
 } = require('./defaults');
 
 window.onresize = doLayout;
@@ -53,11 +51,7 @@ window.onload = function() {
   };
 
   document.querySelector('#home').onclick = function() {
-    User.getCurrentUser()
-      // Signed in
-      .then(() => navigateTo(HOME_URL))
-      // Not signed in
-      .catch(() => navigateTo(SIGN_IN_URL));
+    navigateTo(HOME_URL);
   };
 
   document.querySelector('#reload').onclick = function() {

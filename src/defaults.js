@@ -8,6 +8,5 @@ const DASHBOARD_HOST = process.env.DASHBOARD_HOST || (
 
 module.exports = {
   HOME_URL: DASHBOARD_HOST + '/home',
-  SIGN_IN_URL: DASHBOARD_HOST + '/users/sign_in',
   MAKER_SETUP_URL: DASHBOARD_HOST + '/maker/setup',
 };
