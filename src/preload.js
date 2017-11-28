@@ -10,11 +10,10 @@
 
 const SerialPort = require('serialport');
 const packageJson = require('../package.json');
-const {isOriginWhitelisted} = require('./originWhitelist');
+const {mayInjectNativeApi} = require('./originWhitelist');
 
 function init() {
-  // Don't inject anything if the current page isn't in our whitelist
-  if (!isOriginWhitelisted(document.location.origin)) {
+  if (!mayInjectNativeApi(document.location.origin)) {
     return;
   }
 

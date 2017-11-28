@@ -8,6 +8,13 @@
  */
 const {URL} = require('url');
 
+// Match origins:
+// https://studio.code.org                          Production
+// https://test-studio.code.org                     Test
+// https://dashboard-adhoc-my-branch.cdn-code.org   Ad-Hoc servers
+// http://localhost-studio.code.org:3000            Local development
+const CODE_ORG_URL = /^https?:\/\/(?:[\w\d-]+\.)?(?:cdn-)?code\.org(?::\d+)?$/i;
+
 /**
  * Navigation to urls matching any of the given origins will open the page in
  * the system default browser, instead of within Maker Toolkit Browser, even
@@ -22,46 +29,46 @@ const INTERNAL_BLACKLIST = [
   /wiki\.code\.org$/i,
 ];
 
-// Match origins:
-// https://studio.code.org                          Production
-// https://test-studio.code.org                     Test
-// https://dashboard-adhoc-my-branch.cdn-code.org   Ad-Hoc servers
-// http://localhost-studio.code.org:3000            Local development
-const CODE_ORG_URL = /^https?:\/\/(?:[\w\d-]+\.)?(?:cdn-)?code\.org(?::\d+)?$/i;
-
 /**
  * Limited set of non-Code.org origins we will load within Maker Toolkit Browser,
  * mostly for things like OAuth or other integrations with external services.
- * @type {Array}
+ * We won't inject native APIs to these sites even though they load within the
+ * app.
+ * @type {Array.<RegExp>}
  */
 const EXTERNAL_WHITELIST = [
   /accounts\.google\.com$/i,
 ];
 
 /**
- * @param {string} origin
- * @returns {boolean} whether the origin is included in the whitelist
+ * @param {string} url
+ * @returns {boolean} whether the url should be opened in the system default
+ *   browser.
  */
-function isOriginWhitelisted(origin) {
-  return (
-    (
-      CODE_ORG_URL.test(origin) &&
-      !INTERNAL_BLACKLIST.some(site => site.test(origin))
-    ) ||
-    EXTERNAL_WHITELIST.some(site => site.test(origin))
-  );
+function openUrlInDefaultBrowser(url) {
+  const origin = new URL(url).origin;
+  return !(originIsOnInternalWhitelist(origin) || originIsOnExternalWhitelist(origin));
 }
 
 /**
- * @param {string} url
- * @returns {boolean} whether the url is included in the whitelist
+ * @param {string} origin
+ * @returns {boolean} whether we're allowed to inject a native API into a page
+ *   loaded from the given origin.
  */
-function isUrlWhitelisted(url) {
-  const origin = new URL(url).origin;
-  return isOriginWhitelisted(origin);
+function mayInjectNativeApi(origin) {
+  return originIsOnInternalWhitelist(origin);
+}
+
+function originIsOnInternalWhitelist(origin) {
+  return CODE_ORG_URL.test(origin) &&
+    !INTERNAL_BLACKLIST.some(site => site.test(origin));
+}
+
+function originIsOnExternalWhitelist(origin) {
+  return EXTERNAL_WHITELIST.some(site => site.test(origin));
 }
 
 module.exports = {
-  isOriginWhitelisted,
-  isUrlWhitelisted,
+  openUrlInDefaultBrowser,
+  mayInjectNativeApi,
 };

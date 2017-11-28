@@ -1,10 +1,10 @@
 const { expect } = require('chai');
 const {
-  isOriginWhitelisted,
-  isUrlWhitelisted,
+  openUrlInDefaultBrowser,
+  mayInjectNativeApi,
 } = require('../src/originWhitelist');
 
-const WHITELISTED_ORIGINS = [
+const WHITELISTED_INTERNAL_ORIGINS = [
   // Production
   'https://code.org',
   'https://studio.code.org',
@@ -17,6 +17,9 @@ const WHITELISTED_ORIGINS = [
   // Local development
   'http://localhost.code.org:3000',
   'http://localhost-studio.code.org:3000',
+];
+
+const WHITELISTED_EXTERNAL_ORIGINS = [
   // Google OAuth
   'https://accounts.google.com',
 ];
@@ -29,30 +32,44 @@ const BLACKLISTED_ORIGINS = [
   'https://wiki.code.org',
 ];
 
-describe('isOriginWhitelisted', () => {
-  WHITELISTED_ORIGINS.forEach((origin) => {
-    it(`allows ${origin}`, () => {
-      expect(isOriginWhitelisted(origin)).to.be.true;
+describe('openUrlInDefaultBrowser', () => {
+  // These should load in the system default browser
+  [
+    ...BLACKLISTED_ORIGINS,
+  ].forEach((origin) => {
+    it(`true for ${origin}`, () => {
+      expect(openUrlInDefaultBrowser(`${origin}/any/test/path`)).to.be.true;
     });
   });
 
-  BLACKLISTED_ORIGINS.forEach((origin) => {
-    it(`blocks ${origin}`, () => {
-      expect(isOriginWhitelisted(origin)).to.be.false;
+  // These should load within Maker Toolkit
+  [
+    ...WHITELISTED_INTERNAL_ORIGINS,
+    ...WHITELISTED_EXTERNAL_ORIGINS,
+  ].forEach((origin) => {
+    it(`false for ${origin}`, () => {
+      expect(openUrlInDefaultBrowser(`${origin}/any/test/path`)).to.be.false;
     });
   });
 });
 
-describe('isUrlWhitelisted', () => {
-  WHITELISTED_ORIGINS.forEach((origin) => {
+describe('mayInjectNativeApi', () => {
+  // These should get the native APIs injected into the page
+  [
+    ...WHITELISTED_INTERNAL_ORIGINS,
+  ].forEach((origin) => {
     it(`allows ${origin}`, () => {
-      expect(isUrlWhitelisted(`${origin}/any/test/path`)).to.be.true;
+      expect(mayInjectNativeApi(origin)).to.be.true;
     });
   });
 
-  BLACKLISTED_ORIGINS.forEach((origin) => {
+  // These should never get native APIs injected into the page
+  [
+    ...WHITELISTED_EXTERNAL_ORIGINS,
+    ...BLACKLISTED_ORIGINS,
+  ].forEach((origin) => {
     it(`blocks ${origin}`, () => {
-      expect(isUrlWhitelisted(`${origin}/any/test/path`)).to.be.false;
+      expect(mayInjectNativeApi(origin)).to.be.false;
     });
   });
 });

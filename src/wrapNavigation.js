@@ -4,7 +4,7 @@
  * Process: Main
  */
 const {app, shell, BrowserWindow} = require('electron');
-const {isUrlWhitelisted} = require('./originWhitelist');
+const {openUrlInDefaultBrowser} = require('./originWhitelist');
 const {NAVIGATION_REQUESTED} = require('./channelNames');
 
 /**
@@ -31,7 +31,7 @@ function wrapNavigation() {
     // walled garden of whitelisted origins.
     // @see https://electron.atom.io/docs/api/web-contents/#event-will-navigate
     webContents.on('will-navigate', (event, url) => {
-      if (!isUrlWhitelisted(url)) {
+      if (openUrlInDefaultBrowser(url)) {
         event.preventDefault();
         shell.openExternal(url);
       }
@@ -51,15 +51,15 @@ function wrapNavigation() {
       // @see https://github.com/electron/electron/issues/1963
       event.preventDefault();
 
-      if (isUrlWhitelisted(url)) {
+      if (openUrlInDefaultBrowser(url)) {
+        shell.openExternal(url);
+      } else {
         const focusedWindow = BrowserWindow.getFocusedWindow();
         if (focusedWindow) {
           focusedWindow.webContents.send(NAVIGATION_REQUESTED, url);
         } else {
           console.warn('Unable to navigate, there is no focused window.');
         }
-      } else {
-        shell.openExternal(url);
       }
     });
   });
