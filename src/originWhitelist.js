@@ -14,7 +14,7 @@ const {URL} = require('url');
  * if the origin falls within our general Code.org origin whitelist.
  * @type {Array.<RegExp>}
  */
-const BLACKLIST = [
+const INTERNAL_BLACKLIST = [
   /curriculum\.code\.org$/i,
   /docs\.code\.org$/i,
   /forum\.code\.org$/i,
@@ -30,12 +30,26 @@ const BLACKLIST = [
 const CODE_ORG_URL = /^https?:\/\/(?:[\w\d-]+\.)?(?:cdn-)?code\.org(?::\d+)?$/i;
 
 /**
+ * Limited set of non-Code.org origins we will load within Maker Toolkit Browser,
+ * mostly for things like OAuth or other integrations with external services.
+ * @type {Array}
+ */
+const EXTERNAL_WHITELIST = [
+  /accounts\.google\.com$/i,
+];
+
+/**
  * @param {string} origin
  * @returns {boolean} whether the origin is included in the whitelist
  */
 function isOriginWhitelisted(origin) {
-  return CODE_ORG_URL.test(origin) &&
-    !BLACKLIST.some(site => site.test(origin));
+  return (
+    (
+      CODE_ORG_URL.test(origin) &&
+      !INTERNAL_BLACKLIST.some(site => site.test(origin))
+    ) ||
+    EXTERNAL_WHITELIST.some(site => site.test(origin))
+  );
 }
 
 /**

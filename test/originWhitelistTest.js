@@ -17,6 +17,8 @@ const WHITELISTED_ORIGINS = [
   // Local development
   'http://localhost.code.org:3000',
   'http://localhost-studio.code.org:3000',
+  // Google OAuth
+  'https://accounts.google.com',
 ];
 
 const BLACKLISTED_ORIGINS = [
