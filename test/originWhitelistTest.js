@@ -30,6 +30,9 @@ const WHITELISTED_EXTERNAL_PAGES = [
   'https://www.facebook.com/v2.6/dialog/oauth',
   'https://www.facebook.com/logout.php',
   'https://www.facebook.com/logout.php?next=https://code.org/&access_token=XXXXXX|YYYYYYYYYYYY|ZZZZZZ',
+  // Microsoft OAuth
+  'https://login.live.com/oauth20_authorize.srf',
+  'http://login.live.com/logout.srf',
 ];
 
 const BLACKLISTED_PAGES = [
@@ -39,7 +42,12 @@ const BLACKLISTED_PAGES = [
   'https://support.code.org',
   'https://wiki.code.org',
   'https://www.google.com',
+  'https://accounts.google.com.example.org', // subdomain loophole
+  'https://example.org/?returnTo=accounts.google.com', // queryParam loophole
   'https://www.facebook.com',
+  'https://live.com',
+  'https://live.com.example.org', // subdomain loophole
+  'https://example.org/?returnTo=live.com', // queryParam loophole
 ];
 
 function originFromUrl(url) {
