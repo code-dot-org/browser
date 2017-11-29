@@ -1,3 +1,4 @@
+const _ = require('lodash');
 const { expect } = require('chai');
 const {URL} = require('url');
 const {
@@ -68,25 +69,25 @@ describe('openUrlInDefaultBrowser', () => {
 
 describe('mayInjectNativeApi', () => {
   // These should get the native APIs injected into the page
-  [
-    ...WHITELISTED_INTERNAL_PAGES,
-  ]
-    .map(originFromUrl)
-    .forEach((origin) => {
-      it(`allows ${origin}`, () => {
-        expect(mayInjectNativeApi(origin)).to.be.true;
-      });
+  _.uniq(
+    [
+      ...WHITELISTED_INTERNAL_PAGES,
+    ].map(originFromUrl)
+  ).forEach((origin) => {
+    it(`allows ${origin}`, () => {
+      expect(mayInjectNativeApi(origin)).to.be.true;
     });
+  });
 
   // These should never get native APIs injected into the page
-  [
-    ...WHITELISTED_EXTERNAL_PAGES,
-    ...BLACKLISTED_PAGES,
-  ]
-    .map(originFromUrl)
-    .forEach((origin) => {
-      it(`blocks ${origin}`, () => {
-        expect(mayInjectNativeApi(origin)).to.be.false;
-      });
+  _.uniq(
+    [
+      ...WHITELISTED_EXTERNAL_PAGES,
+      ...BLACKLISTED_PAGES,
+    ].map(originFromUrl)
+  ).forEach((origin) => {
+    it(`blocks ${origin}`, () => {
+      expect(mayInjectNativeApi(origin)).to.be.false;
     });
+  });
 });
