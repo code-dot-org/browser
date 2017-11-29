@@ -30,14 +30,18 @@ const INTERNAL_BLACKLIST = [
 ];
 
 /**
- * Limited set of non-Code.org origins we will load within Maker Toolkit Browser,
+ * Limited set of non-Code.org pages we will load within Maker Toolkit Browser,
  * mostly for things like OAuth or other integrations with external services.
  * We won't inject native APIs to these sites even though they load within the
  * app.
  * @type {Array.<RegExp>}
  */
 const EXTERNAL_WHITELIST = [
-  /accounts\.google\.com$/i,
+  // Google OAuth
+  /accounts\.google\.com(?:$|\/)/i,
+  // Facebook OAuth
+  /www\.facebook\.com\/v2.6\/dialog\/oauth/i,
+  /www\.facebook\.com\/logout/i,
 ];
 
 /**
@@ -47,7 +51,7 @@ const EXTERNAL_WHITELIST = [
  */
 function openUrlInDefaultBrowser(url) {
   const origin = new URL(url).origin;
-  return !(originIsOnInternalWhitelist(origin) || originIsOnExternalWhitelist(origin));
+  return !(originIsOnInternalWhitelist(origin) || urlIsOnExternalWhitelist(url));
 }
 
 /**
@@ -64,8 +68,8 @@ function originIsOnInternalWhitelist(origin) {
     !INTERNAL_BLACKLIST.some(site => site.test(origin));
 }
 
-function originIsOnExternalWhitelist(origin) {
-  return EXTERNAL_WHITELIST.some(site => site.test(origin));
+function urlIsOnExternalWhitelist(url) {
+  return EXTERNAL_WHITELIST.some(site => site.test(url));
 }
 
 module.exports = {
