@@ -17,7 +17,9 @@
     "start": "NODE_ENV=${NODE_ENV:-development} electron .",
     "pack": "build --dir",
     "predist": "yarn test",
-    "dist": "build"
+    "dist": "build",
+    "win": "build --win",
+    "linux": "build --linux"
   },
   "build": {
     "appId": "com.electron.code-dot-org-browser",
