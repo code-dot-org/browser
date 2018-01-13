@@ -1,8 +1,14 @@
-const {app, BrowserWindow} = require('electron');
+const {app, BrowserWindow, protocol, ipcMain} = require('electron');
 const path = require('path');
 const url = require('url');
 const setupMenus = require('./menus');
 const wrapNavigation = require('./wrapNavigation');
+const {autoUpdater} = require("electron-updater");
+const log = require('electron-log');
+
+autoUpdater.logger = log;
+autoUpdater.logger.transports.file.level = 'info';
+log.info('App starting...');
 
 let mainWindow = null;
 
@@ -30,7 +36,54 @@ function createMainWindow() {
   setupMenus();
 }
 
-app.on('ready', createMainWindow);
+const debugAutoUpdate = false;
+let statusWindow;
+
+function sendStatusToWindow(text) {
+  if (debugAutoUpdate) {
+    statusWindow.webContents.send('message', text);
+  }
+  log.info(text);
+}
+function createAutoUpdateDebugWindow() {
+  if (!debugAutoUpdate) {
+    return;
+  }
+  statusWindow = new BrowserWindow();
+  statusWindow.on('closed', () => {
+    statusWindow = null;
+  });
+  statusWindow.loadURL(`file://${__dirname}/version.html#v${app.getVersion()}`);
+  return statusWindow;
+}
+autoUpdater.on('checking-for-update', () => {
+  sendStatusToWindow('Checking for update...');
+})
+autoUpdater.on('update-available', (info) => {
+  sendStatusToWindow('Update available.');
+})
+autoUpdater.on('update-not-available', (info) => {
+  sendStatusToWindow('Update not available.');
+})
+autoUpdater.on('error', (err) => {
+  sendStatusToWindow('Error in auto-updater. ' + err);
+})
+autoUpdater.on('download-progress', (progressObj) => {
+  let log_message = "Download speed: " + progressObj.bytesPerSecond;
+  log_message = log_message + ' - Downloaded ' + progressObj.percent + '%';
+  log_message = log_message + ' (' + progressObj.transferred + "/" + progressObj.total + ')';
+  sendStatusToWindow(log_message);
+})
+autoUpdater.on('update-downloaded', (info) => {
+  sendStatusToWindow('Update downloaded');
+});
+app.on('ready', function() {
+  createMainWindow();
+  createAutoUpdateDebugWindow();
+  setTimeout(function() {
+    autoUpdater.checkForUpdatesAndNotify();
+  }, 500);
+});
 
 // Adopt OSX conventions on that platform
 app.on('window-all-closed', () => {
