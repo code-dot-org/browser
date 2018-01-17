@@ -17,6 +17,7 @@ body {
     flex-grow: 1;
     font-family: sans-serif;
     font-size: 10pt;
+    color: darkgray;
     line-height: 14pt;
     margin-right: 0.5em;
     margin-top: 4px;
