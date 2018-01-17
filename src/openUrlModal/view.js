@@ -26,7 +26,7 @@ function onLoad() {
     try {
       // This constructor throws a TypeError if the URL is invalid
       // @see https://nodejs.org/api/url.html#url_constructor_new_url_input_base
-      new URL(urlInput.value);
+      new URL(urlInput.value); // eslint-disable-line no-new
       // If we get this far we have a valid URL
       if (openUrlInDefaultBrowser(urlInput.value)) {
         errorFeedback.textContent = 'URL will open in system default browser.';
