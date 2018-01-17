@@ -6,6 +6,7 @@ const {REQUEST_NAVIGATION, NAVIGATION_REQUESTED} = require('../channelNames');
 const {openUrlInDefaultBrowser} = require('../originWhitelist');
 
 let _mainWindow;
+let _isOpen = false;
 function injectMainWindow(mainWindow) {
   _mainWindow = mainWindow;
 }
@@ -13,6 +14,11 @@ function injectMainWindow(mainWindow) {
 function showOpenUrlModal() {
   if (!_mainWindow) {
     throw new Error('A reference to the main window has not been established.');
+  }
+
+  // Only open one of these at a time.
+  if (_isOpen) {
+    return;
   }
 
   const modal = new BrowserWindow({
@@ -34,7 +40,9 @@ function showOpenUrlModal() {
   modal.once('ready-to-show', () => modal.show());
   modal.once('closed', () => {
     ipcMain.removeListener(REQUEST_NAVIGATION, handleNavigation);
+    _isOpen = false;
   });
+  _isOpen = true;
 }
 
 function handleNavigation(_, url) {
