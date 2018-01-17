@@ -1,6 +1,6 @@
 /** @file Render process code for the "Open URL..." dialog */
 const {ipcRenderer} = require('electron');
-const {REQUEST_NAVIGATION} = require('./channelNames');
+const {REQUEST_NAVIGATION} = require('../channelNames');
 
 function onLoad() {
   document.removeEventListener('DOMContentLoaded', onLoad);

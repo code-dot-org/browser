@@ -10,7 +10,7 @@ const {
   RELOAD_REQUESTED,
   TOGGLE_DEV_TOOLS_REQUESTED,
 } = require('./channelNames');
-const {showOpenUrlModal} = require('./openUrlMain');
+const {showOpenUrlModal} = require('./openUrlModal');
 
 const RELOAD_WEBVIEW = {
   label: 'Reload',

@@ -2,7 +2,7 @@
 const {BrowserWindow, ipcMain} = require('electron');
 const path = require('path');
 const url = require('url');
-const {REQUEST_NAVIGATION, NAVIGATION_REQUESTED} = require('./channelNames');
+const {REQUEST_NAVIGATION, NAVIGATION_REQUESTED} = require('../channelNames');
 
 let _mainWindow;
 function createOpenUrlModal(mainWindow) {
@@ -25,7 +25,7 @@ function showOpenUrlModal() {
   });
 
   modal.loadURL(url.format({
-    pathname: path.join(__dirname, 'openUrl.html'),
+    pathname: path.join(__dirname, 'view.html'),
     protocol: 'file:',
     slashes: true,
   }));
