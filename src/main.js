@@ -3,7 +3,7 @@ const path = require('path');
 const url = require('url');
 const setupMenus = require('./menus');
 const wrapNavigation = require('./wrapNavigation');
-const {createOpenUrlModal} = require('./openUrlModal');
+const {injectMainWindow} = require('./openUrlModal');
 
 let mainWindow = null;
 
@@ -29,7 +29,7 @@ function createMainWindow() {
 
   wrapNavigation();
   setupMenus();
-  createOpenUrlModal(mainWindow);
+  injectMainWindow(mainWindow);
   return mainWindow;
 }
 

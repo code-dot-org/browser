@@ -5,7 +5,7 @@ const url = require('url');
 const {REQUEST_NAVIGATION, NAVIGATION_REQUESTED} = require('../channelNames');
 
 let _mainWindow;
-function createOpenUrlModal(mainWindow) {
+function injectMainWindow(mainWindow) {
   _mainWindow = mainWindow;
   showOpenUrlModal(); // TODO: Remove this, only present for debugging
 }
@@ -46,6 +46,6 @@ function handleNavigation(_, url) {
 }
 
 module.exports = {
-  createOpenUrlModal,
+  injectMainWindow,
   showOpenUrlModal,
 };
