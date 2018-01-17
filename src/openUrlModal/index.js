@@ -8,7 +8,6 @@ const {openUrlInDefaultBrowser} = require('../originWhitelist');
 let _mainWindow;
 function injectMainWindow(mainWindow) {
   _mainWindow = mainWindow;
-  showOpenUrlModal(); // TODO: Remove this, only present for debugging
 }
 
 function showOpenUrlModal() {
