@@ -1,8 +1,9 @@
 /** @file Main process setup for "Open URL..." dialog */
-const {BrowserWindow, ipcMain} = require('electron');
+const {BrowserWindow, ipcMain, shell} = require('electron');
 const path = require('path');
 const url = require('url');
 const {REQUEST_NAVIGATION, NAVIGATION_REQUESTED} = require('../channelNames');
+const {openUrlInDefaultBrowser} = require('../originWhitelist');
 
 let _mainWindow;
 function injectMainWindow(mainWindow) {
@@ -42,7 +43,11 @@ function handleNavigation(_, url) {
     throw new Error('A reference to the main window has not been established.');
   }
 
-  _mainWindow.webContents.send(NAVIGATION_REQUESTED, url);
+  if (openUrlInDefaultBrowser(url)) {
+    shell.openExternal(url);
+  } else {
+    _mainWindow.webContents.send(NAVIGATION_REQUESTED, url);
+  }
 }
 
 module.exports = {
