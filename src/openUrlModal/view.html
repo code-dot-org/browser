@@ -1,12 +1,15 @@
 <!DOCTYPE html>
 <head>
     <title>Open URL...</title>
-    <!--<link rel="stylesheet" href="browser.css"/>-->
+    <link rel="stylesheet" href="view.css"/>
     <script src="view.js"></script>
 </head>
 <body>
-    <p>
+    <div class="flex-row">
         <input type="text" id="url-input" value="" placeholder="https://code.org/"/>
+    </div>
+    <div class="flex-row">
+        <span id="error-feedback"></span>
         <input type="button" id="go-button" value="Go"/>
-    </p>
+    </div>
 </body>

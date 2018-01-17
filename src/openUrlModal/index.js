@@ -18,7 +18,7 @@ function showOpenUrlModal() {
 
   const modal = new BrowserWindow({
     width: 360,
-    height: 120,
+    height: 70,
     show: false,
     parent: _mainWindow,
     modal: true,
