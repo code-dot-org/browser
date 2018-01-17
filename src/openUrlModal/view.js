@@ -64,6 +64,7 @@ function onLoad() {
     }
   });
 
+  checkUrl();
   urlInput.focus();
 }
 document.addEventListener('DOMContentLoaded', onLoad);
