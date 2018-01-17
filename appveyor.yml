@@ -16,7 +16,7 @@ install:
   - yarn
 
 build_script:
-  - yarn run dist
+  - yarn run ci
 
 test: off
 

@@ -16,56 +16,12 @@
     "test": "mocha",
     "start": "NODE_ENV=${NODE_ENV:-development} electron .",
     "pack": "build --dir",
-    "predist": "yarn test",
-    "dist": "build",
+    "preci": "yarn test",
+    "ci": "build --config ./config-ci.json",
     "mac": "build --mac",
     "win": "build --win",
     "linux": "build --linux",
-    "release": "build --win --mac --linux -p always"
-  },
-  "build": {
-    "appId": "com.electron.code-dot-org-browser",
-    "productName": "Maker Toolkit",
-    "artifactName": "${name}-${version}-${os}.${ext}",
-    "copyright": "Copyright © 2017 Code.org",
-    "mac": {
-      "category": "public.app-category.education"
-    },
-    "dmg": {
-      "contents": [
-        {
-          "x": 65,
-          "y": 165
-        },
-        {
-          "x": 265,
-          "y": 165,
-          "type": "link",
-          "path": "/Applications"
-        }
-      ]
-    },
-    "linux": {
-      "target": [
-        "AppImage",
-        "deb"
-      ]
-    },
-    "publish": [
-      {
-        "provider": "generic",
-        "url": "https://downloads.code.org/makertoolkit/"
-      },
-      {
-        "provider": "s3",
-        "bucket": "downloads.code.org",
-        "path": "makertoolkit"
-      },
-      {
-        "provider": "github",
-        "releaseType": "release"
-      }
-    ]
+    "releaseme": "build --win --mac --linux --config ./config-release.json --publish always"
   },
   "dependencies": {
     "electron-log": "^1.3.0",
