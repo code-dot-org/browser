@@ -3,6 +3,7 @@ const path = require('path');
 const url = require('url');
 const setupMenus = require('./menus');
 const wrapNavigation = require('./wrapNavigation');
+const {injectMainWindow} = require('./openUrlModal');
 const {autoUpdater} = require('electron-updater');
 const log = require('electron-log');
 
@@ -34,6 +35,8 @@ function createMainWindow() {
 
   wrapNavigation();
   setupMenus();
+  injectMainWindow(mainWindow);
+  return mainWindow;
 }
 
 const debugAutoUpdate = false;

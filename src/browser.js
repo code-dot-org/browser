@@ -17,6 +17,7 @@ const {
 const {
   HOME_URL,
   MAKER_SETUP_URL,
+  CLEVER_LOGIN_URL,
 } = require('./defaults');
 
 window.onresize = doLayout;
@@ -72,6 +73,10 @@ window.onload = function() {
 
   document.querySelector('#setup').onclick = function() {
     navigateTo(MAKER_SETUP_URL);
+  };
+
+  document.querySelector('#clever-login').onclick = function() {
+    navigateTo(CLEVER_LOGIN_URL);
   };
 
   webview.addEventListener('close', handleExit);

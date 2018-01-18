@@ -1,0 +1,29 @@
+body {
+    background-color: #eee;
+}
+
+.flex-row {
+    display: flex;
+    margin-top: 0.2em;
+}
+
+#url-input {
+    flex-grow: 1;
+    padding: 0.25em;
+}
+
+#error-feedback {
+    text-align: right;
+    flex-grow: 1;
+    font-family: sans-serif;
+    font-size: 10pt;
+    color: darkgray;
+    line-height: 14pt;
+    margin-right: 0.5em;
+    margin-top: 4px;
+}
+
+#go-button {
+    flex-grow: 0;
+    line-height: 14pt;
+}

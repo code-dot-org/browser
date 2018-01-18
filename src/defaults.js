@@ -9,4 +9,5 @@ const DASHBOARD_HOST = process.env.DASHBOARD_HOST || (
 module.exports = {
   HOME_URL: DASHBOARD_HOST + '/home',
   MAKER_SETUP_URL: DASHBOARD_HOST + '/maker/setup',
+  CLEVER_LOGIN_URL: 'https://clever.com/login',
 };

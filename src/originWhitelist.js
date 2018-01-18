@@ -44,6 +44,8 @@ const EXTERNAL_WHITELIST = [
   /\/\/www\.facebook\.com\/logout/i,
   // Microsoft OAuths
   /\/\/login\.live\.com(?:$|\/)/i,
+  // Clever Auth
+  /\/\/clever.com\/(?:in|login|oauth)(?:$|\/)/i,
 ];
 
 /**

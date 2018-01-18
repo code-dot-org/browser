@@ -26,13 +26,25 @@ const WHITELISTED_EXTERNAL_PAGES = [
   'https://accounts.google.com',
   'https://accounts.google.com/signin/oauth',
   'https://accounts.google.com/logout',
+
   // Facebook OAuth
   'https://www.facebook.com/v2.6/dialog/oauth',
   'https://www.facebook.com/logout.php',
   'https://www.facebook.com/logout.php?next=https://code.org/&access_token=XXXXXX|YYYYYYYYYYYY|ZZZZZZ',
+
   // Microsoft OAuth
   'https://login.live.com/oauth20_authorize.srf',
   'http://login.live.com/logout.srf',
+
+  // Clever Log-in flow
+  // Generic portal link
+  'https://clever.com/login',
+  // School-specific portal link
+  'https://clever.com/in/codeorg-clever-dev',
+  // Auth flow URLs
+  'https://clever.com/oauth/sis/login?target=secret&skip=1&school_name=&default_badge=',
+  'https://clever.com/oauth/authorize?response_type=code&state=secret&redirect_uri=https%3A%2F%2Fclever.com%2Fin%2Fauth_callback&client_id=secret&confirmed=true&channel=clever&new_login_flow=true&district_id=secret',
+  'https://clever.com/in/auth_callback?code=secret&scope=read%3Adistrict_admins_limited%20read%3Aschool_admins_limited%20read%3Asections_limited%20read%3Astudents_launchpad%20read%3Astudents_limited%20read%3Ateachers_limited%20read%3Auser_id&state=secret',
 ];
 
 const BLACKLISTED_PAGES = [
