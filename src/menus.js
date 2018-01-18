@@ -10,6 +10,7 @@ const {
   RELOAD_REQUESTED,
   TOGGLE_DEV_TOOLS_REQUESTED,
 } = require('./channelNames');
+const {showOpenUrlModal} = require('./openUrlModal');
 
 const RELOAD_WEBVIEW = {
   label: 'Reload',
@@ -51,11 +52,18 @@ const VERSION = {
   },
 };
 
+const OPEN_URL = {
+  label: 'Open URL...',
+  accelerator: (process.platform === 'darwin' ? 'Command+O' : 'Ctrl+O'),
+  click: showOpenUrlModal,
+};
+
 module.exports = function setupMenus() {
   // The initial menu item on Windows and Linux, often named 'File'
   const fileMenu = {
     label: 'File',
     submenu: [
+      OPEN_URL,
       {role: 'quit'},
     ],
   };
@@ -66,6 +74,8 @@ module.exports = function setupMenus() {
     submenu: [
       {role: 'about'},
       VERSION,
+      {type: 'separator'},
+      OPEN_URL,
       {type: 'separator'},
       {role: 'services', submenu: []},
       {type: 'separator'},
