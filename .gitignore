@@ -1,4 +1,5 @@
 .idea
+**/.DS_Store
 config/ci.json
 config/release.json
 dist

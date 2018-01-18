@@ -7,6 +7,14 @@ Simple browser exposing native node-serialport to web-based tools on whitelisted
 - Use Node v8
 - Close the repository, then run `yarn` to install dependencies
 - `yarn start` launches the app in development mode.
+- `yarn release` will create OS X, Windows, and Linux builds, upload them to S3, and create a Github release
+
+## Code signing
+
+- OS X: once you've obtained the credentials for OS X app signing, add them to your keychain and they will be automatically used to sign Mac builds
+- Windows: to sign Windows builds, obtain the appropriate Authenticode p12 file and the password, and set the following environment variables in the command line (assuming you're using OS X or Linux):
+  - export WIN_CSC_LINK=/SecretsDirectory/codeorg-authenticode.p12
+  - export WIN_CSC_KEY_PASSWORD=<password here>
 
 ## Options
 The following environment variables are available to help with local development:
