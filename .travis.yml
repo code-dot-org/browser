@@ -38,7 +38,7 @@ install:
   - yarn install
 
 script:
-  - yarn run ci
+  - yarn ci
 
 branches:
   except:

@@ -11,17 +11,19 @@
   },
   "main": "src/main.js",
   "scripts": {
+    "generate-config": "node config/generate.js",
     "lint": "eslint . --fix",
     "pretest": "eslint .",
     "test": "mocha",
     "start": "NODE_ENV=${NODE_ENV:-development} electron .",
     "pack": "build --dir",
-    "preci": "yarn test",
-    "ci": "build --config ./config-ci.json",
+    "preci": "yarn generate-config && yarn test",
+    "ci": "build --config ./config/ci.json",
     "mac": "build --mac",
     "win": "build --win",
     "linux": "build --linux",
-    "releaseme": "build --win --mac --linux --config ./config-release.json --publish always"
+    "prerelease": "yarn generate-config",
+    "release": "build --win --mac --linux --config ./config/release.json --publish always"
   },
   "dependencies": {
     "electron-log": "^1.3.0",
