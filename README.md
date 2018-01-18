@@ -13,8 +13,8 @@ Simple browser exposing native node-serialport to web-based tools on whitelisted
 
 - OS X: once you've obtained the credentials for OS X app signing, add them to your keychain and they will be automatically used to sign Mac builds
 - Windows: to sign Windows builds, obtain the appropriate Authenticode p12 file and the password, and set the following environment variables in the command line (assuming you're using OS X or Linux):
-  - export WIN_CSC_LINK=/SecretsDirectory/codeorg-authenticode.p12
-  - export WIN_CSC_KEY_PASSWORD=<password here>
+  - `export WIN_CSC_LINK=/SecretsDirectory/codeorg-authenticode.p12`
+  - `export WIN_CSC_KEY_PASSWORD=secret_password`
 
 ## Options
 The following environment variables are available to help with local development:
