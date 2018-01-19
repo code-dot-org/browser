@@ -8,10 +8,6 @@
       "provider": "s3",
       "bucket": "downloads.code.org",
       "path": "makertoolkit"
-    },
-    {
-      "provider": "github",
-      "releaseType": "release"
     }
   ]
 }
