@@ -2,11 +2,26 @@
 
 Simple browser exposing native node-serialport to web-based tools on whitelisted Code.org domains.
 
+## Installation
+
+- For installation links and setup instructions, see https://studio.code.org/maker/setup
+
 ## Development setup
 
 - Use Node v8
 - Close the repository, then run `yarn` to install dependencies
 - `yarn start` launches the app in development mode.
+- `yarn release` will create OS X, Windows, and Linux builds, upload them to S3, and create a Github release
+  - For S3 deployment, the same AWS credential configuration that we use for other Code.org AWS work suffices
+  - For Github, you'll need to set an environment variable with a personal Github access token that has full "repo" permissions for this repository (you can set up personal access tokens at https://github.com/settings/tokens): `export GH_TOKEN="token_goes_here"`
+
+## Code signing
+
+- If you build on OS X, you can sign both Windows and OS X applications when building. Code signing will happen automatically if you set up credentials correctly; if they are not provided, unsigned builds will be created.
+- OS X: once you've obtained the credentials for OS X app signing, add them to your keychain
+- Windows: to sign Windows builds, obtain the appropriate Authenticode p12 file and the password, and set the following environment variables on the command line (assuming you're using OS X or Linux):
+  - `export WIN_CSC_LINK=/SecretsDirectory/codeorg-authenticode.p12`
+  - `export WIN_CSC_KEY_PASSWORD=secret_password`
 
 ## Options
 The following environment variables are available to help with local development:
