@@ -2,6 +2,10 @@
 
 Simple browser exposing native node-serialport to web-based tools on whitelisted Code.org domains.
 
+## Installation
+
+- For installation links and setup instructions, see https://studio.code.org/maker/setup
+
 ## Development setup
 
 - Use Node v8
