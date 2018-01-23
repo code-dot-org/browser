@@ -13,6 +13,8 @@ input {
     padding: 3px;
     border-bottom: solid 1px #ccc;
     background-color: #eee;
+    /* Shouldn't be able to text-select toolbar buttons. */
+    user-select: none;
 }
 
 #controls button,
