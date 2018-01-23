@@ -111,17 +111,32 @@ module.exports = function setupMenus() {
     role: 'help',
   };
 
+  const editMenu = {
+    label: 'Edit',
+    submenu: [
+      { label: 'Undo', accelerator: 'CmdOrCtrl+Z', selector: 'undo:' },
+      { label: 'Redo', accelerator: 'Shift+CmdOrCtrl+Z', selector: 'redo:' },
+      { type: 'separator' },
+      { label: 'Cut', accelerator: 'CmdOrCtrl+X', selector: 'cut:' },
+      { label: 'Copy', accelerator: 'CmdOrCtrl+C', selector: 'copy:' },
+      { label: 'Paste', accelerator: 'CmdOrCtrl+V', selector: 'paste:' },
+      { label: 'Select All', accelerator: 'CmdOrCtrl+A', selector: 'selectAll:' },
+    ],
+  };
+
   // We define menus differently on OSX:
   let menu;
   if (process.platform === 'darwin') {
     menu = Menu.buildFromTemplate([
       osxAppMenu,
+      editMenu,
       viewMenu,
       osxHelpMenu,
     ]);
   } else {
     menu = Menu.buildFromTemplate([
       fileMenu,
+      editMenu,
       viewMenu,
       helpMenu,
     ]);
