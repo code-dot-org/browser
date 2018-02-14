@@ -23,6 +23,10 @@ body {
     margin-top: 4px;
 }
 
+#cancel-button {
+    margin-right: 0.2em;
+}
+
 #go-button {
     flex-grow: 0;
     line-height: 14pt;

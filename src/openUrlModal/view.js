@@ -9,6 +9,7 @@ function onLoad() {
 
   const urlInput = document.getElementById('url-input');
   const errorFeedback = document.getElementById('error-feedback');
+  const cancelButton = document.getElementById('cancel-button');
   const goButton = document.getElementById('go-button');
 
   /**
@@ -54,6 +55,7 @@ function onLoad() {
 
   urlInput.addEventListener('keyup', checkUrl);
   urlInput.addEventListener('change', checkUrl);
+  cancelButton.addEventListener('click', () => window.close());
   goButton.addEventListener('click', submit);
 
   window.addEventListener('keydown', (event) => {
