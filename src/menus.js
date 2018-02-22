@@ -100,7 +100,7 @@ module.exports = function setupMenus() {
     label: 'Help',
     submenu: [
       {
-        label: 'Maker Toolkit Browser',
+        label: 'Code.org Maker App',
         enabled: false,
       },
       VERSION,
