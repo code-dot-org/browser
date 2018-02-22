@@ -1,5 +1,5 @@
 /**
- * @file Creates menus for Maker Toolkit Browser.
+ * @file Creates menus for Code.org Maker App.
  *
  * Process: Main
  */

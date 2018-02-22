@@ -1,8 +1,8 @@
 /**
  * @file Defines the whitelist of sites that are allowed to load in the
- * Maker Toolkit Browser and have our native Maker API (including Serialport)
+ * Code.org Maker App and have our native Maker API (including Serialport)
  * injected.  Sites not on this whitelist will be loaded in the system's
- * native browser, not in Maker Toolkit Browser.
+ * native browser, not in Code.org Maker App.
  *
  * Process: Main or Renderer
  */
@@ -17,7 +17,7 @@ const CODE_ORG_URL = /^https?:\/\/(?:[\w\d-]+\.)?(?:cdn-)?code\.org(?::\d+)?$/i;
 
 /**
  * Navigation to urls matching any of the given origins will open the page in
- * the system default browser, instead of within Maker Toolkit Browser, even
+ * the system default browser, instead of within Code.org Maker App, even
  * if the origin falls within our general Code.org origin whitelist.
  * @type {Array.<RegExp>}
  */
@@ -30,7 +30,7 @@ const INTERNAL_BLACKLIST = [
 ];
 
 /**
- * Limited set of non-Code.org pages we will load within Maker Toolkit Browser,
+ * Limited set of non-Code.org pages we will load within Code.org Maker App,
  * mostly for things like OAuth or other integrations with external services.
  * We won't inject native APIs to these sites even though they load within the
  * app.

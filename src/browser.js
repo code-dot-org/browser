@@ -1,5 +1,5 @@
 /**
- * @file Render process entry point for Maker Toolkit Browser.
+ * @file Render process entry point for Code.org Maker App.
  * Creates/binds browser controls, including the webview that hosts Code.org
  * curriculum.
  *

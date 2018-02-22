@@ -1,4 +1,4 @@
-/** @file Default config values for Maker Toolkit app. */
+/** @file Default config values for Code.org Maker App. */
 
 const DASHBOARD_HOST = process.env.DASHBOARD_HOST || (
   process.env.NODE_ENV === 'production'

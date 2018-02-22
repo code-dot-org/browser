@@ -1,5 +1,5 @@
 /**
- * @file Customizes which pages can be visited within Maker Toolkit Browser.
+ * @file Customizes which pages can be visited within Code.org Maker App.
  *
  * Process: Main
  */
@@ -27,7 +27,7 @@ function wrapNavigation() {
     }
 
     // Capture requests to navigate within the webview and open links in the
-    // system default browser instead if they are outside the Maker Toolkit
+    // system default browser instead if they are outside the Code.org Maker App
     // walled garden of whitelisted origins.
     // @see https://electron.atom.io/docs/api/web-contents/#event-will-navigate
     webContents.on('will-navigate', (event, url) => {
@@ -41,7 +41,7 @@ function wrapNavigation() {
     // Capture requests to open a new tab or window, triggered by calls to
     // `window.open` or links with `target="_blank"`, and handle them
     // manually, navigating the existing webview for links within the
-    // Maker Toolkit walled garden and opening all other links in the
+    // Code.org Maker App walled garden and opening all other links in the
     // system default browser.
     // @see https://electron.atom.io/docs/api/web-contents/#event-new-window
     webContents.on('new-window', (event, url) => {
