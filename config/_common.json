@@ -1,7 +1,7 @@
 {
   "appId": "com.electron.codeorg-maker-app",
   "productName": "Code.org Maker App",
-  "artifactName": "${name}-${version}-${os}.${ext}",
+  "artifactName": "${productName}-${version}-${os}.${ext}",
   "copyright": "Copyright © 2017 Code.org",
   "mac": {
     "category": "public.app-category.education"
