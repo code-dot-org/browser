@@ -1,6 +1,6 @@
 {
   "appId": "com.electron.code-dot-org-browser",
-  "productName": "Maker Toolkit",
+  "productName": "Code.org Maker App",
   "artifactName": "${name}-${version}-${os}.${ext}",
   "copyright": "Copyright © 2017 Code.org",
   "mac": {
