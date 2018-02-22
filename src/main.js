@@ -11,6 +11,10 @@ autoUpdater.logger = log;
 autoUpdater.logger.transports.file.level = 'info';
 log.info('App starting...');
 
+// Required to get correct App name in menus on OSX
+// https://github.com/electron-userland/electron-builder/issues/2468
+app.setName('Code.org Maker App');
+
 let mainWindow = null;
 
 function createMainWindow() {
