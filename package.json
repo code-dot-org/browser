@@ -1,5 +1,5 @@
 {
-  "name": "code-dot-org-browser",
+  "name": "codeorg-maker-app",
   "version": "1.0.5",
   "description": "A browser with Code.org-specific extensions, built with Electron",
   "homepage": "https://code.org",

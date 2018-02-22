@@ -1,5 +1,5 @@
 {
-  "appId": "com.electron.code-dot-org-browser",
+  "appId": "com.electron.codeorg-maker-app",
   "productName": "Code.org Maker App",
   "artifactName": "${name}-${version}-${os}.${ext}",
   "copyright": "Copyright © 2017 Code.org",
