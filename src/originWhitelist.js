@@ -46,6 +46,8 @@ const EXTERNAL_WHITELIST = [
   /\/\/login\.live\.com(?:$|\/)/i,
   // Clever Auth
   /\/\/clever.com\/(?:in|login|oauth)(?:$|\/)/i,
+  // School- and District-specific portals
+  /\/\/sso.pcsd1.org(?:$|\/)/i,
 ];
 
 /**
