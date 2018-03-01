@@ -48,6 +48,7 @@ const WHITELISTED_EXTERNAL_PAGES = [
 
   // Known school- and district-specific SSO portals
   'https://sso.pcsd1.org',
+  'https://www.google.com/a/pcsd1.org/acs',
 ];
 
 const BLACKLISTED_PAGES = [
