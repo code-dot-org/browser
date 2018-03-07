@@ -1,7 +1,7 @@
 const {app, dialog, shell} = require('electron');
 
 function checkForManualUpdate() {
-  manualUpdate = app.getVersion().startsWith('1.0.9');
+  const manualUpdate = app.getVersion().startsWith('1.0.9');
   if (manualUpdate) {
     dialog.showMessageBox(
       {
@@ -14,7 +14,7 @@ function checkForManualUpdate() {
       },
       (response, _) => {
         if (response === 0) {
-          shell.openExternal("https://studio.code.org/maker/setup");
+          shell.openExternal('https://studio.code.org/maker/setup');
           app.quit();
         }
       }
