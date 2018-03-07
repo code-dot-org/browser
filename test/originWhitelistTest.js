@@ -45,6 +45,10 @@ const WHITELISTED_EXTERNAL_PAGES = [
   'https://clever.com/oauth/sis/login?target=secret&skip=1&school_name=&default_badge=',
   'https://clever.com/oauth/authorize?response_type=code&state=secret&redirect_uri=https%3A%2F%2Fclever.com%2Fin%2Fauth_callback&client_id=secret&confirmed=true&channel=clever&new_login_flow=true&district_id=secret',
   'https://clever.com/in/auth_callback?code=secret&scope=read%3Adistrict_admins_limited%20read%3Aschool_admins_limited%20read%3Asections_limited%20read%3Astudents_launchpad%20read%3Astudents_limited%20read%3Ateachers_limited%20read%3Auser_id&state=secret',
+
+  // Known school- and district-specific SSO portals
+  'https://sso.pcsd1.org',
+  'https://www.google.com/a/pcsd1.org/acs',
 ];
 
 const BLACKLISTED_PAGES = [
