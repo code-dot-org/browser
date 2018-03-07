@@ -19,9 +19,9 @@
     "pack": "build --dir",
     "preci": "yarn generate-config && yarn test",
     "ci": "build --config ./config/ci.json",
-    "mac": "build --mac",
-    "win": "build --win",
-    "linux": "build --linux",
+    "mac": "build --mac --config ./config/_common.json",
+    "win": "build --win --config ./config/_common.json",
+    "linux": "build --linux --config ./config/_common.json",
     "prerelease": "yarn generate-config",
     "release": "build --win --x64 --ia32 --mac --linux --config ./config/release.json --publish always"
   },

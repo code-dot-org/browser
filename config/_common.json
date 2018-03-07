@@ -9,16 +9,20 @@
   "dmg": {
     "contents": [
       {
-        "x": 65,
-        "y": 165
+        "x": 0,
+        "y": 171
       },
       {
-        "x": 265,
+        "x": 205,
         "y": 165,
         "type": "link",
         "path": "/Applications"
       }
-    ]
+    ],
+    "window": {
+      "width": 380,
+      "height": 280
+    }
   },
   "linux": {
     "target": [
