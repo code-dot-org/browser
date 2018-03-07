@@ -1,4 +1,4 @@
-const {app, BrowserWindow} = require('electron');
+const {app, dialog, shell, BrowserWindow} = require('electron');
 const path = require('path');
 const url = require('url');
 const setupMenus = require('./menus');
@@ -6,12 +6,14 @@ const wrapNavigation = require('./wrapNavigation');
 const {injectMainWindow} = require('./openUrlModal');
 const {autoUpdater} = require('electron-updater');
 const log = require('electron-log');
+const checkForManualUpdate = require('./checkForManualUpdate');
 
 autoUpdater.logger = log;
 autoUpdater.logger.transports.file.level = 'info';
 log.info('App starting...');
 
 let mainWindow = null;
+let manualUpdateRequired = false;
 
 function createMainWindow() {
   mainWindow = new BrowserWindow({
@@ -36,6 +38,7 @@ function createMainWindow() {
   wrapNavigation();
   setupMenus();
   injectMainWindow(mainWindow);
+  manualUpdateRequired = checkForManualUpdate();
   return mainWindow;
 }
 
@@ -83,9 +86,11 @@ autoUpdater.on('update-downloaded', (info) => {
 app.on('ready', function() {
   createMainWindow();
   createAutoUpdateDebugWindow();
-  setTimeout(function() {
-    autoUpdater.checkForUpdatesAndNotify();
-  }, 500);
+  if (!manualUpdateRequired) {
+    setTimeout(function() {
+      autoUpdater.checkForUpdatesAndNotify();
+    }, 500);
+  }
 });
 
 // Adopt OSX conventions on that platform
