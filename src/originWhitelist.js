@@ -50,6 +50,7 @@ const EXTERNAL_WHITELIST = [
   /\/\/clever.com\/(?:in|login|oauth)(?:$|\/)/i,
   // School- and District-specific portals
   /\/\/sso.pcsd1.org(?:$|\/)/i,
+  /\/\/[.\w]*cps\.edu\//i,
 ];
 
 /**
