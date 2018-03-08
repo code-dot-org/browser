@@ -80,7 +80,7 @@ describe('openUrlInDefaultBrowser', () => {
     });
   });
 
-  // These should load within Maker Toolkit Browser
+  // These should load within Code.org Maker App
   [
     ...WHITELISTED_INTERNAL_PAGES,
     ...WHITELISTED_EXTERNAL_PAGES,

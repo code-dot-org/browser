@@ -1,5 +1,5 @@
 /**
- * @file Creates menus for Maker Toolkit Browser.
+ * @file Creates menus for Code.org Maker App.
  *
  * Process: Main
  */
@@ -100,7 +100,7 @@ module.exports = function setupMenus() {
     label: 'Help',
     submenu: [
       {
-        label: 'Maker Toolkit Browser',
+        label: 'Code.org Maker App',
         enabled: false,
       },
       VERSION,

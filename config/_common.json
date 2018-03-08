@@ -1,7 +1,7 @@
 {
-  "appId": "com.electron.code-dot-org-browser",
-  "productName": "Maker Toolkit",
-  "artifactName": "${name}-${version}-${os}.${ext}",
+  "appId": "com.electron.codeorg-maker-app",
+  "productName": "Code.org Maker App",
+  "artifactName": "${productName}-${version}-${os}.${ext}",
   "copyright": "Copyright © 2017 Code.org",
   "mac": {
     "category": "public.app-category.education"
@@ -9,16 +9,20 @@
   "dmg": {
     "contents": [
       {
-        "x": 65,
-        "y": 165
+        "x": 0,
+        "y": 171
       },
       {
-        "x": 265,
+        "x": 205,
         "y": 165,
         "type": "link",
         "path": "/Applications"
       }
-    ]
+    ],
+    "window": {
+      "width": 380,
+      "height": 280
+    }
   },
   "linux": {
     "target": [
