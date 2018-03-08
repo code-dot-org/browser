@@ -3,12 +3,12 @@
   "publish": [
     {
       "provider": "generic",
-      "url": "https://downloads.code.org/makertoolkit/"
+      "url": "https://downloads.code.org/maker/"
     },
     {
       "provider": "s3",
       "bucket": "downloads.code.org",
-      "path": "makertoolkit"
+      "path": "maker"
     }
   ]
 }
