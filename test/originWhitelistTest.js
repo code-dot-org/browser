@@ -49,6 +49,7 @@ const WHITELISTED_EXTERNAL_PAGES = [
   // Known school- and district-specific SSO portals
   'https://sso.pcsd1.org',
   'https://www.google.com/a/pcsd1.org/acs',
+  'https://portal.id.cps.edu/idp/profile/SAML2/Redirect/SSO',
 ];
 
 const BLACKLISTED_PAGES = [
