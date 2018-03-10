@@ -1,6 +1,6 @@
 {
   "name": "code-dot-org-browser",
-  "version": "1.1.1",
+  "version": "1.1.2",
   "description": "A browser with Code.org-specific extensions, built with Electron",
   "homepage": "https://code.org",
   "repository": "https://github.com/code-dot-org/browser",

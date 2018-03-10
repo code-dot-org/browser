@@ -3,6 +3,9 @@
   "productName": "Code.org Maker App",
   "artifactName": "${productName}-${version}-${os}.${ext}",
   "copyright": "Copyright © 2017 Code.org",
+  "nsis": {
+    "oneClick": false
+  },
   "mac": {
     "category": "public.app-category.education"
   },
