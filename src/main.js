@@ -7,6 +7,7 @@ const {injectMainWindow} = require('./openUrlModal');
 const {autoUpdater} = require('electron-updater');
 const log = require('electron-log');
 const checkForManualUpdate = require('./checkForManualUpdate');
+const firehoseClient = require('./firehose');
 
 autoUpdater.logger = log;
 autoUpdater.logger.transports.file.level = 'info';
@@ -77,6 +78,11 @@ autoUpdater.on('update-not-available', (info) => {
 });
 autoUpdater.on('error', (err) => {
   sendStatusToWindow('Error in auto-updater. ' + err);
+  firehoseClient.putRecord({
+    study: 'maker-autoupdate',
+    event: 'error',
+    data_string: JSON.stringify(err)
+  });
 });
 autoUpdater.on('download-progress', (progressObj) => {
   let logMessage = 'Download speed: ' + progressObj.bytesPerSecond;

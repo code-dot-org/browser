@@ -6,6 +6,7 @@
 
 const {app, Menu, shell} = require('electron');
 const packageJson = require('../package.json');
+
 const {
   RELOAD_REQUESTED,
   TOGGLE_DEV_TOOLS_REQUESTED,
