@@ -12,7 +12,7 @@ function logUrlNotInWhitelist(url) {
   firehoseClient.putRecord({
     study: 'maker-whitelist',
     event: 'url-not-in-whitelist',
-    data_string: url
+    data_string: url,
   });
 }
 

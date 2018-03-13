@@ -1,7 +1,7 @@
 /** @file Provides clients to AWS Firehose, whose data is imported into AWS Redshift. */
 
 const AWS = require('aws-sdk');
-const {createUuid, trySetLocalStorage, tryGetLocalStorage} = require('./utils');
+const {createUuid} = require('./utils');
 const {app, BrowserWindow} = require('electron');
 
 /**
@@ -45,7 +45,7 @@ const {app, BrowserWindow} = require('electron');
  */
 
 const deliveryStreamName = 'analysis-events';
-let analytics_uuid = null;
+let analyticsUUID = null;
 
 // TODO(asher): Add the ability to queue records individually, to be submitted
 // as a batch.
@@ -65,7 +65,7 @@ class FirehoseClient {
    * @return {boolean} Whether the hostname includes "test".
    */
   isTestEnvironment() {
-    return this.getEnvironment() === "test";
+    return this.getEnvironment() === 'test';
   }
 
   /**
@@ -73,7 +73,7 @@ class FirehoseClient {
    * @return {boolean} Whether the hostname includes "localhost".
    */
   isDevelopmentEnvironment() {
-    return this.getEnvironment() === "development";
+    return this.getEnvironment() === 'development';
   }
 
   /**
@@ -99,10 +99,10 @@ class FirehoseClient {
    * @return {string} A unique user ID.
    */
   getAnalyticsUuid() {
-    if (!analytics_uuid) {
-      analytics_uuid = createUuid();
+    if (!analyticsUUID) {
+      analyticsUUID = createUuid();
     }
-    return analytics_uuid;
+    return analyticsUUID;
   }
 
   /**
@@ -112,20 +112,20 @@ class FirehoseClient {
    */
   getDeviceInfo() {
     const focusedWindow = BrowserWindow.getFocusedWindow();
-    let device_info = {
+    let deviceInfo = {
       platform: process.platform,
       version: app.getVersion(),
     };
     if (focusedWindow) {
-      device_info = Object.assign({},
-        device_info,
+      deviceInfo = Object.assign({},
+        deviceInfo,
         {
           window_width: focusedWindow.getBounds().width,
           window_height: focusedWindow.getBounds().height,
         }
       );
     }
-    return device_info;
+    return deviceInfo;
   }
 
   /**
@@ -155,7 +155,7 @@ class FirehoseClient {
   putRecord(data, options = {alwaysPut: false, callback: null}) {
     data = this.addCommonValues(data);
     if (!this.shouldPutRecord(options['alwaysPut'])) {
-      console.log("Skipped sending record to " + deliveryStreamName);
+      console.log('Skipped sending record to ' + deliveryStreamName);
       console.log(data);
       if (options.callback) {
         options.callback(null, data);
@@ -170,7 +170,7 @@ class FirehoseClient {
           Data: JSON.stringify(data),
         },
       },
-      function (err, data) {
+      function(err, data) {
         if (options.callback) {
           options.callback(err, data);
         }

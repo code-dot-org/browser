@@ -81,7 +81,7 @@ autoUpdater.on('error', (err) => {
   firehoseClient.putRecord({
     study: 'maker-autoupdate',
     event: 'error',
-    data_string: JSON.stringify(err)
+    data_string: JSON.stringify(err),
   });
 });
 autoUpdater.on('download-progress', (progressObj) => {
