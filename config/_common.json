@@ -3,7 +3,10 @@
   "productName": "Code.org Maker App",
   "artifactName": "${productName}-${version}-${os}.${ext}",
   "copyright": "Copyright © 2017 Code.org",
-  "nsis": {
+  "win": {
+    "target": "msi"
+  },
+  "msi": {
     "oneClick": false
   },
   "mac": {
