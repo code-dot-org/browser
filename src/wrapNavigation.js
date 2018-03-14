@@ -6,6 +6,15 @@
 const {app, shell, BrowserWindow} = require('electron');
 const {openUrlInDefaultBrowser} = require('./originWhitelist');
 const {NAVIGATION_REQUESTED} = require('./channelNames');
+const firehoseClient = require('./firehose');
+
+function logUrlNotInWhitelist(url) {
+  firehoseClient.putRecord({
+    study: 'maker-whitelist',
+    event: 'url-not-in-whitelist',
+    data_string: url,
+  });
+}
 
 /**
  * For every created webview, attaches to navigation events and redirects
@@ -34,6 +43,7 @@ function wrapNavigation() {
       if (openUrlInDefaultBrowser(url)) {
         event.preventDefault();
         shell.openExternal(url);
+        logUrlNotInWhitelist(url);
       }
       // Otherwise navigation will proceed normally.
     });
@@ -53,6 +63,7 @@ function wrapNavigation() {
 
       if (openUrlInDefaultBrowser(url)) {
         shell.openExternal(url);
+        logUrlNotInWhitelist(url);
       } else {
         const focusedWindow = BrowserWindow.getFocusedWindow();
         if (focusedWindow) {
