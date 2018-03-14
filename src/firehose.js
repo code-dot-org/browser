@@ -47,10 +47,6 @@ const {app, BrowserWindow} = require('electron');
 const deliveryStreamName = 'analysis-events';
 let analyticsUUID = null;
 
-// TODO(asher): Add the ability to queue records individually, to be submitted
-// as a batch.
-// TODO(asher): Determine whether any of the utility functions herein should be
-// moved elsewhere, e.g., to apps/src/util.js.
 class FirehoseClient {
   /**
    * Returns the current environment.
