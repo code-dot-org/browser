@@ -4,7 +4,7 @@
  * Process: Main
  */
 const {app, shell, BrowserWindow} = require('electron');
-const {openUrlInDefaultBrowser} = require('./originWhitelist');
+const {openUrlInDefaultBrowser, isCodeOrgUrl} = require('./originWhitelist');
 const {NAVIGATION_REQUESTED} = require('./channelNames');
 const firehoseClient = require('./firehose');
 
@@ -24,6 +24,18 @@ function logUrlNotInWhitelist(url) {
  * existing view if they're whitelisted, or open in the system browser if not.
  */
 function wrapNavigation() {
+  let inOauthFlow = false;
+
+  // Checks whether navigating to a URL either begins or terminates
+  // an oauth flow, and sets the state variable accordingly
+  function checkForOauthFlow(url) {
+    if (url.includes('studio.code.org') && url.includes('/users/auth/')) {
+      inOauthFlow = true;
+    } else if (inOauthFlow && isCodeOrgUrl(url)) {
+      inOauthFlow = false;
+    }
+  }
+
   // We apply this behavior to all created webviews, whenever they get created,
   // because we have to handle this event on the main thread.
   // This is the preferred approach to capturing and preventing navigation
@@ -40,7 +52,10 @@ function wrapNavigation() {
     // walled garden of whitelisted origins.
     // @see https://electron.atom.io/docs/api/web-contents/#event-will-navigate
     webContents.on('will-navigate', (event, url) => {
-      if (openUrlInDefaultBrowser(url)) {
+      // Disable whitelist check if we're in the oauth flow
+      checkForOauthFlow(url);
+
+      if (!inOauthFlow && openUrlInDefaultBrowser(url)) {
         event.preventDefault();
         shell.openExternal(url);
         logUrlNotInWhitelist(url);
@@ -61,7 +76,9 @@ function wrapNavigation() {
       // @see https://github.com/electron/electron/issues/1963
       event.preventDefault();
 
-      if (openUrlInDefaultBrowser(url)) {
+      checkForOauthFlow(url);
+
+      if (!inOauthFlow && openUrlInDefaultBrowser(url)) {
         shell.openExternal(url);
         logUrlNotInWhitelist(url);
       } else {

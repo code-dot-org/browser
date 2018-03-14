@@ -82,7 +82,13 @@ function urlIsOnExternalWhitelist(url) {
   return EXTERNAL_WHITELIST.some(site => site.test(url));
 }
 
+function isCodeOrgUrl(url) {
+  const origin = new URL(url).origin;
+  return CODE_ORG_URL.test(origin);
+}
+
 module.exports = {
+  isCodeOrgUrl,
   openUrlInDefaultBrowser,
   mayInjectNativeApi,
 };
