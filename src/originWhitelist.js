@@ -13,7 +13,7 @@ const {URL} = require('url');
 // https://test-studio.code.org                     Test
 // https://dashboard-adhoc-my-branch.cdn-code.org   Ad-Hoc servers
 // http://localhost-studio.code.org:3000            Local development
-const CODE_ORG_URL = /^http(?:s)?:\/\/(?:[\w\d-]+\.)?(?:cdn-)?code\.org(?::\d+)?$/i;
+const CODE_ORG_URL = /^https?:\/\/(?:[\w\d-]+\.)?(?:cdn-)?code\.org(?::\d+)?$/i;
 
 /**
  * Navigation to urls matching any of the given origins will open the page in
