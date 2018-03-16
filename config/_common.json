@@ -4,9 +4,24 @@
   "artifactName": "${productName}-${version}-${os}.${ext}",
   "copyright": "Copyright © 2017 Code.org",
   "win": {
-    "target": "msi"
+    "target": [
+      {
+        "target": "nsis",
+        "arch": [
+          "x64",
+          "ia32"
+        ]
+      },
+      {
+        "target": "msi",
+        "arch": [
+          "x64",
+          "ia32"
+        ]
+      }
+    ]
   },
-  "msi": {
+  "nsis": {
     "oneClick": false
   },
   "mac": {
