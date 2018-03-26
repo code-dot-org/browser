@@ -4,6 +4,7 @@ const path = require('path');
 const url = require('url');
 const {REQUEST_NAVIGATION, NAVIGATION_REQUESTED} = require('../channelNames');
 const {openUrlInDefaultBrowser} = require('../originWhitelist');
+const firehoseClient = require('../firehose');
 
 let _mainWindow;
 let _isOpen = false;
@@ -49,8 +50,12 @@ function handleNavigation(_, url) {
   if (!_mainWindow) {
     throw new Error('A reference to the main window has not been established.');
   }
-
   if (openUrlInDefaultBrowser(url)) {
+    firehoseClient.putRecord({
+      study: 'maker-whitelist',
+      event: 'url-not-in-whitelist',
+      data_string: url,
+    });
     shell.openExternal(url);
   } else {
     _mainWindow.webContents.send(NAVIGATION_REQUESTED, url);
