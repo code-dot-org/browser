@@ -4,6 +4,7 @@ const AWS = require('aws-sdk');
 const {createUuid} = require('./utils');
 const {app, BrowserWindow} = require('electron');
 const log = require('electron-log');
+const isDev = require('electron-is-dev');
 
 /**
  * Adapted from https://github.com/code-dot-org/code-dot-org/blob/54ab514aafdd2651e6232b1b51c8281b3a93a851/apps/src/lib/util/firehose.js
@@ -54,7 +55,7 @@ class FirehoseClient {
    * @return {string} The current environment, e.g., "staging" or "production".
    */
   getEnvironment() {
-    return process.env.NODE_ENV;
+    return isDev ? 'development' : 'production';
   }
 
   /**
