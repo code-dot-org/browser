@@ -3,6 +3,8 @@
 const AWS = require('aws-sdk');
 const {createUuid} = require('./utils');
 const {app, BrowserWindow} = require('electron');
+const log = require('electron-log');
+const isDev = require('electron-is-dev');
 
 /**
  * Adapted from https://github.com/code-dot-org/code-dot-org/blob/54ab514aafdd2651e6232b1b51c8281b3a93a851/apps/src/lib/util/firehose.js
@@ -53,7 +55,7 @@ class FirehoseClient {
    * @return {string} The current environment, e.g., "staging" or "production".
    */
   getEnvironment() {
-    return process.env.NODE_ENV;
+    return isDev ? 'development' : 'production';
   }
 
   /**
@@ -151,14 +153,14 @@ class FirehoseClient {
   putRecord(data, options = {alwaysPut: false, callback: null}) {
     data = this.addCommonValues(data);
     if (!this.shouldPutRecord(options['alwaysPut'])) {
-      console.log('Skipped sending record to ' + deliveryStreamName);
-      console.log(data);
+      log.info('Skipped sending record to ' + deliveryStreamName);
+      log.info(data);
       if (options.callback) {
         options.callback(null, data);
       }
       return;
     }
-
+    log.info('Putting record: ' + JSON.stringify(data));
     FIREHOSE.putRecord(
       {
         DeliveryStreamName: deliveryStreamName,
