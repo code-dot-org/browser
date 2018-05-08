@@ -4,3 +4,4 @@ config/ci.json
 config/release.json
 dist
 node_modules
+*.p12

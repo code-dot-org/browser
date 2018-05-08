@@ -39,10 +39,11 @@ const INTERNAL_BLACKLIST = [
 const EXTERNAL_WHITELIST = [
   // Google OAuth
   /\/\/accounts\.google\.com(?:$|\/)/i,
+  /\/\/www\.google\.com\/accounts\//i,
   // Google GSuite prefix sometimes used for district-specific redirects.
   /\/\/www\.google\.com\/a\//i,
   // Facebook OAuth
-  /\/\/www\.facebook\.com\/v2.6\/dialog\/oauth/i,
+  /\/\/www\.facebook\.com\/v[^/]+\/dialog\/oauth/i,
   /\/\/www\.facebook\.com\/logout/i,
   // Microsoft OAuths
   /\/\/login\.live\.com(?:$|\/)/i,
@@ -81,7 +82,13 @@ function urlIsOnExternalWhitelist(url) {
   return EXTERNAL_WHITELIST.some(site => site.test(url));
 }
 
+function isCodeOrgUrl(url) {
+  const origin = new URL(url).origin;
+  return CODE_ORG_URL.test(origin);
+}
+
 module.exports = {
+  isCodeOrgUrl,
   openUrlInDefaultBrowser,
   mayInjectNativeApi,
 };

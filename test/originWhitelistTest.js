@@ -25,7 +25,9 @@ const WHITELISTED_EXTERNAL_PAGES = [
   // Google OAuth
   'https://accounts.google.com',
   'https://accounts.google.com/signin/oauth',
+  'https://accounts.google.com/signin/oauth/consent',
   'https://accounts.google.com/logout',
+  'https://www.google.com/accounts/signin/continue?sarp=1&continue=https%3A%2F%2Faccounts.google.com%2Fsignin%2Foauth%2Fconsent',
 
   // Facebook OAuth
   'https://www.facebook.com/v2.6/dialog/oauth',
