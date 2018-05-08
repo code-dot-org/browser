@@ -8,12 +8,21 @@ Simple browser exposing native node-serialport to web-based tools on whitelisted
 
 ## Development setup
 
-- Use Node v8
+- Use Node v8: `nvm use v8.9.1` (`nvm install v8.9.1` if it's not available)
 - Close the repository, then run `yarn` to install dependencies
 - `yarn start` launches the app in development mode.
 - `yarn release` will create OS X, Windows, and Linux builds, upload them to S3, and create a Github release
   - For S3 deployment, the same AWS credential configuration that we use for other Code.org AWS work suffices
-  - For Github, you'll need to set an environment variable with a personal Github access token that has full "repo" permissions for this repository (you can set up personal access tokens at https://github.com/settings/tokens): `export GH_TOKEN="token_goes_here"`
+  - For Github (currently disabled due to a bug in the builder), you'll need to set an environment variable with a personal Github access token that has full "repo" permissions for this repository (you can set up personal access tokens at https://github.com/settings/tokens): `export GH_TOKEN="token_goes_here"`
+  - To build an MSI installer, see below
+
+## MSI Installer (for networked Windows installs)
+
+- Make sure Docker is running on your computer (https://docs.docker.com/docker-for-mac/install/ for OS X, should show up in your toolbar as running when you’re ready)
+- Pull the `msi-installer` branch from this repo, merge desired changes in from master, and bump to the correct version number
+- run `yarn msi-docker-build`
+- The build will appear on the local machine in dist
+- Copy to the S3 bucket (requires AWS CLI and Code.org credentials): `aws s3 cp ./dist/<filename>.msi s3://downloads.code/org/maker/`
 
 ## Code signing
 
