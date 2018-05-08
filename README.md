@@ -16,14 +16,6 @@ Simple browser exposing native node-serialport to web-based tools on whitelisted
   - For Github (currently disabled due to a bug in the builder), you'll need to set an environment variable with a personal Github access token that has full "repo" permissions for this repository (you can set up personal access tokens at https://github.com/settings/tokens): `export GH_TOKEN="token_goes_here"`
   - To build an MSI installer, see below
 
-## MSI Installer (for networked Windows installs)
-
-- Make sure Docker is running on your computer (https://docs.docker.com/docker-for-mac/install/ for OS X, should show up in your toolbar as running when you’re ready)
-- Pull the `msi-installer` branch from this repo, merge desired changes in from master, and bump to the correct version number
-- run `yarn msi-docker-build`
-- The build will appear on the local machine in dist
-- Copy to the S3 bucket (requires AWS CLI and Code.org credentials): `aws s3 cp ./dist/<filename>.msi s3://downloads.code/org/maker/`
-
 ## Code signing
 
 - If you build on OS X, you can sign both Windows and OS X applications when building. Code signing will happen automatically if you set up credentials correctly; if they are not provided, unsigned builds will be created.
@@ -31,6 +23,16 @@ Simple browser exposing native node-serialport to web-based tools on whitelisted
 - Windows: to sign Windows builds, obtain the appropriate Authenticode p12 file and the password, and set the following environment variables on the command line (assuming you're using OS X or Linux):
   - `export WIN_CSC_LINK=/SecretsDirectory/codeorg-authenticode.p12`
   - `export WIN_CSC_KEY_PASSWORD=secret_password`
+
+## MSI Installer (for networked Windows installs)
+
+- First time setup:
+  - Copy the `codeorg-authenticode.p12` Windows code signing file into the `browser/config` directory
+- Make sure Docker is running on your computer (https://docs.docker.com/docker-for-mac/install/ for OS X, should show up in your toolbar as running when you’re ready)
+- Pull the `msi-installer` branch from this repo, merge desired changes in from master, and bump to the correct version number
+- run `yarn msi-docker-build`
+- The build will appear on the local machine in dist
+- Copy to the S3 bucket (requires AWS CLI and Code.org credentials): `aws s3 cp ./dist/<filename>.msi s3://downloads.code/org/maker/`
 
 ## Options
 The following environment variables are available to help with local development:
