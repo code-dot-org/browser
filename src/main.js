@@ -95,12 +95,13 @@ autoUpdater.on('update-downloaded', (info) => {
 });
 app.on('ready', function() {
   createMainWindow();
-  createAutoUpdateDebugWindow();
-  if (!manualUpdateRequired) {
-    setTimeout(function() {
-      autoUpdater.checkForUpdatesAndNotify();
-    }, 500);
-  }
+  // Auto-update should be disabled for MSI installer
+  // createAutoUpdateDebugWindow();
+  // if (!manualUpdateRequired) {
+  //   setTimeout(function() {
+  //     autoUpdater.checkForUpdatesAndNotify();
+  //   }, 500);
+  // }
 });
 
 // Adopt OSX conventions on that platform
