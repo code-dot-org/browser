@@ -6,6 +6,28 @@ Simple browser exposing native node-serialport to web-based tools on whitelisted
 
 - For installation links and setup instructions, see https://studio.code.org/maker/setup
 
+### Silent install / group install
+
+We support a few approaches for installing Code.org Maker App to a group of computers on a school network.
+
+Here's our MSI package. Windows network administrators may find this is the easiest approach to deploy to computers on a network. Please note that auto-updates are disabled when the app is installed via MSI.
+
+https://downloads.code.org/maker/Code.org+Maker+App-1.1.5-msi-win-win.msi
+
+Another approach is a silent install using the installer we've provided on the downloads page. It accepts the following command switches:
+
+- `/S` (case-sensitive) puts the installer in "silent" mode for unattended install
+- `/D=<directory>` (also case-sensitive) lets you specify an install directory from the command line
+
+Example:
+```
+Code.org Maker App-1.1.5-win.exe /S /D="C:\Program Files\Code.org Maker App"
+```
+
+These are standard install options for a [Nullsoft (NSIS)](https://en.wikipedia.org/wiki/Nullsoft_Scriptable_Install_System) installer. You can read more about them in the NullSoft manual in [chapter 3 (Installer Usage)](https://nsis.sourceforge.io/Docs/Chapter3.html#installerusage) and [chapter 4 (Silent Installers)](https://nsis.sourceforge.io/Docs/Chapter4.html#silent).
+Please give these options a try and let us know if they work for you. We're always looking for feedback!
+
+
 ## Development setup
 
 - Use Node v8: `nvm use v8.9.1` (`nvm install v8.9.1` if it's not available)
