@@ -2,7 +2,7 @@
 const {ipcRenderer} = require('electron');
 const {URL} = require('url');
 const {REQUEST_NAVIGATION} = require('../channelNames');
-const {openUrlInDefaultBrowser} = require('../originWhitelist');
+const {openUrlInDefaultBrowser} = require('../originAllowlist');
 
 function onLoad() {
   document.removeEventListener('DOMContentLoaded', onLoad);

@@ -10,7 +10,7 @@
 
 const SerialPort = require('serialport');
 const packageJson = require('../package.json');
-const {mayInjectNativeApi} = require('./originWhitelist');
+const {mayInjectNativeApi} = require('./originAllowlist');
 
 function init() {
   if (!mayInjectNativeApi(document.location.origin)) {

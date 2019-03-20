@@ -3,7 +3,7 @@ const {BrowserWindow, ipcMain, shell} = require('electron');
 const path = require('path');
 const url = require('url');
 const {REQUEST_NAVIGATION, NAVIGATION_REQUESTED} = require('../channelNames');
-const {openUrlInDefaultBrowser} = require('../originWhitelist');
+const {openUrlInDefaultBrowser} = require('../originAllowlist');
 const firehoseClient = require('../firehose');
 
 let _mainWindow;

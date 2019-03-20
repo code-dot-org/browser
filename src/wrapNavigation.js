@@ -4,11 +4,11 @@
  * Process: Main
  */
 const {app, shell, BrowserWindow} = require('electron');
-const {openUrlInDefaultBrowser, isCodeOrgUrl} = require('./originWhitelist');
+const {openUrlInDefaultBrowser, isCodeOrgUrl} = require('./originAllowlist');
 const {NAVIGATION_REQUESTED} = require('./channelNames');
 const firehoseClient = require('./firehose');
 
-function logUrlNotInWhitelist(url) {
+function logUrlNotInAllowlist(url) {
   firehoseClient.putRecord({
     study: 'maker-whitelist',
     event: 'url-not-in-whitelist',
@@ -18,10 +18,10 @@ function logUrlNotInWhitelist(url) {
 
 /**
  * For every created webview, attaches to navigation events and redirects
- * attempted navigation to a non-whitelisted site to the system's default
+ * attempted navigation to a non-allowlisted site to the system's default
  * browser instead of navigating within the webview itself.
  * Also makes links that would normally open in a new tab/window open in the
- * existing view if they're whitelisted, or open in the system browser if not.
+ * existing view if they're allowlisted, or open in the system browser if not.
  */
 function wrapNavigation() {
   let inOauthFlow = false;
@@ -49,16 +49,16 @@ function wrapNavigation() {
 
     // Capture requests to navigate within the webview and open links in the
     // system default browser instead if they are outside the Code.org Maker App
-    // walled garden of whitelisted origins.
+    // walled garden of allowlisted origins.
     // @see https://electron.atom.io/docs/api/web-contents/#event-will-navigate
     webContents.on('will-navigate', (event, url) => {
-      // Disable whitelist check if we're in the oauth flow
+      // Disable allowlist check if we're in the oauth flow
       checkForOauthFlow(url);
 
       if (!inOauthFlow && openUrlInDefaultBrowser(url)) {
         event.preventDefault();
         shell.openExternal(url);
-        logUrlNotInWhitelist(url);
+        logUrlNotInAllowlist(url);
       }
       // Otherwise navigation will proceed normally.
     });
@@ -80,7 +80,7 @@ function wrapNavigation() {
 
       if (!inOauthFlow && openUrlInDefaultBrowser(url)) {
         shell.openExternal(url);
-        logUrlNotInWhitelist(url);
+        logUrlNotInAllowlist(url);
       } else {
         const focusedWindow = BrowserWindow.getFocusedWindow();
         if (focusedWindow) {

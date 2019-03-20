@@ -4,9 +4,9 @@ const {URL} = require('url');
 const {
   openUrlInDefaultBrowser,
   mayInjectNativeApi,
-} = require('../src/originWhitelist');
+} = require('../src/originAllowlist');
 
-const WHITELISTED_INTERNAL_PAGES = [
+const ALLOWLISTED_INTERNAL_PAGES = [
   // Production
   'https://code.org',
   'https://studio.code.org',
@@ -21,7 +21,7 @@ const WHITELISTED_INTERNAL_PAGES = [
   'http://localhost-studio.code.org:3000',
 ];
 
-const WHITELISTED_EXTERNAL_PAGES = [
+const ALLOWLISTED_EXTERNAL_PAGES = [
   // Google OAuth
   'https://accounts.google.com',
   'https://accounts.google.com/signin/oauth',
@@ -54,7 +54,7 @@ const WHITELISTED_EXTERNAL_PAGES = [
   'https://portal.id.cps.edu/idp/profile/SAML2/Redirect/SSO',
 ];
 
-const BLACKLISTED_PAGES = [
+const BLOCKLISTED_PAGES = [
   'https://curriculum.code.org',
   'https://docs.code.org',
   'https://forum.code.org',
@@ -76,7 +76,7 @@ function originFromUrl(url) {
 describe('openUrlInDefaultBrowser', () => {
   // These should load in the system default browser
   [
-    ...BLACKLISTED_PAGES,
+    ...BLOCKLISTED_PAGES,
   ].forEach((url) => {
     it(`true for ${url}`, () => {
       expect(openUrlInDefaultBrowser(url)).to.be.true;
@@ -85,8 +85,8 @@ describe('openUrlInDefaultBrowser', () => {
 
   // These should load within Code.org Maker App
   [
-    ...WHITELISTED_INTERNAL_PAGES,
-    ...WHITELISTED_EXTERNAL_PAGES,
+    ...ALLOWLISTED_INTERNAL_PAGES,
+    ...ALLOWLISTED_EXTERNAL_PAGES,
   ].forEach((url) => {
     it(`false for ${url}`, () => {
       expect(openUrlInDefaultBrowser(url)).to.be.false;
@@ -98,7 +98,7 @@ describe('mayInjectNativeApi', () => {
   // These should get the native APIs injected into the page
   _.uniq(
     [
-      ...WHITELISTED_INTERNAL_PAGES,
+      ...ALLOWLISTED_INTERNAL_PAGES,
     ].map(originFromUrl)
   ).forEach((origin) => {
     it(`allows ${origin}`, () => {
@@ -109,8 +109,8 @@ describe('mayInjectNativeApi', () => {
   // These should never get native APIs injected into the page
   _.uniq(
     [
-      ...WHITELISTED_EXTERNAL_PAGES,
-      ...BLACKLISTED_PAGES,
+      ...ALLOWLISTED_EXTERNAL_PAGES,
+      ...BLOCKLISTED_PAGES,
     ].map(originFromUrl)
   ).forEach((origin) => {
     it(`blocks ${origin}`, () => {

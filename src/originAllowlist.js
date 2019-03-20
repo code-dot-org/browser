@@ -1,7 +1,7 @@
 /**
- * @file Defines the whitelist of sites that are allowed to load in the
+ * @file Defines the allowlist of sites that are not allowed to load in the
  * Code.org Maker App and have our native Maker API (including Serialport)
- * injected.  Sites not on this whitelist will be loaded in the system's
+ * injected.  Sites not on this allowlist will be loaded in the system's
  * native browser, not in Code.org Maker App.
  *
  * Process: Main or Renderer
@@ -18,10 +18,10 @@ const CODE_ORG_URL = /^https?:\/\/(?:[\w\d-]+\.)?(?:cdn-)?code\.org(?::\d+)?$/i;
 /**
  * Navigation to urls matching any of the given origins will open the page in
  * the system default browser, instead of within Code.org Maker App, even
- * if the origin falls within our general Code.org origin whitelist.
+ * if the origin falls within our general Code.org origin allowlist.
  * @type {Array.<RegExp>}
  */
-const INTERNAL_BLACKLIST = [
+const INTERNAL_BLOCKLIST = [
   /curriculum\.code\.org$/i,
   /docs\.code\.org$/i,
   /forum\.code\.org$/i,
@@ -36,7 +36,7 @@ const INTERNAL_BLACKLIST = [
  * app.
  * @type {Array.<RegExp>}
  */
-const EXTERNAL_WHITELIST = [
+const EXTERNAL_ALLOWLIST = [
   // Google OAuth
   /\/\/accounts\.google\.com(?:$|\/)/i,
   /\/\/www\.google\.com\/accounts\//i,
@@ -61,7 +61,7 @@ const EXTERNAL_WHITELIST = [
  */
 function openUrlInDefaultBrowser(url) {
   const origin = new URL(url).origin;
-  return !(originIsOnInternalWhitelist(origin) || urlIsOnExternalWhitelist(url));
+  return !(originIsOnInternalAllowlist(origin) || urlIsOnExternalAllowlist(url));
 }
 
 /**
@@ -70,16 +70,16 @@ function openUrlInDefaultBrowser(url) {
  *   loaded from the given origin.
  */
 function mayInjectNativeApi(origin) {
-  return originIsOnInternalWhitelist(origin);
+  return originIsOnInternalAllowlist(origin);
 }
 
-function originIsOnInternalWhitelist(origin) {
+function originIsOnInternalAllowlist(origin) {
   return CODE_ORG_URL.test(origin) &&
-    !INTERNAL_BLACKLIST.some(site => site.test(origin));
+    !INTERNAL_BLOCKLIST.some(site => site.test(origin));
 }
 
-function urlIsOnExternalWhitelist(url) {
-  return EXTERNAL_WHITELIST.some(site => site.test(url));
+function urlIsOnExternalAllowlist(url) {
+  return EXTERNAL_ALLOWLIST.some(site => site.test(url));
 }
 
 function isCodeOrgUrl(url) {
