@@ -1,8 +1,6 @@
 /**
- * @file Defines the allowlist of sites that are not allowed to load in the
- * Code.org Maker App and have our native Maker API (including Serialport)
- * injected.  Sites not on this allowlist will be loaded in the system's
- * native browser, not in Code.org Maker App.
+ * @file Defines the allowlist of sites that can have our native
+ * Maker API (including Serialport) injected.
  *
  * Process: Main or Renderer
  */
@@ -15,8 +13,7 @@
 const CODE_ORG_URL = /^https?:\/\/(?:[\w\d-]+\.)?(?:cdn-)?code\.org(?::\d+)?$/i;
 
 /**
- * Navigation to urls matching any of the given origins will open the page in
- * the system default browser, instead of within Code.org Maker App, even
+ * These urls shouldn't have the Maker API injected, even
  * if the origin falls within our general Code.org origin allowlist.
  * @type {Array.<RegExp>}
  */

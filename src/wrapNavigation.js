@@ -7,11 +7,9 @@ const {app, BrowserWindow} = require('electron');
 const {NAVIGATION_REQUESTED} = require('./channelNames');
 
 /**
- * For every created webview, attaches to navigation events and redirects
- * attempted navigation to a non-allowlisted site to the system's default
- * browser instead of navigating within the webview itself.
- * Also makes links that would normally open in a new tab/window open in the
- * existing view if they're allowlisted, or open in the system browser if not.
+ * For every created webview, attaches to navigation events and makes
+ * links that would normally open in a new tab/window open in the
+ * existing view.
  */
 function wrapNavigation() {
   // We apply this behavior to all created webviews, whenever they get created,
