@@ -2,7 +2,6 @@ const _ = require('lodash');
 const { expect } = require('chai');
 const {URL} = require('url');
 const {
-  openUrlInDefaultBrowser,
   mayInjectNativeApi,
 } = require('../src/originAllowlist');
 
@@ -72,27 +71,6 @@ const BLOCKLISTED_PAGES = [
 function originFromUrl(url) {
   return new URL(url).origin;
 }
-
-describe('openUrlInDefaultBrowser', () => {
-  // These should load in the system default browser
-  [
-    ...BLOCKLISTED_PAGES,
-  ].forEach((url) => {
-    it(`true for ${url}`, () => {
-      expect(openUrlInDefaultBrowser(url)).to.be.true;
-    });
-  });
-
-  // These should load within Code.org Maker App
-  [
-    ...ALLOWLISTED_INTERNAL_PAGES,
-    ...ALLOWLISTED_EXTERNAL_PAGES,
-  ].forEach((url) => {
-    it(`false for ${url}`, () => {
-      expect(openUrlInDefaultBrowser(url)).to.be.false;
-    });
-  });
-});
 
 describe('mayInjectNativeApi', () => {
   // These should get the native APIs injected into the page

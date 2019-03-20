@@ -1,10 +1,8 @@
 /** @file Main process setup for "Open URL..." dialog */
-const {BrowserWindow, ipcMain, shell} = require('electron');
+const {BrowserWindow, ipcMain} = require('electron');
 const path = require('path');
 const url = require('url');
 const {REQUEST_NAVIGATION, NAVIGATION_REQUESTED} = require('../channelNames');
-const {openUrlInDefaultBrowser} = require('../originAllowlist');
-const firehoseClient = require('../firehose');
 
 let _mainWindow;
 let _isOpen = false;
@@ -50,16 +48,7 @@ function handleNavigation(_, url) {
   if (!_mainWindow) {
     throw new Error('A reference to the main window has not been established.');
   }
-  if (openUrlInDefaultBrowser(url)) {
-    firehoseClient.putRecord({
-      study: 'maker-whitelist',
-      event: 'url-not-in-whitelist',
-      data_string: url,
-    });
-    shell.openExternal(url);
-  } else {
-    _mainWindow.webContents.send(NAVIGATION_REQUESTED, url);
-  }
+  _mainWindow.webContents.send(NAVIGATION_REQUESTED, url);
 }
 
 module.exports = {

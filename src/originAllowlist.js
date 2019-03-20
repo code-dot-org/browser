@@ -6,7 +6,6 @@
  *
  * Process: Main or Renderer
  */
-const {URL} = require('url');
 
 // Match origins:
 // https://studio.code.org                          Production
@@ -30,65 +29,15 @@ const INTERNAL_BLOCKLIST = [
 ];
 
 /**
- * Limited set of non-Code.org pages we will load within Code.org Maker App,
- * mostly for things like OAuth or other integrations with external services.
- * We won't inject native APIs to these sites even though they load within the
- * app.
- * @type {Array.<RegExp>}
- */
-const EXTERNAL_ALLOWLIST = [
-  // Google OAuth
-  /\/\/accounts\.google\.com(?:$|\/)/i,
-  /\/\/www\.google\.com\/accounts\//i,
-  // Google GSuite prefix sometimes used for district-specific redirects.
-  /\/\/www\.google\.com\/a\//i,
-  // Facebook OAuth
-  /\/\/www\.facebook\.com\/v[^/]+\/dialog\/oauth/i,
-  /\/\/www\.facebook\.com\/logout/i,
-  // Microsoft OAuths
-  /\/\/login\.live\.com(?:$|\/)/i,
-  // Clever Auth
-  /\/\/clever.com\/(?:in|login|oauth)(?:$|\/)/i,
-  // School- and District-specific portals
-  /\/\/sso.pcsd1.org(?:$|\/)/i,
-  /\/\/[.\w]*cps\.edu\//i,
-];
-
-/**
- * @param {string} url
- * @returns {boolean} whether the url should be opened in the system default
- *   browser.
- */
-function openUrlInDefaultBrowser(url) {
-  const origin = new URL(url).origin;
-  return !(originIsOnInternalAllowlist(origin) || urlIsOnExternalAllowlist(url));
-}
-
-/**
  * @param {string} origin
  * @returns {boolean} whether we're allowed to inject a native API into a page
  *   loaded from the given origin.
  */
 function mayInjectNativeApi(origin) {
-  return originIsOnInternalAllowlist(origin);
-}
-
-function originIsOnInternalAllowlist(origin) {
   return CODE_ORG_URL.test(origin) &&
     !INTERNAL_BLOCKLIST.some(site => site.test(origin));
 }
 
-function urlIsOnExternalAllowlist(url) {
-  return EXTERNAL_ALLOWLIST.some(site => site.test(url));
-}
-
-function isCodeOrgUrl(url) {
-  const origin = new URL(url).origin;
-  return CODE_ORG_URL.test(origin);
-}
-
 module.exports = {
-  isCodeOrgUrl,
-  openUrlInDefaultBrowser,
   mayInjectNativeApi,
 };

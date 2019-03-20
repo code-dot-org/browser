@@ -2,7 +2,6 @@
 const {ipcRenderer} = require('electron');
 const {URL} = require('url');
 const {REQUEST_NAVIGATION} = require('../channelNames');
-const {openUrlInDefaultBrowser} = require('../originAllowlist');
 
 function onLoad() {
   document.removeEventListener('DOMContentLoaded', onLoad);
@@ -29,11 +28,7 @@ function onLoad() {
       // @see https://nodejs.org/api/url.html#url_constructor_new_url_input_base
       new URL(urlInput.value); // eslint-disable-line no-new
       // If we get this far we have a valid URL
-      if (openUrlInDefaultBrowser(urlInput.value)) {
-        errorFeedback.textContent = 'URL will open in system default browser.';
-      } else {
-        errorFeedback.textContent = '';
-      }
+      errorFeedback.textContent = '';
       goButton.disabled = false;
       return true;
     } catch (e) {
