@@ -3,39 +3,15 @@
  *
  * Process: Main
  */
-const {app, shell, BrowserWindow} = require('electron');
-const {openUrlInDefaultBrowser, isCodeOrgUrl} = require('./originWhitelist');
+const {app, BrowserWindow} = require('electron');
 const {NAVIGATION_REQUESTED} = require('./channelNames');
-const firehoseClient = require('./firehose');
-
-function logUrlNotInWhitelist(url) {
-  firehoseClient.putRecord({
-    study: 'maker-whitelist',
-    event: 'url-not-in-whitelist',
-    data_string: url,
-  });
-}
 
 /**
- * For every created webview, attaches to navigation events and redirects
- * attempted navigation to a non-whitelisted site to the system's default
- * browser instead of navigating within the webview itself.
- * Also makes links that would normally open in a new tab/window open in the
- * existing view if they're whitelisted, or open in the system browser if not.
+ * For every created webview, attaches to navigation events and makes
+ * links that would normally open in a new tab/window open in the
+ * existing view.
  */
 function wrapNavigation() {
-  let inOauthFlow = false;
-
-  // Checks whether navigating to a URL either begins or terminates
-  // an oauth flow, and sets the state variable accordingly
-  function checkForOauthFlow(url) {
-    if (url.includes('studio.code.org') && url.includes('/users/auth/')) {
-      inOauthFlow = true;
-    } else if (inOauthFlow && isCodeOrgUrl(url)) {
-      inOauthFlow = false;
-    }
-  }
-
   // We apply this behavior to all created webviews, whenever they get created,
   // because we have to handle this event on the main thread.
   // This is the preferred approach to capturing and preventing navigation
@@ -46,22 +22,6 @@ function wrapNavigation() {
     if (webContents.getType() !== 'webview') {
       return;
     }
-
-    // Capture requests to navigate within the webview and open links in the
-    // system default browser instead if they are outside the Code.org Maker App
-    // walled garden of whitelisted origins.
-    // @see https://electron.atom.io/docs/api/web-contents/#event-will-navigate
-    webContents.on('will-navigate', (event, url) => {
-      // Disable whitelist check if we're in the oauth flow
-      checkForOauthFlow(url);
-
-      if (!inOauthFlow && openUrlInDefaultBrowser(url)) {
-        event.preventDefault();
-        shell.openExternal(url);
-        logUrlNotInWhitelist(url);
-      }
-      // Otherwise navigation will proceed normally.
-    });
 
     // Capture requests to open a new tab or window, triggered by calls to
     // `window.open` or links with `target="_blank"`, and handle them
@@ -75,19 +35,11 @@ function wrapNavigation() {
       // call this method in the wrong context.
       // @see https://github.com/electron/electron/issues/1963
       event.preventDefault();
-
-      checkForOauthFlow(url);
-
-      if (!inOauthFlow && openUrlInDefaultBrowser(url)) {
-        shell.openExternal(url);
-        logUrlNotInWhitelist(url);
+      const focusedWindow = BrowserWindow.getFocusedWindow();
+      if (focusedWindow) {
+        focusedWindow.webContents.send(NAVIGATION_REQUESTED, url);
       } else {
-        const focusedWindow = BrowserWindow.getFocusedWindow();
-        if (focusedWindow) {
-          focusedWindow.webContents.send(NAVIGATION_REQUESTED, url);
-        } else {
-          console.warn('Unable to navigate, there is no focused window.');
-        }
+        console.warn('Unable to navigate, there is no focused window.');
       }
     });
   });
