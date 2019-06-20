@@ -79,6 +79,10 @@ window.onload = function() {
     navigateTo(CLEVER_LOGIN_URL);
   };
 
+  document.querySelector('#update-firmware').onclick = function() {
+    console.log('Update firmware');
+  };
+
   webview.addEventListener('close', handleExit);
   webview.addEventListener('did-start-loading', handleLoadStart);
   webview.addEventListener('did-stop-loading', handleLoadStop);

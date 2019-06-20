@@ -7,12 +7,17 @@
 <body>
 
   <div id="controls">
-    <button id="back" title="Go Back" disabled="true">&#9664;</button>
-    <button id="forward" title="Go Forward" disabled="true">&#9654;</button>
-    <button id="home" title="Go Home">&#8962;</button>
-    <button id="reload" title="Reload">&#10227;</button>
-    <button id="setup" title="Setup">&#x2699;</button>
-    <button id="clever-login" title="Log in with Clever">Log in with Clever</button>
+    <div id="navigation-controls">
+      <button id="back" title="Go Back" disabled="true">&#9664;</button>
+      <button id="forward" title="Go Forward" disabled="true">&#9654;</button>
+      <button id="home" title="Go Home">&#8962;</button>
+      <button id="reload" title="Reload">&#10227;</button>
+      <button id="setup" title="Setup">&#x2699;</button>
+      <button id="clever-login" title="Log in with Clever">Log in with Clever</button>
+    </div>
+    <div id="update-controls">
+      <button id="update-firmware" title="Update Firmware of Attached Board">Update firmware of attached board</button>
+    </div>
   </div>
 
   <webview preload="./preload.js" partition="persist:codeorg-maker-app"></webview>
