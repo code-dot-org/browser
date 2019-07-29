@@ -11,6 +11,7 @@
 const SerialPort = require('serialport');
 const packageJson = require('../package.json');
 const {mayInjectNativeApi} = require('./originAllowlist');
+const fs = require('graceful-fs');
 
 function init() {
   if (!mayInjectNativeApi(document.location.origin)) {
@@ -22,6 +23,7 @@ function init() {
   window.MakerBridge = {
     getVersion,
   };
+  window.FileSystem = fs;
 }
 
 function getVersion() {
