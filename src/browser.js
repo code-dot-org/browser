@@ -19,7 +19,7 @@ const {
   MAKER_SETUP_URL,
   CLEVER_LOGIN_URL,
 } = require('./defaults');
-
+const Avrgirl = require('avrgirl-arduino');
 window.onresize = doLayout;
 var isLoading = false;
 
@@ -80,7 +80,19 @@ window.onload = function() {
   };
 
   document.querySelector('#update-firmware').onclick = function() {
-    console.log('Update firmware');
+    let avrgirl = new Avrgirl({board: 'circuit-playground-classic'});
+    window.fetch('https://s3.amazonaws.com/downloads.code.org/maker/Blink.ino.circuitplay32u4.hex')
+      .then(function(response) {
+        response.text().then(function(body) {
+          avrgirl.flash(Buffer.from(body), (error) => {
+            if (error) {
+              console.error(error);
+            } else {
+              console.log('Firmware Updated');
+            }
+          });
+        });
+      });
   };
 
   webview.addEventListener('close', handleExit);
