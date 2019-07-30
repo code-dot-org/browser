@@ -81,9 +81,10 @@ window.onload = function() {
 
   document.querySelector('#update-firmware').onclick = function() {
     let avrgirl = new Avrgirl({board: 'circuit-playground-classic'});
-    window.fetch('https://s3.amazonaws.com/downloads.code.org/maker/Blink.ino.circuitplay32u4.hex')
+    window.fetch('https://s3.amazonaws.com/downloads.code.org/maker/CircuitPlaygroundFirmata.ino.circuitplay32u4.hex')
       .then(function(response) {
-        response.text().then(function(body) {
+        response.arrayBuffer().then(function(body) {
+          // Pass the response buffer to flash function to avoid filesystem error
           avrgirl.flash(Buffer.from(body), (error) => {
             if (error) {
               console.error(error);
