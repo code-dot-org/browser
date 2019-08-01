@@ -20,8 +20,24 @@ const {
   CLEVER_LOGIN_URL,
 } = require('./defaults');
 const Avrgirl = require('avrgirl-arduino');
+const SerialPort = require('serialport');
 window.onresize = doLayout;
 var isLoading = false;
+
+const BOARD_TYPE = {
+  CLASSIC: 'classic',
+  EXPRESS: 'express',
+  OTHER: 'other',
+};
+
+/** @const {string} Adafruit's vendor id as reported by Circuit Playground boards */
+const ADAFRUIT_VID = 0x239a;
+
+/** @const {string} The Circuit Playground product id as reported by Circuit playground boards */
+const CIRCUIT_PLAYGROUND_PID = 0x8011;
+
+/** @const {string} The Circuit Playground Express product id */
+const CIRCUIT_PLAYGROUND_EXPRESS_PID = 0x8018;
 
 // Handle requests from Electron menu items
 ipcRenderer.on(RELOAD_REQUESTED, () => {
@@ -80,20 +96,24 @@ window.onload = function() {
   };
 
   document.querySelector('#update-firmware').onclick = function() {
-    let avrgirl = new Avrgirl({board: 'circuit-playground-classic'});
-    window.fetch('https://s3.amazonaws.com/downloads.code.org/maker/CircuitPlaygroundFirmata.ino.circuitplay32u4.hex')
-      .then(function(response) {
-        response.arrayBuffer().then(function(body) {
-          // Pass the response buffer to flash function to avoid filesystem error
-          avrgirl.flash(Buffer.from(body), (error) => {
-            if (error) {
-              console.error(error);
-            } else {
-              console.log('Firmware Updated');
-            }
+    detectBoardType().then(function(boardType) {
+      if (boardType === BOARD_TYPE.CLASSIC) {
+        let avrgirl = new Avrgirl({board: 'circuit-playground-classic'});
+        window.fetch('https://s3.amazonaws.com/downloads.code.org/maker/CircuitPlaygroundFirmata.ino.circuitplay32u4.hex')
+          .then(function (response) {
+            response.arrayBuffer().then(function (body) {
+              // Pass the response buffer to flash function to avoid filesystem error
+              avrgirl.flash(Buffer.from(body), (error) => {
+                if (error) {
+                  console.error(error);
+                } else {
+                  console.log('Firmware Updated');
+                }
+              });
+            });
           });
-        });
-      });
+      }
+    });
   };
 
   webview.addEventListener('close', handleExit);
@@ -177,4 +197,33 @@ function handleLoadAbort(event) {
 
 function handleLoadRedirect(event) {
   resetExitedState();
+}
+
+/**
+ * Detects the type of board plugged into the serial port
+ */
+function detectBoardType() {
+  let boardType = BOARD_TYPE.OTHER;
+  return SerialPort.list().then(function(ports) {
+    // 1. Circuit Playground
+    const adafruitCircuitPlayground = ports.find(
+      port =>
+        parseInt(port.vendorId, 16) === ADAFRUIT_VID &&
+        parseInt(port.productId, 16) === CIRCUIT_PLAYGROUND_PID
+    );
+    if (adafruitCircuitPlayground) {
+      boardType = BOARD_TYPE.CLASSIC;
+    }
+
+    // 2. Circuit Playground Express
+    const adafruitExpress = ports.find(
+      port =>
+        parseInt(port.vendorId, 16) === ADAFRUIT_VID &&
+        parseInt(port.productId, 16) === CIRCUIT_PLAYGROUND_EXPRESS_PID
+    );
+    if (adafruitExpress) {
+      boardType = BOARD_TYPE.EXPRESS;
+    }
+    return boardType;
+  });
 }
