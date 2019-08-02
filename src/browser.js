@@ -26,7 +26,6 @@ var isLoading = false;
 
 const BOARD_TYPE = {
   CLASSIC: 'classic',
-  EXPRESS: 'express',
   OTHER: 'other',
 };
 
@@ -35,9 +34,6 @@ const ADAFRUIT_VID = 0x239a;
 
 /** @const {string} The Circuit Playground product id as reported by Circuit playground boards */
 const CIRCUIT_PLAYGROUND_PID = 0x8011;
-
-/** @const {string} The Circuit Playground Express product id */
-const CIRCUIT_PLAYGROUND_EXPRESS_PID = 0x8018;
 
 // Handle requests from Electron menu items
 ipcRenderer.on(RELOAD_REQUESTED, () => {
@@ -213,16 +209,6 @@ function detectBoardType() {
     );
     if (adafruitCircuitPlayground) {
       boardType = BOARD_TYPE.CLASSIC;
-    }
-
-    // 2. Circuit Playground Express
-    const adafruitExpress = ports.find(
-      port =>
-        parseInt(port.vendorId, 16) === ADAFRUIT_VID &&
-        parseInt(port.productId, 16) === CIRCUIT_PLAYGROUND_EXPRESS_PID
-    );
-    if (adafruitExpress) {
-      boardType = BOARD_TYPE.EXPRESS;
     }
     return boardType;
   });
