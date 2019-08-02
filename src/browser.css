@@ -127,3 +127,7 @@ case we use a different background color and label). */
 .killed #sad-webview #crashed-label {
     display: none;
 }
+
+#update-firmware {
+    visibility: hidden;
+}
