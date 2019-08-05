@@ -24,7 +24,6 @@ function init() {
   }
 
   // Expose a bridging API to by setting globals on `window`.
-  window.SerialPort = SerialPort;
   window.MakerBridge = {
     getVersion,
   };
