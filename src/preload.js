@@ -27,27 +27,37 @@ function init() {
   window.SerialPort = SerialPort;
   window.MakerBridge = {
     getVersion,
+    flashBoardFirmware,
   };
-  window.flashBoardFirmware = flashBoardFirmware;
 }
 
+/**
+ * For Circuit Playground Classic board, flash firmware from the hex url to this board.
+ * @param boardType, string
+ * @return {Promise}
+ */
 function flashBoardFirmware(boardType) {
-  if (boardType === BOARD_TYPE.CLASSIC) {
-    let avrgirl = new Avrgirl({board: 'circuit-playground-classic'});
-    window.fetch('https://s3.amazonaws.com/downloads.code.org/maker/CircuitPlaygroundFirmata.ino.circuitplay32u4.hex')
-      .then(function(response) {
-        response.arrayBuffer().then(function(body) {
-          // Pass the response buffer to flash function to avoid filesystem error
-          avrgirl.flash(Buffer.from(body), (error) => {
-            if (error) {
-              console.error(error);
-            } else {
-              console.log('Firmware Updated');
-            }
+  return new Promise((resolve, reject) => {
+    if (boardType === BOARD_TYPE.CLASSIC) {
+      let avrgirl = new Avrgirl({board: 'circuit-playground-classic'});
+      window.fetch('https://s3.amazonaws.com/downloads.code.org/maker/CircuitPlaygroundFirmata.ino.circuitplay32u4.hex')
+        .then(function (response) {
+          response.arrayBuffer().then(function (body) {
+            // Pass the response buffer to flash function to avoid filesystem error
+            avrgirl.flash(Buffer.from(body), (error) => {
+              if (error) {
+                reject(new Error(error));
+              } else {
+                console.log('Firmware Updated');
+                resolve();
+              }
+            });
           });
         });
-      });
-  }
+    } else {
+      resolve();
+    }
+  });
 }
 
 function getVersion() {
