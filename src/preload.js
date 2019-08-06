@@ -8,6 +8,7 @@
 
 // https://github.com/electron/electron/blob/master/docs/api/webview-tag.md#preload
 
+const SerialPort = require('serialport');
 const packageJson = require('../package.json');
 const {mayInjectNativeApi} = require('./originAllowlist');
 const Avrgirl = require('avrgirl-arduino');
@@ -23,6 +24,7 @@ function init() {
   }
 
   // Expose a bridging API to by setting globals on `window`.
+  window.SerialPort = SerialPort;
   window.MakerBridge = {
     getVersion,
   };
