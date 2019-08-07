@@ -14,12 +14,6 @@ const {mayInjectNativeApi} = require('./originAllowlist');
 const Avrgirl = require('avrgirl-arduino');
 const md5 = require('blueimp-md5');
 
-const HEX_CHECKSUM = '766c4fad9088037ab4839b18292be8b1';
-const BOARD_TYPE = {
-  CLASSIC: 'classic',
-  OTHER: 'other',
-};
-
 function init() {
   if (!mayInjectNativeApi(document.location.origin)) {
     return;
@@ -34,34 +28,35 @@ function init() {
 }
 
 /**
- * For Circuit Playground Classic board, flash firmware from the hex url to this board.
- * @param boardType, string
+ * Flash firmware of board with contents of specified hex file.
+ * @param {Object} flashInfo, info to flash board
+ * @param {String} flashInfo.boardName, name of board from Avrgirl options
+ * @param {String} flashInfo.hexPath, path to hex file to flash to board
+ * @param {String} flashInfo.checksum, checksum to verify valid hex download
  * @return {Promise}
  */
-function flashBoardFirmware(boardType) {
+function flashBoardFirmware(flashInfo) {
   return new Promise((resolve, reject) => {
-    if (boardType === BOARD_TYPE.CLASSIC) {
-      let avrgirl = new Avrgirl({board: 'circuit-playground-classic'});
-      window.fetch('https://s3.amazonaws.com/downloads.code.org/maker/CircuitPlaygroundFirmata.ino.circuitplay32u4.hex')
-        .then(function(response) {
-          // Hard coded checksum value to verify valid hex download
-          if (md5(response) === HEX_CHECKSUM) {
-            response.arrayBuffer().then(function(body) {
-              // Pass the response buffer to flash function to avoid filesystem error
-              avrgirl.flash(Buffer.from(body), (error) => {
-                if (error) {
-                  reject(new Error(error));
-                } else {
-                  console.log('Firmware Updated');
-                  resolve();
-                }
-              });
+    let avrgirl = new Avrgirl({board: flashInfo.boardName});
+    window.fetch(flashInfo.hexPath)
+      .then(function(response) {
+        // Hard coded checksum value to verify valid hex download
+        if (md5(response) === flashInfo.checksum) {
+          response.arrayBuffer().then(function(body) {
+            // Pass the response buffer to flash function to avoid filesystem error
+            avrgirl.flash(Buffer.from(body), (error) => {
+              if (error) {
+                reject(new Error(error));
+              } else {
+                console.log('Firmware Updated');
+                resolve();
+              }
             });
-          }
-        });
-    } else {
-      resolve();
-    }
+          });
+        } else {
+          reject(new Error('Error downloading firmware for board.'));
+        }
+      });
   });
 }
 
