@@ -46,7 +46,7 @@ function flashBoardFirmware(boardType) {
         .then(function(response) {
           // Hard coded checksum value to verify valid hex download
           if (md5(response) === HEX_CHECKSUM) {
-            response.arrayBuffer().then(function (body) {
+            response.arrayBuffer().then(function(body) {
               // Pass the response buffer to flash function to avoid filesystem error
               avrgirl.flash(Buffer.from(body), (error) => {
                 if (error) {
