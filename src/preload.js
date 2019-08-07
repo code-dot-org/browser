@@ -12,7 +12,9 @@ const SerialPort = require('serialport');
 const packageJson = require('../package.json');
 const {mayInjectNativeApi} = require('./originAllowlist');
 const Avrgirl = require('avrgirl-arduino');
+const md5 = require('blueimp-md5');
 
+const HEX_CHECKSUM = '766c4fad9088037ab4839b18292be8b1';
 const BOARD_TYPE = {
   CLASSIC: 'classic',
   OTHER: 'other',
@@ -42,17 +44,20 @@ function flashBoardFirmware(boardType) {
       let avrgirl = new Avrgirl({board: 'circuit-playground-classic'});
       window.fetch('https://s3.amazonaws.com/downloads.code.org/maker/CircuitPlaygroundFirmata.ino.circuitplay32u4.hex')
         .then(function(response) {
-          response.arrayBuffer().then(function(body) {
-            // Pass the response buffer to flash function to avoid filesystem error
-            avrgirl.flash(Buffer.from(body), (error) => {
-              if (error) {
-                reject(new Error(error));
-              } else {
-                console.log('Firmware Updated');
-                resolve();
-              }
+          // Hard coded checksum value to verify valid hex download
+          if (md5(response) === HEX_CHECKSUM) {
+            response.arrayBuffer().then(function (body) {
+              // Pass the response buffer to flash function to avoid filesystem error
+              avrgirl.flash(Buffer.from(body), (error) => {
+                if (error) {
+                  reject(new Error(error));
+                } else {
+                  console.log('Firmware Updated');
+                  resolve();
+                }
+              });
             });
-          });
+          }
         });
     } else {
       resolve();
