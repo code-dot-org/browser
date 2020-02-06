@@ -79,6 +79,11 @@ window.onload = function() {
     navigateTo(CLEVER_LOGIN_URL);
   };
 
+  document.querySelector('#google-login').onclick = function() {
+    // Opens link in default browser
+    require('electron').shell.openExternal('https://studio.code.org/users/sign_in');
+  };
+
   webview.addEventListener('close', handleExit);
   webview.addEventListener('did-start-loading', handleLoadStart);
   webview.addEventListener('did-stop-loading', handleLoadStop);
