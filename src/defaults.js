@@ -10,4 +10,5 @@ module.exports = {
   HOME_URL: DASHBOARD_HOST + '/maker/home',
   MAKER_SETUP_URL: DASHBOARD_HOST + '/maker/setup',
   CLEVER_LOGIN_URL: 'https://clever.com/login',
+  GOOGLE_LOGIN_URL: DASHBOARD_HOST + '/users/auth/google_oauth2'
 };

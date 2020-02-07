@@ -18,6 +18,7 @@ const {
   HOME_URL,
   MAKER_SETUP_URL,
   CLEVER_LOGIN_URL,
+  GOOGLE_LOGIN_URL,
 } = require('./defaults');
 
 window.onresize = doLayout;
@@ -81,7 +82,7 @@ window.onload = function() {
 
   document.querySelector('#google-login').onclick = function() {
     // Opens link in default browser
-    require('electron').shell.openExternal('https://studio.code.org/users/sign_in');
+    require('electron').shell.openExternal(GOOGLE_LOGIN_URL);
   };
 
   webview.addEventListener('close', handleExit);
