@@ -34,7 +34,7 @@
     "electron-updater": "^2.15.0",
     "jscs": "^3.0.7",
     "lodash": "^4.17.4",
-    "serialport": "6.0.4"
+    "serialport": "^8.0.7"
   },
   "devDependencies": {
     "chai": "^4.1.2",
