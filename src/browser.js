@@ -55,11 +55,11 @@ window.onload = function() {
   var webview = document.querySelector('webview');
   doLayout();
 
-  detectBoardType().then(function(boardType) {
-    if (boardType === BOARD_TYPE.CLASSIC) {
-      document.querySelector('#update-firmware').setAttribute('style', 'visibility: visible;');
-    }
-  });
+  // detectBoardType().then(function(boardType) {
+  //   if (boardType === BOARD_TYPE.CLASSIC) {
+  //     document.querySelector('#update-firmware').setAttribute('style', 'visibility: visible;');
+  //   }
+  // });
 
   document.querySelector('#back').onclick = function() {
     webview.goBack();
@@ -97,6 +97,7 @@ window.onload = function() {
     navigateTo(CLEVER_LOGIN_URL);
   };
 
+  /*
   document.querySelector('#update-firmware').onclick = function() {
     detectBoardType().then(function(boardType) {
       if (boardType === BOARD_TYPE.CLASSIC) {
@@ -117,6 +118,7 @@ window.onload = function() {
       }
     });
   };
+*/
 
   webview.addEventListener('close', handleExit);
   webview.addEventListener('did-start-loading', handleLoadStart);
@@ -200,22 +202,22 @@ function handleLoadAbort(event) {
 function handleLoadRedirect(event) {
   resetExitedState();
 }
-
-/**
- * Detects the type of board plugged into the serial port
- */
-function detectBoardType() {
-  let boardType = BOARD_TYPE.OTHER;
-  return SerialPort.list().then(function(ports) {
-    // 1. Circuit Playground
-    const adafruitCircuitPlayground = ports.find(
-      port =>
-        parseInt(port.vendorId, 16) === ADAFRUIT_VID &&
-        parseInt(port.productId, 16) === CIRCUIT_PLAYGROUND_PID
-    );
-    if (adafruitCircuitPlayground) {
-      boardType = BOARD_TYPE.CLASSIC;
-    }
-    return boardType;
-  });
-}
+//
+// /**
+//  * Detects the type of board plugged into the serial port
+//  */
+// function detectBoardType() {
+//   let boardType = BOARD_TYPE.OTHER;
+//   return SerialPort.list().then(function(ports) {
+//     // 1. Circuit Playground
+//     const adafruitCircuitPlayground = ports.find(
+//       port =>
+//         parseInt(port.vendorId, 16) === ADAFRUIT_VID &&
+//         parseInt(port.productId, 16) === CIRCUIT_PLAYGROUND_PID
+//     );
+//     if (adafruitCircuitPlayground) {
+//       boardType = BOARD_TYPE.CLASSIC;
+//     }
+//     return boardType;
+//   });
+// }
