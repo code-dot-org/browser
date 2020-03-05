@@ -18,6 +18,8 @@ const {
   HOME_URL,
   MAKER_SETUP_URL,
   CLEVER_LOGIN_URL,
+  MAKER_LOGIN_URL,
+  SIGN_IN_URL,
 } = require('./defaults');
 
 window.onresize = doLayout;
@@ -77,6 +79,12 @@ window.onload = function() {
 
   document.querySelector('#clever-login').onclick = function() {
     navigateTo(CLEVER_LOGIN_URL);
+  };
+
+  document.querySelector('#google-login').onclick = function() {
+    // Opens link in default browser
+    require('electron').shell.openExternal(SIGN_IN_URL + '?user_return_to=/maker/display_google_oauth_code&maker=true');
+    navigateTo(MAKER_LOGIN_URL);
   };
 
   webview.addEventListener('close', handleExit);
