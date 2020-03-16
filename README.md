@@ -50,7 +50,7 @@ This is the process of setting up certificates (paired with private keys) on you
 2. Go to "Account" > "Certificates, Identifiers & Profiles" -- you should see a list of certificates.
 3. Open the newest (i.e., expiration date that is farthest away) "Developer ID Application" and download it. This should download a .cer file.
 4. Open the Keychain Access app (comes with OS X by default). Double-click the downloaded .cer file to add it to your keychain.
-5. Examine the certificate in your keychain. It should look something like the table below, where the "Developer ID Application" is the outer certificate, and the "Code.org" private key is nested within that certificate. **If your certificate does not contain a private key, you will need to [generate a new certificate](#generating-a-new-developer-id-application) and perform steps 2-5 again.**
+5. Examine the certificate in your keychain. It should look something like the table below, where the "Developer ID Application" is the outer certificate, and the "Code.org" private key is nested within that certificate. **If your certificate does not contain a private key, follow the steps in [Generating a new Developer ID Application](#generating-a-new-developer-id-application) and perform steps 2-5 again.**
    |Name|Kind|Expires|Keychain|
    |----|----|-------|--------|
    |Developer ID Application: Code.org ([codeorg_id_here])|certificate|Mar 13, 2025|login|
