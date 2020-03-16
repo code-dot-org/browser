@@ -2,8 +2,6 @@
 
 Simple browser exposing native node-serialport to web-based tools on allowlisted Code.org domains.
 
----
-
 ## Installation
 
 - For installation links and setup instructions, see https://studio.code.org/maker/setup
@@ -30,8 +28,6 @@ Code.org Maker App-1.1.5-win.exe /S /D="C:\Program Files\Code.org Maker App"
 These are standard install options for a [Nullsoft (NSIS)](https://en.wikipedia.org/wiki/Nullsoft_Scriptable_Install_System) installer. You can read more about them in the NullSoft manual in [chapter 3 (Installer Usage)](https://nsis.sourceforge.io/Docs/Chapter3.html#installerusage) and [chapter 4 (Silent Installers)](https://nsis.sourceforge.io/Docs/Chapter4.html#silent).
 Please give these options a try and let us know if they work for you. We're always looking for feedback!
 
----
-
 ## Development setup
 
 - Use Node v8: `nvm use v8.9.1` (`nvm install v8.9.1` if it's not available)
@@ -41,8 +37,6 @@ Please give these options a try and let us know if they work for you. We're alwa
   - For S3 deployment, the same AWS credential configuration that we use for other Code.org AWS work suffices
   - For Github (currently disabled due to a bug in the builder), you'll need to set an environment variable with a personal Github access token that has full "repo" permissions for this repository (you can set up personal access tokens at https://github.com/settings/tokens): `export GH_TOKEN="token_goes_here"`
   - To build an MSI installer, see below
-
----
 
 ## Releasing
 
@@ -92,8 +86,6 @@ This is the process of setting up certificates (paired with private keys) on you
 - The build will appear on the local machine in dist
 - Copy to the S3 bucket (requires AWS CLI and Code.org credentials): `aws s3 cp ./dist/<filename>.msi s3://downloads.code/org/maker/`
 
----
-
 ## Options
 
 The following environment variables are available to help with local development:
@@ -107,8 +99,6 @@ The following environment variables are available to help with local development
 - `OPEN_DEV_TOOLS`, if set, will cause the developer tools for both the electron
   app and its contained webview to open when the app loads.
   (Example: `OPEN_DEV_TOOLS=1 yarn start`)
-
----
 
 ## Resources
 
