@@ -59,6 +59,7 @@ This is the process of setting up certificates (paired with private keys) on you
 7. To sign Windows builds, we need to set up two environment variables from the command line:
    1. `export WIN_CSC_LINK=/SecretsDirectory/codeorg-authenticode.p12` (where path matches your path to the .p12 file generated in step 6)
    2. `export WIN_CSC_KEY_PASSWORD=secret_password` (where `secret_password` is stored in the "MakerAppWindowsBuildPassword" note in LastPass)
+8. Now you can release a new version of the Maker app!
 
 ### Releasing a new version
 
@@ -66,6 +67,8 @@ This is the process of setting up certificates (paired with private keys) on you
 2. Run `yarn release`
 
 ### Generating a new Developer ID Application
+
+These steps are only necessary if the certificate you have obtained from Apple (or an internal source) **does not contain the private key**. Try the steps in [Code signing](#code-signing) first before generating a new certificate.
 
 1. Obtain the LastPass credentials for our Apple Developer account and log in to developer.apple.com.
 2. Go to "Account" > "Certificates, Identifiers & Profiles."
