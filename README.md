@@ -46,20 +46,17 @@ Please give these options a try and let us know if they work for you. We're alwa
 
 This is the process of setting up certificates (paired with private keys) on your personal machine that are required for releasing the Maker app.
 
-1. Obtain the LastPass credentials for our Apple Developer account and log in to developer.apple.com.
-2. Go to "Account" > "Certificates, Identifiers & Profiles" -- you should see a list of certificates.
-3. Open the newest (i.e., expiration date that is farthest away) "Developer ID Application" and download it. This should download a .cer file.
-4. Open the Keychain Access app (comes with OS X by default). Double-click the downloaded .cer file to add it to your keychain.
-5. Examine the certificate in your keychain. It should look something like the table below, where the "Developer ID Application" is the outer certificate, and the "Code.org" private key is nested within that certificate. **If your certificate does not contain a private key, follow the steps in [Generating a new Developer ID Application](#generating-a-new-developer-id-application) and perform steps 2-5 again.**
+1. Download the .p12 file from the "MakerAppCertificate" note in LastPass.
+2. Open the Keychain Access app (comes with OS X by default). Double-click the downloaded .p12 file to add it to your keychain. You will be prompted for a password, which is stored in the LastPass note description.
+3. Examine the certificate in your keychain (make sure you're in the "login" Keychain and "Certificates" Category, which are found in the lefthand navigation). It should look something like the table below, where the "Developer ID Application" is the outer certificate, and the "Code.org" private key is nested within that certificate. **If your certificate does not contain a private key, you will most likely need to generate a new certificate by following the steps in [Generating a new Developer ID Application](#generating-a-new-developer-id-application).**
    |Name|Kind|Expires|Keychain|
    |----|----|-------|--------|
    |Developer ID Application: Code.org ([codeorg_id_here])|certificate|Mar 13, 2025|login|
    | > Code.org|private key|--|login|
-6. In Keychain Access, right-click on the "Developer ID Application" and export it as a .p12 file for our Windows build. (If the certificate cannot be exported as .p12, that means it is improperly formatted, most likely missing its private key.)
-7. To sign Windows builds, we need to set up two environment variables from the command line:
-   1. `export WIN_CSC_LINK=/SecretsDirectory/codeorg-authenticode.p12` (where path matches your path to the .p12 file generated in step 6)
-   2. `export WIN_CSC_KEY_PASSWORD=secret_password` (where `secret_password` is stored in the "MakerAppWindowsBuildPassword" note in LastPass)
-8. Now you can release a new version of the Maker app!
+4. To sign Windows builds, we need to set up two environment variables from the command line:
+   1. `export WIN_CSC_LINK=/SecretsDirectory/codeorg_signing_certificate.p12` (where path corresponds to the .p12 file downloaded in step 1)
+   2. `export WIN_CSC_KEY_PASSWORD='secret_password'` (`secret_password` is stored in the "MakerAppCertificate" note in LastPass)
+5. Now you can release a new version of the Maker app!
 
 ### Releasing a new version
 
@@ -68,16 +65,19 @@ This is the process of setting up certificates (paired with private keys) on you
 
 ### Generating a new Developer ID Application
 
-These steps are only necessary if the certificate you have obtained from Apple (or an internal source) **does not contain the private key**. Try the steps in [Code signing](#code-signing) first before generating a new certificate.
+These steps are only necessary if the certificate you have obtained from LastPass (or some other internal source) **does not contain the private key**. Try the steps in [Code signing](#code-signing) first before generating a new certificate. Apple allows 5 certificates before we have to start revoking older certificates.
 
-1. Obtain the LastPass credentials for our Apple Developer account and log in to developer.apple.com.
+1. Obtain the LastPass credentials for our Apple Developer account and log in to developer.apple.com. The Accounts/A-Team have permissions to share these credentials.
 2. Go to "Account" > "Certificates, Identifiers & Profiles."
 3. Click the "+" button next to the "Certificates" header to create a new certificate.
 4. Choose the "Software" > "Developer ID Application" option and click "Continue".
-5. You should now be asked to upload a Certificate Signing Request (CSR). Open the Keychain Access app to create a CSR.
+5. You should now be asked to upload a Certificate Signing Request (CSR). Open the Keychain Access app (comes default on OS X) to create a CSR.
 6. Within Keychain Access, use the top navbar to navigate to "Keychain Access" > "Certificate Assistant" > "Request a Certificate From a Certificate Authority"
 7. Fill out the certificate information -- "User Email Address" is your Code.org email, "Common Name" is your name, "CA Email Address" is the email associated with our Apple Developer account, and "Request is: Saved to disk".
 8. Upload the .certSigningRequest file to finish generating our new certificate.
+9. Download the certificate. Double-click the downloaded file to add the certificate to your keychain.
+10. Examine the certificate to make sure it includes a private key (see step 3 of [Code signing](#code-signing) for more details).
+11. If a private key is present, you can export the certificate + private key as a .p12 file, which will be needed for step 4 of [Code signing](#code-signing).
 
 ## MSI Installer (for networked Windows installs)
 
