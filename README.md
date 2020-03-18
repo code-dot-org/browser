@@ -20,6 +20,7 @@ Another approach is a silent install using the installer we've provided on the d
 - `/D=<directory>` (also case-sensitive) lets you specify an install directory from the command line
 
 Example:
+
 ```
 Code.org Maker App-1.1.5-win.exe /S /D="C:\Program Files\Code.org Maker App"
 ```
@@ -27,24 +28,56 @@ Code.org Maker App-1.1.5-win.exe /S /D="C:\Program Files\Code.org Maker App"
 These are standard install options for a [Nullsoft (NSIS)](https://en.wikipedia.org/wiki/Nullsoft_Scriptable_Install_System) installer. You can read more about them in the NullSoft manual in [chapter 3 (Installer Usage)](https://nsis.sourceforge.io/Docs/Chapter3.html#installerusage) and [chapter 4 (Silent Installers)](https://nsis.sourceforge.io/Docs/Chapter4.html#silent).
 Please give these options a try and let us know if they work for you. We're always looking for feedback!
 
-
 ## Development setup
 
 - Use Node v8: `nvm use v8.9.1` (`nvm install v8.9.1` if it's not available)
-- Close the repository, then run `yarn` to install dependencies
+- Clone the repository, then run `yarn` to install dependencies
 - `yarn start` launches the app in development mode.
-- `yarn release` will create OS X, Windows, and Linux builds, upload them to S3, and create a Github release
+- `yarn release` will create OS X, Windows, and Linux builds, upload them to S3, and create a Github release. For full instructions, see below
   - For S3 deployment, the same AWS credential configuration that we use for other Code.org AWS work suffices
   - For Github (currently disabled due to a bug in the builder), you'll need to set an environment variable with a personal Github access token that has full "repo" permissions for this repository (you can set up personal access tokens at https://github.com/settings/tokens): `export GH_TOKEN="token_goes_here"`
   - To build an MSI installer, see below
 
-## Code signing
+## Releasing
 
-- If you build on OS X, you can sign both Windows and OS X applications when building. Code signing will happen automatically if you set up credentials correctly; if they are not provided, unsigned builds will be created.
-- OS X: once you've obtained the credentials for OS X app signing, add them to your keychain
-- Windows: to sign Windows builds, obtain the appropriate Authenticode p12 file and the password, and set the following environment variables on the command line (assuming you're using OS X or Linux):
-  - `export WIN_CSC_LINK=/SecretsDirectory/codeorg-authenticode.p12`
-  - `export WIN_CSC_KEY_PASSWORD=secret_password`
+**Note:** You can only release an OS X app from an OS X machine. If you are using Linux or Windows, you'll need to pair with someone with a Mac to release the Maker app! If you are on OS X, you can release on all platforms.
+
+### Code signing
+
+This is the process of setting up certificates (paired with private keys) on your personal machine that are required for releasing the Maker app.
+
+1. Download the .p12 file from the "MakerAppCertificate" note in LastPass.
+2. Open the Keychain Access app (comes with OS X by default). Double-click the downloaded .p12 file to add it to your keychain. You will be prompted for a password, which is stored in the LastPass note description.
+3. Examine the certificate in your keychain (make sure you're in the "login" Keychain and "Certificates" Category, which are found in the lefthand navigation). It should look something like the table below, where the "Developer ID Application" is the outer certificate, and the "Code.org" private key is nested within that certificate. **If your certificate does not contain a private key, you will most likely need to generate a new certificate by following the steps in [Generating a new Developer ID Application](#generating-a-new-developer-id-application).**
+   |Name|Kind|Expires|Keychain|
+   |----|----|-------|--------|
+   |Developer ID Application: Code.org ([codeorg_id_here])|certificate|Mar 13, 2025|login|
+   | > Code.org|private key|--|login|
+4. To sign Windows builds, we need to set up two environment variables from the command line:
+   1. `export WIN_CSC_LINK=/SecretsDirectory/codeorg_signing_certificate.p12` (where path corresponds to the .p12 file downloaded in step 1)
+   2. `export WIN_CSC_KEY_PASSWORD='secret_password'` (`secret_password` is stored in the "MakerAppCertificate" note in LastPass)
+5. Now you can release a new version of the Maker app!
+
+### Releasing a new version
+
+1. Bump the version in `package.json`
+2. Run `yarn release`
+
+### Generating a new Developer ID Application
+
+These steps are only necessary if the certificate you have obtained from LastPass (or some other internal source) **does not contain the private key**. Try the steps in [Code signing](#code-signing) first before generating a new certificate. Apple allows 5 certificates before we have to start revoking older certificates.
+
+1. Obtain the LastPass credentials for our Apple Developer account and log in to developer.apple.com. The Accounts/A-Team have permissions to share these credentials.
+2. Go to "Account" > "Certificates, Identifiers & Profiles."
+3. Click the "+" button next to the "Certificates" header to create a new certificate.
+4. Choose the "Software" > "Developer ID Application" option and click "Continue".
+5. You should now be asked to upload a Certificate Signing Request (CSR). Open the Keychain Access app (comes default on OS X) to create a CSR.
+6. Within Keychain Access, use the top navbar to navigate to "Keychain Access" > "Certificate Assistant" > "Request a Certificate From a Certificate Authority"
+7. Fill out the certificate information -- "User Email Address" is your Code.org email, "Common Name" is your name, "CA Email Address" is the email associated with our Apple Developer account, and "Request is: Saved to disk".
+8. Upload the .certSigningRequest file to finish generating our new certificate.
+9. Download the certificate. Double-click the downloaded file to add the certificate to your keychain.
+10. Examine the certificate to make sure it includes a private key (see step 3 of [Code signing](#code-signing) for more details).
+11. If a private key is present, you can export the certificate + private key as a .p12 file, which will be needed for step 4 of [Code signing](#code-signing).
 
 ## MSI Installer (for networked Windows installs)
 
@@ -57,13 +90,14 @@ Please give these options a try and let us know if they work for you. We're alwa
 - Copy to the S3 bucket (requires AWS CLI and Code.org credentials): `aws s3 cp ./dist/<filename>.msi s3://downloads.code/org/maker/`
 
 ## Options
+
 The following environment variables are available to help with local development:
 
 - `NODE_ENV` controls the default Code.org host.
   If set to `production` it will point at the live Code.org site.
   Otherwise it will point to http://localhost-studio.code.org:3000.
 - `DASHBOARD_HOST` sets the dashboard host, overriding whatever would normally
-  be selected by the `NODE_ENV` setting.  Omit any trailing slash.
+  be selected by the `NODE_ENV` setting. Omit any trailing slash.
   (Example: `DASHBOARD_HOST=https://dashboard-adhoc-maker.cdn-code.org yarn start`)
 - `OPEN_DEV_TOOLS`, if set, will cause the developer tools for both the electron
   app and its contained webview to open when the app loads.
