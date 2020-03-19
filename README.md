@@ -82,7 +82,7 @@ These steps are only necessary if the certificate you have obtained from LastPas
 ## MSI Installer (for networked Windows installs)
 
 - First time setup:
-  - Copy the `codeorg-authenticode.p12` Windows code signing file into the `browser/config` directory
+  - Download and unzip the `codeorg_signing_certificate.p12` (stored in the "MakerAppCertificate" note in LastPass) code signing file into the `browser/config` directory
 - Make sure Docker is running on your computer (https://docs.docker.com/docker-for-mac/install/ for OS X, should show up in your toolbar as running when you’re ready)
 - Pull the `msi-installer` branch from this repo, merge desired changes in from master, and bump to the correct version number
 - run `yarn msi-docker-build`
