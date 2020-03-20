@@ -46,7 +46,7 @@ Please give these options a try and let us know if they work for you. We're alwa
 
 This is the process of setting up certificates (paired with private keys) on your personal machine that are required for releasing the Maker app.
 
-1. Download the .p12 file from the "MakerAppCertificate" note in LastPass.
+1. Download the .p12 file from the "MakerAppCertificate" note in LastPass. LastPass does not allow file downloads from its browser extension -- you have to have the desktop app for this.
 2. Open the Keychain Access app (comes with OS X by default). Double-click the downloaded .p12 file to add it to your keychain. You will be prompted for a password, which is stored in the LastPass note description.
 3. Examine the certificate in your keychain (make sure you're in the "login" Keychain and "Certificates" Category, which are found in the lefthand navigation). It should look something like the table below, where the "Developer ID Application" is the outer certificate, and the "Code.org" private key is nested within that certificate. **If your certificate does not contain a private key, you will most likely need to generate a new certificate by following the steps in [Generating a new Developer ID Application](#generating-a-new-developer-id-application).**
    |Name|Kind|Expires|Keychain|
