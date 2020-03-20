@@ -44,7 +44,7 @@ Please give these options a try and let us know if they work for you. We're alwa
 
 ### AWS Access
 
-First, read through the [AWS Account Login](https://docs.google.com/document/d/1dDfEOhyyNYI2zIv4LI--ErJj6OVEJopFLqPxcI0RXOA/edit) doc to make sure you have the appropriate credentials. Once you have AWS account access, we can set up access through your command line with the steps below (note that some steps are duplicative of steps in the Google Doc).
+First, read through the [AWS Account Login](https://docs.google.com/document/d/1dDfEOhyyNYI2zIv4LI--ErJj6OVEJopFLqPxcI0RXOA/edit) doc to make sure you have the correct credentials. Once you have AWS account access, we can set up access through your command line with the steps below (note that some steps are duplicative of steps in the Google Doc).
 
 1. Run `brew info awscli` to make sure you have the AWS command line tool. If you don't, run `brew install awscli`.
 2. From the root of the `code-dot-org` repository, run `./bin/aws_access`. A successful response should look like: `AWS access: GoogleSignIn/<your_codeorg_google_email>`.
