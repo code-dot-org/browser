@@ -42,6 +42,15 @@ Please give these options a try and let us know if they work for you. We're alwa
 
 **Note:** You can only release an OS X app from an OS X machine. If you are using Linux or Windows, you'll need to pair with someone with a Mac to release the Maker app! If you are on OS X, you can release on all platforms.
 
+### AWS Access
+
+First, read through the [AWS Account Login](https://docs.google.com/document/d/1dDfEOhyyNYI2zIv4LI--ErJj6OVEJopFLqPxcI0RXOA/edit) doc to make sure you have the appropriate credentials. Once you have AWS account access, we can set up access through your command line with the steps below (note that some steps are duplicative of steps in the Google Doc).
+
+1. Run `brew info awscli` to make sure you have the AWS command line tool. If you don't, run `brew install awscli`.
+2. From the root of the `code-dot-org` repository, run `./bin/aws_access`. A successful response should look like: `AWS access: GoogleSignIn/<your_codeorg_google_email>`.
+3. Check that you have an AWS credentials file by running `cat ~/.aws/credentials`.
+4. If your AWS credentials from step 2 are nested under a `[cdo]` profile, run `export AWS_PROFILE=cdo` to make cdo your default AWS profile.
+
 ### Code signing
 
 This is the process of setting up certificates (paired with private keys) on your personal machine that are required for releasing the Maker app.
