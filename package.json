@@ -24,7 +24,8 @@
     "win": "build --win --config ./config/_common.json",
     "linux": "build --linux --config ./config/_common.json",
     "prerelease": "yarn generate-config",
-    "release": "NODE_ENV=production build --win --x64 --ia32 --mac --linux --config ./config/release.json --publish always"
+    "release": "NODE_ENV=production build --win --x64 --ia32 --mac --linux --config ./config/release.json --publish always",
+    "postinstall": "electron-builder install-app-deps"
   },
   "dependencies": {
     "avrgirl-arduino": "^4.2.1",
