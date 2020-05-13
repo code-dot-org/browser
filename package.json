@@ -24,7 +24,8 @@
     "win": "build --win --config ./config/_common.json",
     "linux": "build --linux --config ./config/_common.json",
     "prerelease": "yarn generate-config",
-    "release": "NODE_ENV=production build --win --x64 --ia32 --mac --linux --config ./config/release.json --publish always"
+    "release": "NODE_ENV=production build --win --x64 --ia32 --mac --linux --config ./config/release.json --publish always",
+    "postinstall": "electron-builder install-app-deps"
   },
   "dependencies": {
     "avrgirl-arduino": "^4.2.1",
@@ -39,9 +40,10 @@
   },
   "devDependencies": {
     "chai": "^4.1.2",
-    "electron": "3.1.6",
+    "electron": "4.0.8",
     "electron-builder": "^19.43.3",
     "electron-publisher-s3": "^19.53.4",
+    "electron-forge": "5.2.3",
     "electron-rebuild": "^1.10.1",
     "eslint": "^4.18.2",
     "eslint-config-standard": "^10.2.1",
