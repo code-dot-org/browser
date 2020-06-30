@@ -1,4 +1,4 @@
-# Code.org Maker App [![GitHub release](https://img.shields.io/github/release/code-dot-org/browser.svg)](https://github.com/code-dot-org/browser/releases/latest) [![Build Status](https://travis-ci.org/code-dot-org/browser.svg?branch=master)](https://travis-ci.org/code-dot-org/browser) [![Build status](https://ci.appveyor.com/api/projects/status/s05fruj5b0hibar6?svg=true)](https://ci.appveyor.com/project/islemaster/browser)
+# Code.org Maker App [![GitHub release](https://img.shields.io/github/release/code-dot-org/browser.svg)](https://github.com/code-dot-org/browser/releases/latest) [![Build Status](https://travis-ci.org/code-dot-org/browser.svg?branch=main)](https://travis-ci.org/code-dot-org/browser) [![Build status](https://ci.appveyor.com/api/projects/status/s05fruj5b0hibar6?svg=true)](https://ci.appveyor.com/project/islemaster/browser)
 
 Simple browser exposing native node-serialport to web-based tools on allowlisted Code.org domains.
 
@@ -93,7 +93,7 @@ These steps are only necessary if the certificate you have obtained from LastPas
 - First time setup:
   - Download and unzip the `codeorg_signing_certificate.p12` (stored in the "MakerAppCertificate" note in LastPass) code signing file into the `browser/config` directory
 - Make sure Docker is running on your computer (https://docs.docker.com/docker-for-mac/install/ for OS X, should show up in your toolbar as running when you’re ready)
-- Pull the `msi-installer` branch from this repo, merge desired changes in from master, and bump to the correct version number
+- Pull the `msi-installer` branch from this repo, merge desired changes in from main, and bump to the correct version number
 - run `yarn msi-docker-build`
 - The build will appear on the local machine in dist
 - Copy to the S3 bucket (requires AWS CLI and Code.org credentials): `aws s3 cp ./dist/<filename>.msi s3://downloads.code/org/maker/`
