@@ -12,5 +12,5 @@ module.exports = {
   CLEVER_LOGIN_URL: 'https://clever.com/login',
   GOOGLE_LOGIN_URL: DASHBOARD_HOST + '/users/auth/google_oauth2',
   MAKER_LOGIN_URL: DASHBOARD_HOST + '/maker/google_oauth_login_code',
-  SIGN_IN_URL: DASHBOARD_HOST + '/users/sign_in',
+  SIGN_IN_URL: DASHBOARD_HOST + '/maker/google_oauth_confirm_login',
 };
