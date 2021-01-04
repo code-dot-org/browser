@@ -42,7 +42,7 @@
     "chai": "^4.1.2",
     "electron": "4.0.8",
     "electron-builder": "^19.43.3",
-    "electron-forge": "5.2.3",
+    "electron-forge": "5.2.4",
     "electron-publisher-s3": "^19.53.4",
     "electron-rebuild": "^1.10.1",
     "eslint": "^4.18.2",
