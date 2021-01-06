@@ -2034,7 +2034,7 @@ electron-publisher-s3@^19.53.4:
     fs-extra-p "^4.5.0"
     mime "^2.2.0"
 
-electron-rebuild@^1.10.1, electron-rebuild@^1.6.0:
+electron-rebuild@^1.6.0:
   version "1.10.1"
   resolved "https://registry.yarnpkg.com/electron-rebuild/-/electron-rebuild-1.10.1.tgz#f5cb911586e703fe78e2a0e9f644e7a76f137d97"
   integrity sha512-KSqp0Xiu7CCvKL2aEdPp/vNe2Rr11vaO8eM/wq9gQJTY02UjtAJ3l7WLV7Mf8oR+UJReJO8SWOWs/FozqK8ggA==
