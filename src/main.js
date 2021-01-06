@@ -22,6 +22,10 @@ let manualUpdateRequired = false;
 
 function createMainWindow() {
   mainWindow = new BrowserWindow({
+    webPreferences: {
+      nodeIntegration: true,
+      webviewTag: true,
+    },
     width: 1024,
     height: 768,
   });
