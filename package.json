@@ -16,7 +16,6 @@
     "pretest": "eslint .",
     "test": "mocha",
     "start": "NODE_ENV=${NODE_ENV:-development} electron .",
-    "install": "electron-rebuild",
     "pack": "build --dir",
     "preci": "yarn generate-config && yarn test",
     "ci": "build --config ./config/ci.json",
@@ -40,7 +39,7 @@
   },
   "devDependencies": {
     "chai": "^4.1.2",
-    "electron": "4.0.0",
+    "electron": "3.1.6",
     "electron-builder": "^19.43.3",
     "electron-publisher-s3": "^19.53.4",
     "electron-packager": "11.2.1",
