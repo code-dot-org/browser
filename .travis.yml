@@ -12,7 +12,7 @@ matrix:
     - os: osx
       osx_image: xcode9.0
       language: node_js
-      node_js: "19"
+      node_js: "10"
 
     - os: linux
       env: CC=clang CXX=clang++ npm_config_clang=1
