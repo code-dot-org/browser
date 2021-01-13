@@ -11,7 +11,6 @@
 const SerialPort = require('serialport');
 const packageJson = require('../package.json');
 const {mayInjectNativeApi} = require('./originAllowlist');
-const md5 = require('blueimp-md5');
 
 function init() {
   if (!mayInjectNativeApi(document.location.origin)) {
