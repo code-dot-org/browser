@@ -28,7 +28,6 @@
     "postinstall": "electron-builder install-app-deps"
   },
   "dependencies": {
-    "avrgirl-arduino": "^4.2.1",
     "aws-sdk": "2.28.0",
     "blueimp-md5": "^2.11.0",
     "electron-is-dev": "^0.3.0",
