@@ -27,7 +27,7 @@
   resolved "https://registry.yarnpkg.com/7zip-bin/-/7zip-bin-4.1.0.tgz#33eff662a5c39c0c2061170cc003c5120743fff0"
   integrity sha512-AsnBZN3a8/JcNt+KPkGGODaA4c7l3W5+WpeKgGSbstSLxqWtTXqd1ieJGBQ8IFCtRg8DmmKUcSkIkUc0A4p3YA==
 
-"@electron/get@^1.6.0":
+"@electron/get@^1.0.1", "@electron/get@^1.6.0":
   version "1.12.2"
   resolved "https://registry.yarnpkg.com/@electron/get/-/get-1.12.2.tgz#6442066afb99be08cefb9a281e4b4692b33764f3"
   integrity sha512-vAuHUbfvBQpYTJ5wB7uVIDq5c/Ry0fiTBMs7lnEYAo/qXXppIVcWdfBr57u6eRnKdVso7KSiH6p/LbQAG6Izrg==
@@ -173,10 +173,10 @@
   resolved "https://registry.yarnpkg.com/@types/node/-/node-13.13.5.tgz#96ec3b0afafd64a4ccea9107b75bf8489f0e5765"
   integrity sha512-3ySmiBYJPqgjiHA7oEaIo2Rzz0HrOZ7yrNO5HWyaE5q0lQ3BppDZ3N53Miz8bw2I7gh1/zir2MGVZBvpb1zq9g==
 
-"@types/node@^10.12.18":
-  version "10.17.21"
-  resolved "https://registry.yarnpkg.com/@types/node/-/node-10.17.21.tgz#c00e9603399126925806bed2d9a1e37da506965e"
-  integrity sha512-PQKsydPxYxF1DsAFWmunaxd3sOi3iMt6Zmx/tgaagHYmwJ/9cRH91hQkeJZaUGWbvn0K5HlSVEXkn5U/llWPpQ==
+"@types/node@^12.0.12":
+  version "12.19.14"
+  resolved "https://registry.yarnpkg.com/@types/node/-/node-12.19.14.tgz#59e5029a3c2aea34f68b717955381692fd47cafb"
+  integrity sha512-2U9uLN46+7dv9PiS8VQJcHhuoOjiDPZOLAt0WuA1EanEknIMae+2QbMhayF7cgGqjvRVIfNpt+6jLPczJZFiRw==
 
 "@types/semver@^7.3.1":
   version "7.3.4"
@@ -1803,7 +1803,7 @@ electron-builder@20.44.0:
     update-notifier "^3.0.0"
     yargs "^13.2.4"
 
-electron-download@^4.0.0, electron-download@^4.1.0:
+electron-download@^4.0.0:
   version "4.1.1"
   resolved "https://registry.yarnpkg.com/electron-download/-/electron-download-4.1.1.tgz#02e69556705cc456e520f9e035556ed5a015ebe8"
   integrity sha512-FjEWG9Jb/ppK/2zToP+U5dds114fM1ZOJqMAR4aXXL5CvyPE9fiqBK/9YcwC9poIFQTEJk/EM/zyRwziziRZrg==
@@ -2196,13 +2196,13 @@ electron-wix-msi@^2.1.1:
     lodash "^4.17.15"
     uuid "^3.3.3"
 
-electron@4.0.8:
-  version "4.0.8"
-  resolved "https://registry.yarnpkg.com/electron/-/electron-4.0.8.tgz#b7998b16543d2094f081757a0c5afdb8875ea510"
-  integrity sha512-FOBJIHkuv8wc15N+ZyqwDzPavYVu5CHMBEf14jHDWv7QW2vkEIpJjVK+PIT31kfZfvjsIP0j2wvA/FBsiqB7pw==
+electron@7.2.4:
+  version "7.2.4"
+  resolved "https://registry.yarnpkg.com/electron/-/electron-7.2.4.tgz#9fc0446dae23ead897af8742470cb18da55c6ce9"
+  integrity sha512-Z+R692uTzXgP8AHrabE+kkrMlQJ6pnAYoINenwj9QSqaD2YbO8IuXU9DMCcUY0+VpA91ee09wFZJNUKYPMnCKg==
   dependencies:
-    "@types/node" "^10.12.18"
-    electron-download "^4.1.0"
+    "@electron/get" "^1.0.1"
+    "@types/node" "^12.0.12"
     extract-zip "^1.0.3"
 
 emoji-regex@^7.0.1:
