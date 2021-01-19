@@ -29,7 +29,7 @@ function showOpenUrlModal() {
     autoHideMenuBar: true,
     webPreferences: {
       nodeIntegration: true,
-      webviewTag:true,
+      webviewTag: true,
     },
   });
 
