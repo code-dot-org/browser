@@ -27,6 +27,10 @@ function showOpenUrlModal() {
     parent: _mainWindow,
     modal: true,
     autoHideMenuBar: true,
+    webPreferences: {
+      nodeIntegration: true,
+      webviewTag:true,
+    },
   });
 
   modal.loadURL(url.format({
