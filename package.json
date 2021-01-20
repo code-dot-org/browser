@@ -37,8 +37,9 @@
   },
   "devDependencies": {
     "chai": "^4.1.2",
-    "electron": "7.2.4",
+    "electron": "8.2.0",
     "electron-builder": "20.44.0",
+    "electron-context-menu": "^2.4.0",
     "electron-publisher-s3": "^19.53.4",
     "electron-packager": "^15.0.0",
     "electron-forge": "5.2.3",
