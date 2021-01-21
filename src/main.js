@@ -8,6 +8,7 @@ const {autoUpdater} = require('electron-updater');
 const log = require('electron-log');
 const checkForManualUpdate = require('./checkForManualUpdate');
 const firehoseClient = require('./firehose');
+const contextMenu = require('electron-context-menu');
 
 autoUpdater.logger = log;
 autoUpdater.logger.transports.file.level = 'info';
@@ -118,4 +119,11 @@ app.on('activate', () => {
   if (mainWindow === null) {
     createMainWindow();
   }
+});
+
+app.on('web-contents-created', (e, contents) => {
+  contextMenu({
+    window: contents,
+    showInspectElement: false,
+  });
 });
