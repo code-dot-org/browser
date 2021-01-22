@@ -30,7 +30,7 @@ Please give these options a try and let us know if they work for you. We're alwa
 
 ## Development setup
 
-- Use Node v8: `nvm use v8.9.1` (`nvm install v8.9.1` if it's not available)
+- Use Node v10: `nvm use v10.17.0` (`nvm install v10.17.0` if it's not available)
 - Clone the repository, then run `yarn` to install dependencies
 - `yarn start` launches the app in development mode.
 - `yarn release` will create OS X, Windows, and Linux builds, upload them to S3, and create a Github release. For full instructions, see below
