@@ -83,7 +83,7 @@ window.onload = function() {
 
   document.querySelector('#google-login').onclick = function() {
     // Opens link in default browser
-    require('electron').shell.openExternal(SIGN_IN_URL + '?user_return_to=/maker/display_google_oauth_code&maker=true');
+    require('electron').shell.openExternal(SIGN_IN_URL + '?user_return_to=/maker/display_google_oauth_code');
     navigateTo(MAKER_LOGIN_URL);
   };
 
