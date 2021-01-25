@@ -8,7 +8,8 @@
 // First step: Always be production, unless told otherwise.
 if (process.env.NODE_ENV === undefined) process.env.NODE_ENV = 'production';
 
-const {ipcRenderer} = require('electron');
+const {ipcRenderer, shell} = require('electron');
+const electron = require('electron');
 const {
   NAVIGATION_REQUESTED,
   RELOAD_REQUESTED,
@@ -169,3 +170,13 @@ function handleLoadAbort(event) {
 function handleLoadRedirect(event) {
   resetExitedState();
 }
+
+const notificationText = {
+  title: 'New Version of the Code.org Maker App Available',
+  body: 'Click this notification to download the latest version of the Code.org Maker App',
+};
+let notification = new electron.remote.Notification(notificationText);
+notification.on('click', (event, arg) => {
+  shell.openExternal('https://studio.code.org/maker/setup');
+});
+notification.show();
