@@ -1,4 +1,4 @@
-const {app, BrowserWindow} = require('electron');
+const {app, BrowserWindow, shell} = require('electron');
 const path = require('path');
 const url = require('url');
 const setupMenus = require('./menus');
@@ -8,6 +8,7 @@ const {autoUpdater} = require('electron-updater');
 const log = require('electron-log');
 const checkForManualUpdate = require('./checkForManualUpdate');
 const firehoseClient = require('./firehose');
+const electron = require('electron');
 
 autoUpdater.logger = log;
 autoUpdater.logger.transports.file.level = 'info';
@@ -19,6 +20,8 @@ app.setName('Code.org Maker App');
 
 let mainWindow = null;
 let manualUpdateRequired = false;
+
+const suggestedVersion = '1.1.9';
 
 function createMainWindow() {
   mainWindow = new BrowserWindow({
@@ -71,6 +74,23 @@ function createAutoUpdateDebugWindow() {
   statusWindow.loadURL(`file://${__dirname}/version.html#v${app.getVersion()}`);
   return statusWindow;
 }
+
+// If current version is lower than our suggested version, show notification to update
+function createSuggestedUpdateNotification() {
+  // Versions are expected as strings in the format x.y.z
+  if (app.getVersion() < suggestedVersion) {
+    const notificationText = {
+      title: 'New Version of the Code.org Maker App Available',
+      body: 'Click this notification to download the latest version of the Code.org Maker App',
+    };
+    let notification = new electron.Notification(notificationText);
+    notification.on('click', (event, arg) => {
+      shell.openExternal('https://studio.code.org/maker/setup');
+    });
+    notification.show();
+  }
+}
+
 autoUpdater.on('checking-for-update', () => {
   sendStatusToWindow('Checking for update...');
 });
@@ -100,6 +120,7 @@ autoUpdater.on('update-downloaded', (info) => {
 app.on('ready', function() {
   createMainWindow();
   createAutoUpdateDebugWindow();
+  createSuggestedUpdateNotification();
   if (!manualUpdateRequired) {
     setTimeout(function() {
       autoUpdater.checkForUpdatesAndNotify();
