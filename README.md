@@ -70,7 +70,6 @@ This is the process of setting up certificates (paired with private keys) on you
 ### Releasing a new version
 
 1. Bump the version in `package.json`
-   1. If you want users to see a notification suggesting they update to this version, bump the `const suggestedVersion` in `main.json` to reflect the version in `package.json`.
 2. Run `yarn release`
 
 ### Generating a new Developer ID Application
