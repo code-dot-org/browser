@@ -127,3 +127,6 @@ app.on('web-contents-created', (e, contents) => {
     showInspectElement: false,
   });
 });
+
+// Safe to remove this flag after we remove serialport dependency
+app.allowRendererProcessReuse = false;
