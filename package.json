@@ -44,6 +44,7 @@
     "electron": "^10.4.3",
     "electron-builder": "^22.10.5",
     "electron-forge": "5.2.3",
+    "electron-notarize": "^1.0.0",
     "electron-packager": "^15.0.0",
     "electron-publisher-s3": "^19.53.4",
     "eslint": "^4.18.2",

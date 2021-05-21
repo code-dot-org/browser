@@ -7,9 +7,14 @@
   "nsis": {
     "oneClick": false
   },
+  "afterSign": "./config/notarize.js",
   "mac": {
     "category": "public.app-category.education",
-    "electronUpdaterCompatibility": "1.0.0"
+    "hardenedRuntime": true,
+    "gatekeeperAssess": false,
+    "entitlements": "build/entitlements.mac.plist",
+    "entitlementsInherit": "build/entitlements.mac.plist",
+    "electronUpdaterCompatibility": "2.15.0"
   },
   "dmg": {
     "contents": [
