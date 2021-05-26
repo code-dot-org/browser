@@ -30,17 +30,18 @@ Please give these options a try and let us know if they work for you. We're alwa
 
 ## Development setup
 
-- Use Node v10: `nvm use v10.17.0` (`nvm install v10.17.0` if it's not available)
+- Use Node v14: `nvm use v14.16.1` (`nvm install v14.16.1` if it's not available)
 - Clone the repository, then run `yarn` to install dependencies
 - `yarn start` launches the app in development mode.
-- `yarn release` will create OS X, Windows, and Linux builds, upload them to S3, and create a Github release. For full instructions, see below
+- `yarn win|mac|linux` will create builds for the given OS in the `./dist` directory
+- `yarn release` will create OS X, Windows, and Linux builds and upload them to S3, and create a Github release (note: use the build command above to create pre-release builds and verify them on Windows, Mac, and Linux prior to releasing). For full instructions, see below
   - For S3 deployment, the same AWS credential configuration that we use for other Code.org AWS work suffices
   - For Github (currently disabled due to a bug in the builder), you'll need to set an environment variable with a personal Github access token that has full "repo" permissions for this repository (you can set up personal access tokens at https://github.com/settings/tokens): `export GH_TOKEN="token_goes_here"`
   - To build an MSI installer, see below
 
 ## Releasing
 
-**Note:** You can only release an OS X app from an OS X machine. If you are using Linux or Windows, you'll need to pair with someone with a Mac to release the Maker app! If you are on OS X, you can release on all platforms.
+**Note:** You can only release an OS X app from an OS X machine. If you are using Linux or Windows, you'll need to pair with someone with a Mac to release the Maker app! If you are on OS X, you may be able to release on all platforms; depending on your hardware and OS version, you may need a Windows (virtual) machine to successfully create a build with native extensions. However you create the builds, it is important that you verify they run on their intended platforms before uploading to S3.
 
 ### AWS Access
 
@@ -65,12 +66,52 @@ This is the process of setting up certificates (paired with private keys) on you
 4. To sign Windows builds, we need to set up two environment variables from the command line:
    1. `export WIN_CSC_LINK=/SecretsDirectory/codeorg_signing_certificate.p12` (where path corresponds to the .p12 file downloaded in step 1)
    2. `export WIN_CSC_KEY_PASSWORD='secret_password'` (`secret_password` is stored in the "MakerAppCertificate" note in LastPass)
-5. Now you can release a new version of the Maker app!
+5. To notarize the Mac builds, we need to set up two additional environment variables
+   1. `export APPLEID=[Apple ID from LastPass]`
+   2. `export APPLEIDPASS=[App specific password in Apple entry in LastPass]`
+
+### Testing a build before release
+Note: It is important to verify working builds for each operating system we support (Mac, Linux, Windows 32 and 64 bit) before creating a release.
+1. Run `yarn win && yarn mac && yarn linux`
+1. Find the builds in the `./dist` folder and run them on their intended OS verifying connectivity and core features
+
+#### Verifying Windows and Linux builds using VirtualBox
+1. Download and install [VirtualBox](https://www.virtualbox.org/wiki/Downloads)
+1. Download the lastest Windows 64 bit (x64) and 32 bit (x86) VirtualBox archives from the [Microsoft Edge Tools site](https://developer.microsoft.com/en-us/microsoft-edge/tools/vms/) and unpack the zip files. For Linux, download the current [Ubuntu LTS version](https://ubuntu.com/download/desktop)
+1. Set up each of the downloaded builds in VirtualBox:
+   1. Go to File -> Import Appliance -> select the `.ovf` file from the downloaded archive
+   1. Select the VM and open Settings
+   1. Fix any incompatible settings by following the instructions shown with the :warning: icon.
+   1. Select Storage -> Add New Storage Attachment (floppy disk icon) -> Optical Drive -> select VboxGuestAdditions.iso
+   1. Select Ports -> USB -> Enable USB Controller
+   1. Save and exit Settings
+   1. Start the VM (default Windows password is `Passw0rd!`)
+   1. In Windows/Linux open the CD drive and run `VBoxWindowsAdditions` accepting all default settings (restart if prompted)
+1. In the running VM, install the Maker App build you would like to verify (copy installer from `./dist` on your host machine)
+1. Connect a Circuit Playground and "capture" it in the VM by right clicking the USB icon in the bottom right and selecting your board
+1. Open the Maker App, verify connectivity by clicking the Setup cog in the top toolbar, try out the core features using this [test project](https://studio.code.org/projects/applab/P-JzGsvERn5gESQ5MSym4i_RcmaMWiWr2EKWsXB-OjI)
 
 ### Releasing a new version
 
 1. Bump the version in `package.json`
-2. Run `yarn release`
+1. If all builds from the verify process above were built on your mac, simply run `yarn release`. If your Windows build either failed to build or failed to run then you will need to build those on a Windows virtual machine.
+
+#### Using a Virtual Machine to build and release a new Windows version
+1. Start the Windows 64 bit Virtual Machine that you installed in the **Verify** process above.
+1. Using the built-in Edge browser, download and install NodeJS 14. Accept all default settings until you reach *Tool for Native Modules* screen and Check "Automatically install the necessary tools." Several install scripts will run. Accept any default settings when prompted.
+1. Install [Visual Studio Community](https://visualstudio.microsoft.com/downloads/). Select "Desktop development with C++" when prompted (this is necessary to build the native Serial adapter).
+1. See instruction in Code Signing above for downloading the `.p12` certificate. Copy it to the virtual machine
+1. Copy over the the entire `browser` directory from your host machine to the VM (or download your branch from Github)
+1. Open Powershell as Administrator (use search box on Windows toolbar)
+   1. `cd path\to\browser`
+   1. `node -v` v14.x.x
+   1. `npm install -g yarn`
+   1. `yarn install`
+   1. `$Env:WIN_CSC_LINK = "/SecretsDirectory/codeorg_signing_certificate.p12"`
+   1. `$Env:WIN_CSC_KEY_PASSWORD = "secret_password"` (`secret_password` is stored in the "MakerAppCertificate" note in LastPass)
+   1. `yarn release-win`
+1. Manually upload the files in `./dist` to S3 (automated S3 publishing does not work from Windows)
+1. On your host OS (not in the Virtual Machine) run `yarn release-mac && yarn release-linux` (this process will automatically upload the builds to S3).
 
 ### Generating a new Developer ID Application
 
