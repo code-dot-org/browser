@@ -3,11 +3,18 @@
   "productName": "Code.org Maker App",
   "artifactName": "${productName}-${version}-${os}.${ext}",
   "copyright": "Copyright © 2017 Code.org",
+  "npmRebuild": true,
   "nsis": {
     "oneClick": false
   },
+  "afterSign": "./config/notarize.js",
   "mac": {
-    "category": "public.app-category.education"
+    "category": "public.app-category.education",
+    "hardenedRuntime": true,
+    "gatekeeperAssess": false,
+    "entitlements": "build/entitlements.mac.plist",
+    "entitlementsInherit": "build/entitlements.mac.plist",
+    "electronUpdaterCompatibility": "2.15.0"
   },
   "dmg": {
     "contents": [
