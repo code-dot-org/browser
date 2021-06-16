@@ -36,7 +36,7 @@ Please give these options a try and let us know if they work for you. We're alwa
 - `yarn win|mac|linux` will create builds for the given OS in the `./dist` directory
 - `yarn release` will create OS X, Windows, and Linux builds and upload them to S3, and create a Github release (note: use the build command above to create pre-release builds and verify them on Windows, Mac, and Linux prior to releasing). For full instructions, see below
   - For S3 deployment, the same AWS credential configuration that we use for other Code.org AWS work suffices
-  - For Github (currently disabled due to a bug in the builder), you'll need to set an environment variable with a personal Github access token that has full "repo" permissions for this repository (you can set up personal access tokens at https://github.com/settings/tokens): `export GH_TOKEN="token_goes_here"`
+  - For Github, you'll need to set an environment variable with a personal Github access token that has full "repo" permissions for this repository (you can set up personal access tokens at https://github.com/settings/tokens): `export GITHUB_TOKEN="token_goes_here"`
   - To build an MSI installer, see below
 
 ## Releasing
@@ -94,7 +94,7 @@ Note: It is important to verify working builds for each operating system we supp
 ### Releasing a new version
 
 1. Bump the version in `package.json`
-1. If all builds from the verify process above were built on your mac, simply run `yarn release`. If your Windows build either failed to build or failed to run then you will need to build those on a Windows virtual machine.
+1. If all builds from the verify process above were built on your mac, simply run `yarn release`. If your Windows executable either failed to build or failed to run then you will need to rebuild it on a Windows virtual machine.
 
 #### Using a Virtual Machine to build and release a new Windows version
 1. Start the Windows 64 bit Virtual Machine that you installed in the **Verify** process above.
@@ -110,8 +110,8 @@ Note: It is important to verify working builds for each operating system we supp
    1. `$Env:WIN_CSC_LINK = "/SecretsDirectory/codeorg_signing_certificate.p12"`
    1. `$Env:WIN_CSC_KEY_PASSWORD = "secret_password"` (`secret_password` is stored in the "MakerAppCertificate" note in LastPass)
    1. `yarn release-win`
-1. Manually upload the files in `./dist` to S3 (automated S3 publishing does not work from Windows)
-1. On your host OS (not in the Virtual Machine) run `yarn release-mac && yarn release-linux` (this process will automatically upload the builds to S3).
+1. Manually upload the files created in `./dist` to S3 (automated S3 publishing does not work from Windows) and also copy them to `./dist` on your host operating system.
+1. On your host OS run `yarn release-mac && yarn release-linux && yarn github-release`. This will create the mac and linux builds, upload them to S3, and draft a release in Github).
 
 ### Generating a new Developer ID Application
 
