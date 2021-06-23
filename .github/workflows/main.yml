@@ -1,0 +1,35 @@
+name: Node.js CI
+on: [push, pull_request]
+env: 
+  ELECTRON_CACHE: $HOME/.cache/electron
+jobs:
+  build-linux:
+
+    runs-on: ubuntu-latest
+    
+    env: 
+      CC: clang
+      CXX: clang++ 
+      npm_config_clang: 1
+    
+    steps:
+      - uses: actions/checkout@v2
+      - name: Use Node.js
+        uses: actions/setup-node@v1
+        with:
+          node-version: '14.x'
+      - run: yarn install --frozen-lockfile
+      - run: yarn ci
+
+  build-mac:
+
+    runs-on: macos-latest
+    
+    steps:
+      - uses: actions/checkout@v2
+      - name: Use Node.js
+        uses: actions/setup-node@v1
+        with:
+          node-version: '14.x'
+      - run: yarn install --frozen-lockfile
+      - run: yarn ci
