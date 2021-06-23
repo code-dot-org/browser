@@ -24,11 +24,11 @@
     "win": "electron-builder --win --x64 --ia32 --config ./config/_common.json",
     "linux": "electron-builder --linux --config ./config/_common.json",
     "prerelease": "yarn generate-config",
-    "release": "NODE_ENV=production electron-builder --win --x64 --ia32 --mac --linux --config ./config/release.json --publish always && yarn github-release",
+    "release": "NODE_ENV=production electron-builder --win --x64 --ia32 --mac --linux --config ./config/release.json --publish always && yarn githubRelease",
     "release-mac": "NODE_ENV=production electron-builder --mac --config ./config/release.json --publish always",
     "release-win": "NODE_ENV=production electron-builder --win --x64 --ia32 --config ./config/release.json --publish always",
     "release-linux": "NODE_ENV=production electron-builder --linux --config ./config/release.json --publish always",
-    "github-release": "node github-release.js",
+    "github-release": "node githubRelease.js",
     "postinstall": "electron-builder install-app-deps"
   },
   "dependencies": {

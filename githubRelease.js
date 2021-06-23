@@ -15,7 +15,7 @@ if (accessToken) {
     const releaseId = release.data.id;
 
     await uploadAssets(releaseId);
-    console.log(`Release drafted. Visit ${release.data.html_url} to publish.`);
+    console.log(`Release drafted. Visit ${release.data.html_url} to add release notes and publish.`);
 
     function createRelease() {
       console.log(`Drafting release ${appVersion}`);
@@ -34,13 +34,16 @@ if (accessToken) {
           let buildName = buildNamePrefix + buildNameSuffixes[i];
           let buildFile = fs.readFileSync(`./dist/${buildName}`);
           console.log(`Uploading ${buildName}`);
-          await octokit.rest.repos.uploadReleaseAsset({
+          let response = await octokit.rest.repos.uploadReleaseAsset({
             owner: 'code-dot-org',
             repo: 'browser',
             release_id: releaseId,
             name: buildName,
             data: buildFile,
           });
+          if (response.status !== 201) {
+            console.error(`Error uploading ${buildName}. You can manually attach this file to the release on Github.`);
+          }
         }
         resolve();
       });
