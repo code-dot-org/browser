@@ -16,6 +16,9 @@
     "entitlementsInherit": "build/entitlements.mac.plist",
     "electronUpdaterCompatibility": "2.15.0"
   },
+  "win": {
+    "msi": true
+  },
   "dmg": {
     "contents": [
       {
