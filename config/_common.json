@@ -17,7 +17,7 @@
     "electronUpdaterCompatibility": "2.15.0"
   },
   "win": {
-    "msi": true
+    "target": "msi"
   },
   "dmg": {
     "contents": [
