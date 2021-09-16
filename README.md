@@ -12,7 +12,7 @@ We support a few approaches for installing Code.org Maker App to a group of comp
 
 Here's our MSI package. Windows network administrators may find this is the easiest approach to deploy to computers on a network. Please note that auto-updates are disabled when the app is installed via MSI.
 
-https://downloads.code.org/maker/Code.org+Maker+App-1.1.5-msi-win-win.msi
+https://downloads.code.org/maker/Code.org%20Maker%20App-1.1.9-win.msi
 
 Another approach is a silent install using the installer we've provided on the downloads page. It accepts the following command switches:
 
@@ -22,7 +22,7 @@ Another approach is a silent install using the installer we've provided on the d
 Example:
 
 ```
-Code.org Maker App-1.1.5-win.exe /S /D="C:\Program Files\Code.org Maker App"
+Code.org Maker App-1.1.9-win.exe /S /D="C:\Program Files\Code.org Maker App"
 ```
 
 These are standard install options for a [Nullsoft (NSIS)](https://en.wikipedia.org/wiki/Nullsoft_Scriptable_Install_System) installer. You can read more about them in the NullSoft manual in [chapter 3 (Installer Usage)](https://nsis.sourceforge.io/Docs/Chapter3.html#installerusage) and [chapter 4 (Silent Installers)](https://nsis.sourceforge.io/Docs/Chapter4.html#silent).
@@ -131,13 +131,12 @@ These steps are only necessary if the certificate you have obtained from LastPas
 
 ## MSI Installer (for networked Windows installs)
 
-- First time setup:
-  - Download and unzip the `codeorg_signing_certificate.p12` (stored in the "MakerAppCertificate" note in LastPass) code signing file into the `browser/config` directory
-- Make sure Docker is running on your computer (https://docs.docker.com/docker-for-mac/install/ for OS X, should show up in your toolbar as running when you’re ready)
 - Pull the `msi-installer` branch from this repo, merge desired changes in from main, and bump to the correct version number
-- run `yarn msi-docker-build`
-- The build will appear on the local machine in dist
+- run `yarn win` (needs to be done from a Windows machine/VM; see [Using a Virtual Machine to build and release a new Windows version](#Using-a-Virtual-Machine-to-build-and-release-a-new-Windows-version))
+- The build will appear in `./dist`
+- Verify the build (see [Testing a build before release](#Testing-a-build-before-release))
 - Copy to the S3 bucket (requires AWS CLI and Code.org credentials): `aws s3 cp ./dist/<filename>.msi s3://downloads.code/org/maker/`
+- Update the link in [Silent install / group install](#silent-install--group-install)
 
 ## Options
 
