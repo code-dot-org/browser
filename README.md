@@ -1,4 +1,4 @@
-# Code.org Maker App [![GitHub release](https://img.shields.io/github/release/code-dot-org/browser.svg)](https://github.com/code-dot-org/browser/releases/latest) [![Build Status](https://github.com/code-dot-org/browser/actions/workflows/main.yml/badge.svg?branch=main)](https://github.com/code-dot-org/browser/actions/workflows/main.yml)
+# Code.org Maker App [![GitHub release](https://img.shields.io/github/release/code-dot-org/browser.svg)](https://github.com/code-dot-org/browser/releases/latest) [![Build Status](https://github.com/code-dot-org/browser/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/code-dot-org/browser/actions/workflows/ci.yml)
 
 Simple browser exposing native node-serialport to web-based tools on allowlisted Code.org domains.
 
