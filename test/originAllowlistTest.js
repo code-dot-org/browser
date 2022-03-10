@@ -1,4 +1,3 @@
-const _ = require('lodash');
 const { expect } = require('chai');
 const {URL} = require('url');
 const {
@@ -74,7 +73,7 @@ function originFromUrl(url) {
 
 describe('mayInjectNativeApi', () => {
   // These should get the native APIs injected into the page
-  _.uniq(
+  new Set(
     [
       ...ALLOWLISTED_INTERNAL_PAGES,
     ].map(originFromUrl)
@@ -85,7 +84,7 @@ describe('mayInjectNativeApi', () => {
   });
 
   // These should never get native APIs injected into the page
-  _.uniq(
+  new Set(
     [
       ...ALLOWLISTED_EXTERNAL_PAGES,
       ...BLOCKLISTED_PAGES,
