@@ -16,7 +16,6 @@
     "pretest": "eslint .",
     "test": "mocha",
     "start": "NODE_ENV=${NODE_ENV:-development} electron .",
-    "install": "electron-rebuild",
     "pack": "electron-builder --dir",
     "preci": "yarn generate-config && yarn test",
     "ci": "electron-builder --config ./config/ci.json",
