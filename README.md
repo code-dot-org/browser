@@ -1,6 +1,10 @@
-# Code.org Maker App [![GitHub release](https://img.shields.io/github/release/code-dot-org/browser.svg)](https://github.com/code-dot-org/browser/releases/latest) [![Build Status](https://github.com/code-dot-org/browser/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/code-dot-org/browser/actions/workflows/ci.yml)
+# Code.org Maker App - DEPRECATED
 
-Simple browser exposing native node-serialport to web-based tools on allowlisted Code.org domains.
+[![Maintenance](https://img.shields.io/badge/Maintained%3F-no-red.svg)](https://bitbucket.org/lbesson/ansi-colors)
+
+Simple browser exposing native node-serialport to web-based tools on allowlisted Code.org domains.  
+
+This repo is deprecated because the Code.org Maker App is no longer supported. Boards now connect directly through the browser, so no app is needed to access the Maker Toolkit. Read more [here](https://support.code.org/hc/en-us/articles/11304760762125-Deprecating-the-Maker-App-and-Chrome-Serial-Extension).
 
 ## Installation
 
